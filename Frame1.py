@@ -80,6 +80,28 @@ CHARS = {
 
 HEX = {v:k for k,v in CHARS.items()}
 
+SHOOTS_CHAR = {
+        '0' : '\x00',
+        '1' : '\x01',
+        '2' : '\x02',
+        '3' : '\x03',
+        '4' : '\x04',
+        '5' : '\x05',
+        '6' : '\x06',
+        '7' : '\x07',
+        '8' : '\x08',
+        '9' : '\x09',
+        '10' : '\x0A',
+        '11' : '\x0B',
+        '12' : '\x0C',
+        '13' : '\x0D',
+        '14' : '\x0E',
+        '15' : '\x0F',
+        '16' : '\x16',
+        '17' : '\xFF',    
+}
+
+SHOOTS_HEX = {v:k for k,v in SHOOTS_CHAR.items()}
 
 #-------------------------------------------------------------------------------
 # File
@@ -214,15 +236,17 @@ def savenopenalty(rom, enable):
     else:
         rom.write("\x18")
 
-    
+#-------------------------------------------------------------------------------
+
 #-------------------------------------------------------------------------------
 # Teams
 
 class Team(object):
     
-    def __init__(self, teamNameOffset, playersNameOffset):
+    def __init__(self, teamNameOffset, playerNameOffset, playerShootOffset):
         self.teamNameOffset = teamNameOffset
-        self.playerNameOffset = playersNameOffset
+        self.playerNameOffset = playerNameOffset
+        self.playerShootOffset = playerShootOffset
     
     def loadteam(self, rom):
         
@@ -276,8 +300,73 @@ class Team(object):
         rom.seek( self.playerNameOffset[4] )
         rom.write(players[4])
 
+    def sShootRead(self, rom):
+        
+        playerShoot = ['' for i in range(5)]
+        playerShootHex = ['' for i in range(5)]
+        
+        rom.seek( self.playerShootOffset[0] )
+        playerShootHex[0] = rom.read(1)
+        
+        rom.seek( self.playerShootOffset[1] )
+        playerShootHex[1] = rom.read(1)
+        
+        rom.seek( self.playerShootOffset[2] )
+        playerShootHex[2] = rom.read(1)
+        
+        rom.seek( self.playerShootOffset[3] )
+        playerShootHex[3] = rom.read(1)
+        
+        rom.seek( self.playerShootOffset[4] )
+        playerShootHex[4] = rom.read(1)
+        
+        i = 0
+        for hex in playerShootHex:
+            
+            pattern = re.compile(r'(' + '|'.join(SHOOTS_HEX.keys()) + r')')
+            result = pattern.sub(lambda x: SHOOTS_HEX[x.group()], hex)
+            
+            playerShoot[i] = result
+            i+=1
+        
+        return playerShoot
+
+    def sShootWrite(self, rom, index):
+        print (index)
+        
+        pattern = re.compile(r'\b(' + '|'.join(SHOOTS_CHAR.keys()) + r')\b')
+        
+        result = ''
+        
+        for c in index:
+            hex = pattern.sub(lambda x: SHOOTS_CHAR[x.group()], str(c))
+            
+            if hex == ' ':
+                hex = '\xFF'
+            
+            result += hex
+        
+        print result
+        
+        rom.seek(self.playerShootOffset[0])
+        rom.write(result[0])
+        
+        rom.seek(self.playerShootOffset[1])
+        rom.write(result[1])
+        
+        rom.seek(self.playerShootOffset[2])
+        rom.write(result[2])
+        
+        rom.seek(self.playerShootOffset[3])
+        rom.write(result[3])
+        
+        rom.seek(self.playerShootOffset[4])
+        rom.write(result[4])
+
+
 #-------------------------------------------------------------------------------
 # utils
+
 
 def convertint(int_value):
    encoded = format(int_value, 'x')
@@ -317,25 +406,25 @@ def hextostr(hex):
 def create(parent):
     return Frame1(parent)
 
-[wxID_FRAME1, wxID_FRAME1ANGRYSPINCTRL1, wxID_FRAME1ANGRYSPINCTRL2, 
- wxID_FRAME1ANGRYSPINCTRL3, wxID_FRAME1ANGRYSPINCTRL4, 
- wxID_FRAME1ANGRYSPINCTRL5, wxID_FRAME1BUTTON1, wxID_FRAME1BUTTON2, 
+[wxID_FRAME1, wxID_FRAME1ANGRYSPINTEAM1CTRL1, wxID_FRAME1ANGRYSPINTEAM1CTRL2, 
+ wxID_FRAME1ANGRYSPINTEAM1CTRL3, wxID_FRAME1ANGRYSPINTEAM1CTRL4, 
+ wxID_FRAME1ANGRYSPINTEAM1CTRL5, wxID_FRAME1BUTTON1, wxID_FRAME1BUTTON2, 
  wxID_FRAME1CHECKBOX1, wxID_FRAME1CHOICE1, wxID_FRAME1CHOICE2, 
  wxID_FRAME1CHOICE3, wxID_FRAME1CHOICE4, wxID_FRAME1MINCTRL1, 
- wxID_FRAME1MPOWERSPINCTRL1, wxID_FRAME1MPOWERSPINCTRL2, 
- wxID_FRAME1MPOWERSPINCTRL3, wxID_FRAME1MPOWERSPINCTRL4, 
- wxID_FRAME1MPOWERSPINCTRL5, wxID_FRAME1NOTEBOOK1, wxID_FRAME1PANEL1, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL1, wxID_FRAME1MPOWERSPINTEAM1CTRL2, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL3, wxID_FRAME1MPOWERSPINTEAM1CTRL4, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL5, wxID_FRAME1NOTEBOOK1, wxID_FRAME1PANEL1, 
  wxID_FRAME1PANEL10, wxID_FRAME1PANEL11, wxID_FRAME1PANEL12, 
  wxID_FRAME1PANEL2, wxID_FRAME1PANEL3, wxID_FRAME1PANEL4, wxID_FRAME1PANEL5, 
  wxID_FRAME1PANEL6, wxID_FRAME1PANEL7, wxID_FRAME1PANEL8, wxID_FRAME1PANEL9, 
  wxID_FRAME1SECCTRL1, wxID_FRAME1SHOOTCTRL1, wxID_FRAME1SHOOTTEAM1CHOICE1, 
  wxID_FRAME1SHOOTTEAM1CHOICE2, wxID_FRAME1SHOOTTEAM1CHOICE3, 
  wxID_FRAME1SHOOTTEAM1CHOICE4, wxID_FRAME1SHOOTTEAM1CHOICE5, 
- wxID_FRAME1SPEEDSPINCTRL1, wxID_FRAME1SPEEDSPINCTRL2, 
- wxID_FRAME1SPEEDSPINCTRL3, wxID_FRAME1SPEEDSPINCTRL4, 
- wxID_FRAME1SPEEDSPINCTRL5, wxID_FRAME1SPOWERSPINCTRL1, 
- wxID_FRAME1SPOWERSPINCTRL2, wxID_FRAME1SPOWERSPINCTRL3, 
- wxID_FRAME1SPOWERSPINCTRL4, wxID_FRAME1SPOWERSPINCTRL5, 
+ wxID_FRAME1SPEEDSPINTEAM1CTRL1, wxID_FRAME1SPEEDSPINTEAM1CTRL2, 
+ wxID_FRAME1SPEEDSPINTEAM1CTRL3, wxID_FRAME1SPEEDSPINTEAM1CTRL4, 
+ wxID_FRAME1SPEEDSPINTEAM1CTRL5, wxID_FRAME1SPOWERSPINTEAM1CTRL1, 
+ wxID_FRAME1SPOWERSPINTEAM1CTRL2, wxID_FRAME1SPOWERSPINTEAM1CTRL3, 
+ wxID_FRAME1SPOWERSPINTEAM1CTRL4, wxID_FRAME1SPOWERSPINTEAM1CTRL5, 
  wxID_FRAME1STATICTEXT1, wxID_FRAME1STATICTEXT10, wxID_FRAME1STATICTEXT11, 
  wxID_FRAME1STATICTEXT12, wxID_FRAME1STATICTEXT13, wxID_FRAME1STATICTEXT14, 
  wxID_FRAME1STATICTEXT15, wxID_FRAME1STATICTEXT16, wxID_FRAME1STATICTEXT17, 
@@ -353,9 +442,9 @@ def create(parent):
  wxID_FRAME1TEAM3PLAYER3CTRL, wxID_FRAME1TEAM3PLAYER4CTRL, 
  wxID_FRAME1TEAM3PLAYER5CTRL, wxID_FRAME1TEAMNAMECTRL1, 
  wxID_FRAME1TEAMNAMECTRL2, wxID_FRAME1TEAMNAMECTRL3, 
- wxID_FRAME1WEIGHTSPINCTRL1, wxID_FRAME1WEIGHTSPINCTRL2, 
- wxID_FRAME1WEIGHTSPINCTRL3, wxID_FRAME1WEIGHTSPINCTRL4, 
- wxID_FRAME1WEIGHTSPINCTRL5, 
+ wxID_FRAME1WEIGHTSPINTEAM1CTRL1, wxID_FRAME1WEIGHTSPINTEAM1CTRL2, 
+ wxID_FRAME1WEIGHTSPINTEAM1CTRL3, wxID_FRAME1WEIGHTSPINTEAM1CTRL4, 
+ wxID_FRAME1WEIGHTSPINTEAM1CTRL5, 
 ] = [wx.NewId() for _init_ctrls in range(96)]
 
 class Frame1(wx.Frame):
@@ -542,10 +631,13 @@ class Frame1(wx.Frame):
         self.teamNameCtrl1.Bind(wx.EVT_TEXT, self.OnTeamNameCtrl1Text,
               id=wxID_FRAME1TEAMNAMECTRL1)
 
-        self.sPowerSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINCTRL1,
-              initial=1, max=5, min=1, name=u'sPowerSpinCtrl1',
+        self.sPowerSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL1,
+              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(240, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.sPowerSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
+              self.OnSPowerSpinTeam1Ctrl1Text,
+              id=wxID_FRAME1SPOWERSPINTEAM1CTRL1)
 
         self.staticText8 = wx.StaticText(id=wxID_FRAME1STATICTEXT8,
               label=u'Team name :', name='staticText8', parent=self.panel2,
@@ -576,97 +668,106 @@ class Frame1(wx.Frame):
         self.team1Player1Ctrl.Bind(wx.EVT_TEXT, self.OnTeam1Player1CtrlText,
               id=wxID_FRAME1TEAM1PLAYER1CTRL)
 
-        self.mPowerSpinCtrl4 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINCTRL4,
-              initial=1, max=5, min=1, name=u'mPowerSpinCtrl4',
+        self.mPowerSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL4,
+              initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(328, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.mPowerSpinCtrl5 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINCTRL5,
-              initial=1, max=5, min=1, name=u'mPowerSpinCtrl5',
+        self.mPowerSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL5,
+              initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(328, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.mPowerSpinCtrl2 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINCTRL2,
-              initial=1, max=5, min=1, name=u'mPowerSpinCtrl2',
+        self.mPowerSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL2,
+              initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(328, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.mPowerSpinCtrl3 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINCTRL3,
-              initial=1, max=5, min=1, name=u'mPowerSpinCtrl3',
+        self.mPowerSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL3,
+              initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(328, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.mPowerSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINCTRL1,
-              initial=1, max=5, min=1, name=u'mPowerSpinCtrl1',
+        self.mPowerSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL1,
+              initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(328, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.weightSpinCtrl4 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINCTRL4,
-              initial=1, max=5, min=1, name=u'weightSpinCtrl4',
+        self.weightSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL4,
+              initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(464, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.weightSpinCtrl5 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINCTRL5,
-              initial=1, max=5, min=1, name=u'weightSpinCtrl5',
+        self.weightSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL5,
+              initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(464, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.weightSpinCtrl2 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINCTRL2,
-              initial=1, max=5, min=1, name=u'weightSpinCtrl2',
+        self.weightSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL2,
+              initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(464, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.weightSpinCtrl3 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINCTRL3,
-              initial=1, max=5, min=1, name=u'weightSpinCtrl3',
+        self.weightSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL3,
+              initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(464, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.weightSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINCTRL1,
-              initial=1, max=5, min=1, name=u'weightSpinCtrl1',
+        self.weightSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL1,
+              initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(464, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.sPowerSpinCtrl4 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINCTRL4,
-              initial=1, max=5, min=1, name=u'sPowerSpinCtrl4',
+        self.sPowerSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL4,
+              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(240, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.sPowerSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
+              self.OnSPowerSpinTeam1Ctrl4Text,
+              id=wxID_FRAME1SPOWERSPINTEAM1CTRL4)
 
-        self.sPowerSpinCtrl5 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINCTRL5,
-              initial=1, max=5, min=1, name=u'sPowerSpinCtrl5',
+        self.sPowerSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL5,
+              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(240, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.sPowerSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
+              self.OnSPowerSpinTeam1Ctrl5Text,
+              id=wxID_FRAME1SPOWERSPINTEAM1CTRL5)
 
-        self.sPowerSpinCtrl2 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINCTRL2,
-              initial=1, max=5, min=1, name=u'sPowerSpinCtrl2',
+        self.sPowerSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL2,
+              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(240, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.sPowerSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
+              self.OnSPowerSpinTeam1Ctrl2Text,
+              id=wxID_FRAME1SPOWERSPINTEAM1CTRL2)
 
         self.staticText9 = wx.StaticText(id=wxID_FRAME1STATICTEXT9,
               label=u'Name', name='staticText9', parent=self.panel2,
               pos=wx.Point(144, 48), size=wx.Size(27, 14), style=0)
 
-        self.speedSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINCTRL1,
-              initial=1, max=3, min=1, name=u'speedSpinCtrl1',
+        self.speedSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL1,
+              initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(400, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.speedSpinCtrl2 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINCTRL2,
-              initial=1, max=3, min=1, name=u'speedSpinCtrl2',
+        self.speedSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL2,
+              initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(400, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.speedSpinCtrl3 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINCTRL3,
-              initial=1, max=3, min=1, name=u'speedSpinCtrl3',
+        self.speedSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL3,
+              initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(400, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.speedSpinCtrl4 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINCTRL4,
-              initial=1, max=3, min=1, name=u'speedSpinCtrl4',
+        self.speedSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL4,
+              initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(400, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.speedSpinCtrl5 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINCTRL5,
-              initial=1, max=3, min=1, name=u'speedSpinCtrl5',
+        self.speedSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL5,
+              initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(400, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
@@ -684,10 +785,13 @@ class Frame1(wx.Frame):
         self.team1Player2Ctrl.Bind(wx.EVT_TEXT, self.OnTeam1Player2CtrlText,
               id=wxID_FRAME1TEAM1PLAYER2CTRL)
 
-        self.sPowerSpinCtrl3 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINCTRL3,
-              initial=1, max=5, min=1, name=u'sPowerSpinCtrl3',
+        self.sPowerSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL3,
+              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(240, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.sPowerSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
+              self.OnSPowerSpinTeam1Ctrl3Text,
+              id=wxID_FRAME1SPOWERSPINTEAM1CTRL3)
 
         self.staticText10 = wx.StaticText(id=wxID_FRAME1STATICTEXT10,
               label=u'Start Power', name='staticText10', parent=self.panel2,
@@ -731,28 +835,28 @@ class Frame1(wx.Frame):
               label=u'5', name='staticText19', parent=self.panel2,
               pos=wx.Point(480, 48), size=wx.Size(6, 14), style=0)
 
-        self.angrySpinCtrl4 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINCTRL4,
-              initial=1, max=7, min=1, name=u'angrySpinCtrl4',
+        self.angrySpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL4,
+              initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(536, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.angrySpinCtrl5 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINCTRL5,
-              initial=1, max=7, min=1, name=u'angrySpinCtrl5',
+        self.angrySpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL5,
+              initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(536, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.angrySpinCtrl2 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINCTRL2,
-              initial=1, max=7, min=1, name=u'angrySpinCtrl2',
+        self.angrySpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL2,
+              initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(536, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.angrySpinCtrl3 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINCTRL3,
-              initial=1, max=7, min=1, name=u'angrySpinCtrl3',
+        self.angrySpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL3,
+              initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(536, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
-        self.angrySpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINCTRL1,
-              initial=1, max=7, min=1, name=u'angrySpinCtrl1',
+        self.angrySpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL1,
+              initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(536, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
 
@@ -942,7 +1046,8 @@ class Frame1(wx.Frame):
         
         self.noPenalty = False
         
-        self.sShootSelection = [[0 for x in range(5)] for x in range(11)]
+        self.sShootSelection = [['0' for x in range(5)] for x in range(11)]
+        self.sShootSelectionHex = [['\x00' for x in range(5)] for x in range(11)]
         
         self.ShootNames = (
                         "DEFORMA LA PELOTA, DIRECTA",
@@ -963,7 +1068,6 @@ class Frame1(wx.Frame):
                         "DIRECTA, LA FICHA SE PONE NARANJA",
                         "TIRO ESPECIAL, SE SUSPENDE EL PARTIDO XD",
                         "TIRO FAKE, LA POLLA XD",
-                        "COMO SI FUESE 00 (TODOS IGUAL LOS SIGUIENTES)",
                         "SIN ESPECIAL"
                         )
         
@@ -1002,6 +1106,7 @@ class Frame1(wx.Frame):
         
         team1NameOffset = 0x0105E9
         players1NameOffset = (0x0107CD, 0x0107DA, 0x0107F4, 0x010801, 0x0107E7)
+        players1ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
         team2NameOffset = 0x0105F9
         players2NameOffset = (0x01085C, 0x010869, 0x010876, 0x010883, 0x010890)
@@ -1009,9 +1114,9 @@ class Frame1(wx.Frame):
         team3NameOffset = 0x010609
         players3NameOffset = (0x01089D, 0x0108AA, 0x0108B7, 0x0108C4, 0x0108D1)
         
-        self.team1 = Team(team1NameOffset,players1NameOffset)
-        self.team2 = Team(team2NameOffset,players2NameOffset)
-        self.team3 = Team(team3NameOffset,players3NameOffset)
+        self.team1 = Team(team1NameOffset, players1NameOffset, players1ShootOffset)
+        self.team2 = Team(team2NameOffset, players2NameOffset, players1ShootOffset)
+        self.team3 = Team(team3NameOffset, players3NameOffset, players1ShootOffset)
 
 #-------------------------------------------------------------------------------
 
@@ -1094,6 +1199,14 @@ class Frame1(wx.Frame):
                 self.team1Player4Ctrl.SetValue(self.teamPlayerNames[0][3])
                 self.team1Player5Ctrl.SetValue(self.teamPlayerNames[0][4])
                 
+                self.sShootSelection[0] = self.team1.sShootRead(self.rom)
+                
+                self.shootTeam1Choice1.SetSelection(int(self.sShootSelection[0][0]))
+                self.shootTeam1Choice2.SetSelection(int(self.sShootSelection[0][1]))
+                self.shootTeam1Choice3.SetSelection(int(self.sShootSelection[0][2]))
+                self.shootTeam1Choice4.SetSelection(int(self.sShootSelection[0][3]))
+                self.shootTeam1Choice5.SetSelection(int(self.sShootSelection[0][4]))
+                
                 # Team 2
                 
                 self.teamHexName[1], self.teamPlayerHexNames[1] = self.team2.loadteam(self.rom)
@@ -1152,6 +1265,8 @@ class Frame1(wx.Frame):
                 self.team1.saveteam(self.rom, self.teamHexName[0], self.teamPlayerHexNames[0])
                 self.team2.saveteam(self.rom, self.teamHexName[1], self.teamPlayerHexNames[1])
                 self.team3.saveteam(self.rom, self.teamHexName[2], self.teamPlayerHexNames[2])
+                
+                self.team1.sShootWrite(self.rom, self.sShootSelection[0])
                 
                 closefile(self.rom)
                 
@@ -1265,14 +1380,32 @@ class Frame1(wx.Frame):
         event.Skip()
         self.sShootSelection[0][1] = self.shootTeam1Choice1.GetSelection()
 
-    def OnShootTeam1Choice4Choice(self, event):
+    def OnShootTeam1Choice3Choice(self, event):
         event.Skip()
         self.sShootSelection[0][2] = self.shootTeam1Choice1.GetSelection()
 
-    def OnShootTeam1Choice3Choice(self, event):
+    def OnShootTeam1Choice4Choice(self, event):
         event.Skip()
         self.sShootSelection[0][3] = self.shootTeam1Choice1.GetSelection()
 
     def OnShootTeam1Choice5Choice(self, event):
         event.Skip()
         self.sShootSelection[0][4] = self.shootTeam1Choice1.GetSelection()
+
+#-------------------------------------------------------------------------------
+
+    def OnSPowerSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+
+    def OnSPowerSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+
+    def OnSPowerSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+
+    def OnSPowerSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+
+    def OnSPowerSpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+

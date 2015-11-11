@@ -4,6 +4,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import binascii
+from binascii import hexlify
 
 import wx
 
@@ -243,10 +245,11 @@ def savenopenalty(rom, enable):
 
 class Team(object):
     
-    def __init__(self, teamNameOffset, playerNameOffset, playerShootOffset):
+    def __init__(self, teamNameOffset, teamStatsOffset, playerNameOffset, playerShootOffset):
         self.teamNameOffset = teamNameOffset
         self.playerNameOffset = playerNameOffset
         self.playerShootOffset = playerShootOffset
+        self.teamStatsOffset = teamStatsOffset
     
     def loadteam(self, rom):
         
@@ -300,6 +303,24 @@ class Team(object):
         rom.seek( self.playerNameOffset[4] )
         rom.write(players[4])
 
+    def readTeamStats(self, rom):
+        
+        rom.seek(self.teamStatsOffset)
+        teamStats = rom.read(2)
+        
+        return teamStats
+    
+    def writeTeamStats(self, rom, attack, defense):
+        
+        attackHex = convertint(attack)
+        defenseHex = convertint(defense)
+        
+        stats = attackHex + defenseHex
+        
+        
+        rom.seek(self.teamStatsOffset)
+        rom.write(stats)
+        
     def sShootRead(self, rom):
         
         playerShoot = ['' for i in range(5)]
@@ -332,7 +353,6 @@ class Team(object):
         return playerShoot
 
     def sShootWrite(self, rom, index):
-        print (index)
         
         pattern = re.compile(r'\b(' + '|'.join(SHOOTS_CHAR.keys()) + r')\b')
         
@@ -346,7 +366,6 @@ class Team(object):
             
             result += hex
         
-        print result
         
         rom.seek(self.playerShootOffset[0])
         rom.write(result[0])
@@ -429,10 +448,12 @@ def create(parent):
  wxID_FRAME1STATICTEXT12, wxID_FRAME1STATICTEXT13, wxID_FRAME1STATICTEXT14, 
  wxID_FRAME1STATICTEXT15, wxID_FRAME1STATICTEXT16, wxID_FRAME1STATICTEXT17, 
  wxID_FRAME1STATICTEXT18, wxID_FRAME1STATICTEXT19, wxID_FRAME1STATICTEXT2, 
- wxID_FRAME1STATICTEXT20, wxID_FRAME1STATICTEXT22, wxID_FRAME1STATICTEXT23, 
- wxID_FRAME1STATICTEXT24, wxID_FRAME1STATICTEXT25, wxID_FRAME1STATICTEXT3, 
- wxID_FRAME1STATICTEXT4, wxID_FRAME1STATICTEXT5, wxID_FRAME1STATICTEXT6, 
- wxID_FRAME1STATICTEXT7, wxID_FRAME1STATICTEXT8, wxID_FRAME1STATICTEXT9, 
+ wxID_FRAME1STATICTEXT20, wxID_FRAME1STATICTEXT21, wxID_FRAME1STATICTEXT22, 
+ wxID_FRAME1STATICTEXT23, wxID_FRAME1STATICTEXT24, wxID_FRAME1STATICTEXT25, 
+ wxID_FRAME1STATICTEXT26, wxID_FRAME1STATICTEXT3, wxID_FRAME1STATICTEXT4, 
+ wxID_FRAME1STATICTEXT5, wxID_FRAME1STATICTEXT6, wxID_FRAME1STATICTEXT7, 
+ wxID_FRAME1STATICTEXT8, wxID_FRAME1STATICTEXT9, 
+ wxID_FRAME1TEAM1ATTACKSPINCTRL1, wxID_FRAME1TEAM1DEFENSESPINCTRL1, 
  wxID_FRAME1TEAM1PLAYER1CTRL, wxID_FRAME1TEAM1PLAYER2CTRL, 
  wxID_FRAME1TEAM1PLAYER3CTRL, wxID_FRAME1TEAM1PLAYER4CTRL, 
  wxID_FRAME1TEAM1PLAYER5CTRL, wxID_FRAME1TEAM2PLAYER1CTRL, 
@@ -445,7 +466,7 @@ def create(parent):
  wxID_FRAME1WEIGHTSPINTEAM1CTRL1, wxID_FRAME1WEIGHTSPINTEAM1CTRL2, 
  wxID_FRAME1WEIGHTSPINTEAM1CTRL3, wxID_FRAME1WEIGHTSPINTEAM1CTRL4, 
  wxID_FRAME1WEIGHTSPINTEAM1CTRL5, 
-] = [wx.NewId() for _init_ctrls in range(96)]
+] = [wx.NewId() for _init_ctrls in range(100)]
 
 class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
@@ -477,12 +498,12 @@ class Frame1(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRAME1, name='', parent=prnt,
-              pos=wx.Point(331, 286), size=wx.Size(845, 425),
+              pos=wx.Point(331, 283), size=wx.Size(845, 428),
               style=wx.DEFAULT_FRAME_STYLE, title=u'TurBo Hockey Editor 3000')
-        self.SetClientSize(wx.Size(837, 398))
+        self.SetClientSize(wx.Size(837, 401))
 
         self.panel1 = wx.Panel(id=wxID_FRAME1PANEL1, name='panel1', parent=self,
-              pos=wx.Point(0, 0), size=wx.Size(837, 398),
+              pos=wx.Point(0, 0), size=wx.Size(837, 401),
               style=wx.TAB_TRAVERSAL)
         self.panel1.SetToolTipString(u'')
 
@@ -1017,6 +1038,30 @@ class Frame1(wx.Frame):
         self.shootTeam1Choice5.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice5Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE5)
 
+        self.team1AttackSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1TEAM1ATTACKSPINCTRL1,
+              initial=0, max=255, min=0, name=u'team1AttackSpinCtrl1',
+              parent=self.panel2, pos=wx.Point(48, 80), size=wx.Size(48, 21),
+              style=wx.SP_ARROW_KEYS)
+        self.team1AttackSpinCtrl1.Bind(wx.EVT_TEXT,
+              self.OnTeam1AttackSpinCtrl1Text,
+              id=wxID_FRAME1TEAM1ATTACKSPINCTRL1)
+
+        self.team1DefenseSpinCtrl1 = wx.SpinCtrl(id=wxID_FRAME1TEAM1DEFENSESPINCTRL1,
+              initial=0, max=7, min=0, name=u'team1DefenseSpinCtrl1',
+              parent=self.panel2, pos=wx.Point(48, 152), size=wx.Size(48, 21),
+              style=wx.SP_ARROW_KEYS)
+        self.team1DefenseSpinCtrl1.Bind(wx.EVT_TEXT,
+              self.OnTeam1DefenseSpinCtrl1Text,
+              id=wxID_FRAME1TEAM1DEFENSESPINCTRL1)
+
+        self.staticText21 = wx.StaticText(id=wxID_FRAME1STATICTEXT21,
+              label=u'Team Atack', name='staticText21', parent=self.panel2,
+              pos=wx.Point(48, 48), size=wx.Size(56, 14), style=0)
+
+        self.staticText26 = wx.StaticText(id=wxID_FRAME1STATICTEXT26,
+              label=u'Team Defense', name='staticText26', parent=self.panel2,
+              pos=wx.Point(40, 120), size=wx.Size(69, 14), style=0)
+
         self._init_coll_notebook1_Pages(self.notebook1)
 
     def __init__(self, parent):
@@ -1045,6 +1090,9 @@ class Frame1(wx.Frame):
             self.choice4.SetSelection(0)
         
         self.noPenalty = False
+        
+        self.teamAttack = ['' for x in range (11)]
+        self.teamDefense = ['' for x in range (11)]
         
         self.sShootSelection = [['0' for x in range(5)] for x in range(11)]
         self.sShootSelectionHex = [['\x00' for x in range(5)] for x in range(11)]
@@ -1105,6 +1153,7 @@ class Frame1(wx.Frame):
             self.teamPlayerHexStats[i]     = [['' for x in range(6)] for x in range(5)]
         
         team1NameOffset = 0x0105E9
+        team1StatsOffset = 0x01B3B7
         players1NameOffset = (0x0107CD, 0x0107DA, 0x0107F4, 0x010801, 0x0107E7)
         players1ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
@@ -1114,9 +1163,9 @@ class Frame1(wx.Frame):
         team3NameOffset = 0x010609
         players3NameOffset = (0x01089D, 0x0108AA, 0x0108B7, 0x0108C4, 0x0108D1)
         
-        self.team1 = Team(team1NameOffset, players1NameOffset, players1ShootOffset)
-        self.team2 = Team(team2NameOffset, players2NameOffset, players1ShootOffset)
-        self.team3 = Team(team3NameOffset, players3NameOffset, players1ShootOffset)
+        self.team1 = Team(team1NameOffset, team1StatsOffset, players1NameOffset, players1ShootOffset)
+        self.team2 = Team(team2NameOffset, team1StatsOffset, players2NameOffset, players1ShootOffset)
+        self.team3 = Team(team3NameOffset, team1StatsOffset, players3NameOffset, players1ShootOffset)
 
 #-------------------------------------------------------------------------------
 
@@ -1190,6 +1239,14 @@ class Frame1(wx.Frame):
                 self.teamName[0] = hextostr(self.teamHexName[0])
                 self.teamNameCtrl1.SetValue(self.teamName[0])
                 
+                teamStats = self.team1.readTeamStats(self.rom)
+                
+                self.team1Attack = int(hexlify(teamStats[0]), 16)
+                self.team1Defense = int(hexlify(teamStats[1]), 16)
+                
+                self.team1AttackSpinCtrl1.SetValue(self.team1Attack)
+                self.team1DefenseSpinCtrl1.SetValue(self.team1Defense)
+                
                 for i in range(5):
                     self.teamPlayerNames[0][i] = hextostr(self.teamPlayerHexNames[0][i])
                 
@@ -1261,10 +1318,12 @@ class Frame1(wx.Frame):
                 savenopenalty(self.rom, self.noPenalty)
 
                 # Team Settings
-
+                
                 self.team1.saveteam(self.rom, self.teamHexName[0], self.teamPlayerHexNames[0])
                 self.team2.saveteam(self.rom, self.teamHexName[1], self.teamPlayerHexNames[1])
                 self.team3.saveteam(self.rom, self.teamHexName[2], self.teamPlayerHexNames[2])
+                
+                self.team1.writeTeamStats(self.rom, self.team1Attack, self.team1Defense)
                 
                 self.team1.sShootWrite(self.rom, self.sShootSelection[0])
                 
@@ -1409,3 +1468,12 @@ class Frame1(wx.Frame):
     def OnSPowerSpinTeam1Ctrl5Text(self, event):
         event.Skip()
 
+#-------------------------------------------------------------------------------
+
+    def OnTeam1AttackSpinCtrl1Text(self, event):
+        event.Skip()
+        self.team1Attack = self.team1AttackSpinCtrl1.GetValue()
+        
+    def OnTeam1DefenseSpinCtrl1Text(self, event):
+        event.Skip()
+        self.team1Defense = self.team1DefenseSpinCtrl1.GetValue()

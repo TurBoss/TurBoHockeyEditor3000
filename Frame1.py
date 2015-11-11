@@ -501,6 +501,10 @@ class Frame1(wx.Frame):
               pos=wx.Point(331, 283), size=wx.Size(845, 428),
               style=wx.DEFAULT_FRAME_STYLE, title=u'TurBo Hockey Editor 3000')
         self.SetClientSize(wx.Size(837, 401))
+        self.SetMaxClientSize(wx.Size(845, 428))
+        self.SetMaxSize(wx.Size(845, 428))
+        self.SetMinClientSize(wx.Size(837, 401))
+        self.SetMinSize(wx.Size(837, 401))
 
         self.panel1 = wx.Panel(id=wxID_FRAME1PANEL1, name='panel1', parent=self,
               pos=wx.Point(0, 0), size=wx.Size(837, 401),

@@ -511,7 +511,7 @@ class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.panel2, select=False,
+        parent.AddPage(imageId=-1, page=self.panel2, select=True,
               text=u'Team 1')
         parent.AddPage(imageId=-1, page=self.panel3, select=False,
               text=u'Team 2')
@@ -525,22 +525,18 @@ class Frame1(wx.Frame):
               text=u'Team 6')
         parent.AddPage(imageId=-1, page=self.panel8, select=False,
               text=u'Team 7')
-        parent.AddPage(imageId=-1, page=self.panel9, select=True,
+        parent.AddPage(imageId=-1, page=self.panel9, select=False,
               text=u'Team 8')
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRAME1, name='', parent=prnt,
-              pos=wx.Point(355, 279), size=wx.Size(845, 428),
+              pos=wx.Point(350, 279), size=wx.Size(850, 428),
               style=wx.DEFAULT_FRAME_STYLE, title=u'TurBo Hockey Editor 3000')
-        self.SetClientSize(wx.Size(837, 401))
-        self.SetMaxClientSize(wx.Size(845, 428))
-        self.SetMaxSize(wx.Size(845, 428))
-        self.SetMinClientSize(wx.Size(837, 401))
-        self.SetMinSize(wx.Size(837, 401))
+        self.SetClientSize(wx.Size(842, 401))
 
         self.panel1 = wx.Panel(id=wxID_FRAME1PANEL1, name='panel1', parent=self,
-              pos=wx.Point(0, 0), size=wx.Size(837, 401),
+              pos=wx.Point(0, 0), size=wx.Size(842, 401),
               style=wx.TAB_TRAVERSAL)
         self.panel1.SetToolTipString(u'')
 

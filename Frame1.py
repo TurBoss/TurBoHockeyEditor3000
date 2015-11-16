@@ -523,11 +523,11 @@ class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.panel2, select=False,
+        parent.AddPage(imageId=-1, page=self.panel2, select=True,
               text=u'Team 1')
         parent.AddPage(imageId=-1, page=self.panel3, select=False,
               text=u'Team 2')
-        parent.AddPage(imageId=-1, page=self.panel4, select=True,
+        parent.AddPage(imageId=-1, page=self.panel4, select=False,
               text=u'Team 3')
         parent.AddPage(imageId=-1, page=self.panel5, select=False,
               text=u'Team 4')

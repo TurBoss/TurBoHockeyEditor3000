@@ -18,7 +18,9 @@ target = Executable(	script="App1.pyw",
 						copyDependentFiles=True,
 						appendScriptToExe=True,
 						appendScriptToLibrary=False,
-						icon="icon.ico"
+						icon="icon.ico",
+						shortcutName="TurBo Hockey Editor 3000",
+						shortcutDir="DesktopFolder",
 )
 
 setup(	name = "TurBo Hockey Editor 3000",

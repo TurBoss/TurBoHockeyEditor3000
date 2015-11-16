@@ -1,7 +1,7 @@
-#Boa:Frame:Frame1
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#Boa:Frame:Frame1
+
 
 import re
 import binascii
@@ -1545,18 +1545,19 @@ class Frame1(wx.Frame):
         for i in range(1,7):
             self.choice1.Append("%d" % i)
             self.choice1.SetSelection(0)
-        for i in range(1,7):
+            
             self.choice2.Append("%d" % i)
             self.choice2.SetSelection(0)
-        for i in range(1,7):
+            
             self.choice3.Append("%d" % i)
             self.choice3.SetSelection(0)
-        for i in range(1,7):
+            
             self.choice4.Append("%d" % i)
             self.choice4.SetSelection(0)
-        for i in range(1,7):
+            
             self.choice5.Append("%d" % i)
             self.choice5.SetSelection(0)
+        
         
         self.noPenalty = False
         
@@ -1648,8 +1649,262 @@ class Frame1(wx.Frame):
         self.team6 = Team(team6NameOffset, team6StatsOffset, players6NameOffset, players6ShootOffset)
         self.team7 = Team(team7NameOffset, team7StatsOffset, players7NameOffset, players7ShootOffset)
         self.team8 = Team(team8NameOffset, team8StatsOffset, players8NameOffset, players8ShootOffset)
+    
+    def loadRom(self):
+        # General Game Settings
         
+        self.minutes , self.seconds = loadtime(self.rom)
+        self.minCtrl1.SetValue("%d" % self.minutes)
+        self.secCtrl1.SetValue("%2d" % self.seconds)
         
+        self.superShoot = loadcharge(self.rom)
+        self.shootCtrl1.SetValue("%d" % self.superShoot)
+        
+        self.music = loadmusic(self.rom)
+        self.choice1.SetSelection(self.music[0])
+        self.choice2.SetSelection(self.music[1])
+        self.choice3.SetSelection(self.music[2])
+        self.choice4.SetSelection(self.music[3])
+        
+        self.noPenalty = loadnopenalty(self.rom)
+        self.checkBox1.SetValue(self.noPenalty)
+        
+        # Team Settings
+        
+        # Team 1
+        
+        self.teamHexName[0], self.teamPlayerHexNames[0] = self.team1.loadteam(self.rom)
+        
+        self.teamName[0] = hextostr(self.teamHexName[0])
+        self.teamNameCtrl1.SetValue(self.teamName[0])
+        
+        team1Stats = self.team1.readTeamStats(self.rom)
+        
+        self.team1Attack = int(hexlify(team1Stats[0]), 16)
+        self.team1Defense = int(hexlify(team1Stats[1]), 16)
+        
+        self.team1AttackSpinCtrl1.SetValue(self.team1Attack)
+        self.team1DefenseSpinCtrl1.SetValue(self.team1Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[0][i] = hextostr(self.teamPlayerHexNames[0][i])
+        
+        self.team1Player1Ctrl.SetValue(self.teamPlayerNames[0][0])
+        self.team1Player2Ctrl.SetValue(self.teamPlayerNames[0][1])
+        self.team1Player3Ctrl.SetValue(self.teamPlayerNames[0][2])
+        self.team1Player4Ctrl.SetValue(self.teamPlayerNames[0][3])
+        self.team1Player5Ctrl.SetValue(self.teamPlayerNames[0][4])
+        
+        self.sShootSelection[0] = self.team1.sShootRead(self.rom)
+        
+        self.shootTeam1Choice1.SetSelection(int(self.sShootSelection[0][0]))
+        self.shootTeam1Choice2.SetSelection(int(self.sShootSelection[0][1]))
+        self.shootTeam1Choice3.SetSelection(int(self.sShootSelection[0][2]))
+        self.shootTeam1Choice4.SetSelection(int(self.sShootSelection[0][3]))
+        self.shootTeam1Choice5.SetSelection(int(self.sShootSelection[0][4]))
+        
+        # Team 2
+        
+        self.teamHexName[1], self.teamPlayerHexNames[1] = self.team2.loadteam(self.rom)
+        
+        self.teamName[1] = hextostr(self.teamHexName[1])
+        self.teamNameCtrl2.SetValue(self.teamName[1])
+        
+        team2Stats = self.team2.readTeamStats(self.rom)
+        
+        self.team2Attack = int(hexlify(team2Stats[0]), 16)
+        self.team2Defense = int(hexlify(team2Stats[1]), 16)
+        
+        self.team2AttackSpinCtrl1.SetValue(self.team2Attack)
+        self.team2DefenseSpinCtrl1.SetValue(self.team2Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[1][i] = hextostr(self.teamPlayerHexNames[1][i])
+        
+        self.team2Player1Ctrl.SetValue(self.teamPlayerNames[1][0])
+        self.team2Player2Ctrl.SetValue(self.teamPlayerNames[1][1])
+        self.team2Player3Ctrl.SetValue(self.teamPlayerNames[1][2])
+        self.team2Player4Ctrl.SetValue(self.teamPlayerNames[1][3])
+        self.team2Player5Ctrl.SetValue(self.teamPlayerNames[1][4])
+        
+        # Team 3
+        
+        self.teamHexName[2], self.teamPlayerHexNames[2] = self.team3.loadteam(self.rom)
+        
+        self.teamName[2] = hextostr(self.teamHexName[2])
+        self.teamNameCtrl3.SetValue(self.teamName[2])
+        
+        team3Stats = self.team3.readTeamStats(self.rom)
+        
+        self.team3Attack = int(hexlify(team3Stats[0]), 16)
+        self.team3Defense = int(hexlify(team3Stats[1]), 16)
+        
+        self.team3AttackSpinCtrl1.SetValue(self.team3Attack)
+        self.team3DefenseSpinCtrl1.SetValue(self.team3Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[2][i] = hextostr(self.teamPlayerHexNames[2][i])
+        
+        self.team3Player1Ctrl.SetValue(self.teamPlayerNames[2][0])
+        self.team3Player2Ctrl.SetValue(self.teamPlayerNames[2][1])
+        self.team3Player3Ctrl.SetValue(self.teamPlayerNames[2][2])
+        self.team3Player4Ctrl.SetValue(self.teamPlayerNames[2][3])
+        self.team3Player5Ctrl.SetValue(self.teamPlayerNames[2][4])
+        
+        # Team 4
+        
+        self.teamHexName[3], self.teamPlayerHexNames[3] = self.team4.loadteam(self.rom)
+        
+        self.teamName[3] = hextostr(self.teamHexName[3])
+        self.teamNameCtrl4.SetValue(self.teamName[3])
+        
+        team4Stats = self.team4.readTeamStats(self.rom)
+        
+        self.team4Attack = int(hexlify(team4Stats[0]), 16)
+        self.team4Defense = int(hexlify(team4Stats[1]), 16)
+        
+        self.team4AttackSpinCtrl1.SetValue(self.team4Attack)
+        self.team4DefenseSpinCtrl1.SetValue(self.team4Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[3][i] = hextostr(self.teamPlayerHexNames[3][i])
+        
+        self.team4Player1Ctrl.SetValue(self.teamPlayerNames[3][0])
+        self.team4Player2Ctrl.SetValue(self.teamPlayerNames[3][1])
+        self.team4Player3Ctrl.SetValue(self.teamPlayerNames[3][2])
+        self.team4Player4Ctrl.SetValue(self.teamPlayerNames[3][3])
+        self.team4Player5Ctrl.SetValue(self.teamPlayerNames[3][4])
+        
+        # Team 5
+        
+        self.teamHexName[4], self.teamPlayerHexNames[4] = self.team5.loadteam(self.rom)
+        
+        self.teamName[4] = hextostr(self.teamHexName[4])
+        self.teamNameCtrl5.SetValue(self.teamName[4])
+        
+        team5Stats = self.team5.readTeamStats(self.rom)
+        
+        self.team5Attack = int(hexlify(team5Stats[0]), 16)
+        self.team5Defense = int(hexlify(team5Stats[1]), 16)
+        
+        self.team5AttackSpinCtrl1.SetValue(self.team5Attack)
+        self.team5DefenseSpinCtrl1.SetValue(self.team5Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[4][i] = hextostr(self.teamPlayerHexNames[4][i])
+        
+        self.team5Player1Ctrl.SetValue(self.teamPlayerNames[4][0])
+        self.team5Player2Ctrl.SetValue(self.teamPlayerNames[4][1])
+        self.team5Player3Ctrl.SetValue(self.teamPlayerNames[4][2])
+        self.team5Player4Ctrl.SetValue(self.teamPlayerNames[4][3])
+        self.team5Player5Ctrl.SetValue(self.teamPlayerNames[4][4])
+        
+        # Team 6
+        
+        self.teamHexName[5], self.teamPlayerHexNames[5] = self.team6.loadteam(self.rom)
+        
+        self.teamName[5] = hextostr(self.teamHexName[5])
+        self.teamNameCtrl6.SetValue(self.teamName[5])
+        
+        team6Stats = self.team6.readTeamStats(self.rom)
+        
+        self.team6Attack = int(hexlify(team6Stats[0]), 16)
+        self.team6Defense = int(hexlify(team6Stats[1]), 16)
+        
+        self.team6AttackSpinCtrl1.SetValue(self.team6Attack)
+        self.team6DefenseSpinCtrl1.SetValue(self.team6Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[5][i] = hextostr(self.teamPlayerHexNames[5][i])
+        
+        self.team6Player1Ctrl.SetValue(self.teamPlayerNames[5][0])
+        self.team6Player2Ctrl.SetValue(self.teamPlayerNames[5][1])
+        self.team6Player3Ctrl.SetValue(self.teamPlayerNames[5][2])
+        self.team6Player4Ctrl.SetValue(self.teamPlayerNames[5][3])
+        self.team6Player5Ctrl.SetValue(self.teamPlayerNames[5][4])
+        
+        # Team 7
+        
+        self.teamHexName[6], self.teamPlayerHexNames[6] = self.team7.loadteam(self.rom)
+        
+        self.teamName[6] = hextostr(self.teamHexName[6])
+        self.teamNameCtrl7.SetValue(self.teamName[6])
+        
+        team7Stats = self.team7.readTeamStats(self.rom)
+        
+        self.team7Attack = int(hexlify(team7Stats[0]), 16)
+        self.team7Defense = int(hexlify(team7Stats[1]), 16)
+        
+        self.team7AttackSpinCtrl1.SetValue(self.team7Attack)
+        self.team7DefenseSpinCtrl1.SetValue(self.team7Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[6][i] = hextostr(self.teamPlayerHexNames[6][i])
+        
+        self.team7Player1Ctrl.SetValue(self.teamPlayerNames[6][0])
+        self.team7Player2Ctrl.SetValue(self.teamPlayerNames[6][1])
+        self.team7Player3Ctrl.SetValue(self.teamPlayerNames[6][2])
+        self.team7Player4Ctrl.SetValue(self.teamPlayerNames[6][3])
+        self.team7Player5Ctrl.SetValue(self.teamPlayerNames[6][4])
+        
+        # Team 8
+        
+        self.teamHexName[7], self.teamPlayerHexNames[7] = self.team8.loadteam(self.rom)
+        
+        self.teamName[7] = hextostr(self.teamHexName[7])
+        self.teamNameCtrl8.SetValue(self.teamName[7])
+        
+        team8Stats = self.team8.readTeamStats(self.rom)
+        
+        self.team8Attack = int(hexlify(team8Stats[0]), 16)
+        self.team8Defense = int(hexlify(team8Stats[1]), 16)
+        
+        self.team8AttackSpinCtrl1.SetValue(self.team8Attack)
+        self.team8DefenseSpinCtrl1.SetValue(self.team8Defense)
+        
+        for i in range(5):
+            self.teamPlayerNames[7][i] = hextostr(self.teamPlayerHexNames[7][i])
+        
+        self.team8Player1Ctrl.SetValue(self.teamPlayerNames[7][0])
+        self.team8Player2Ctrl.SetValue(self.teamPlayerNames[7][1])
+        self.team8Player3Ctrl.SetValue(self.teamPlayerNames[7][2])
+        self.team8Player4Ctrl.SetValue(self.teamPlayerNames[7][3])
+        self.team8Player5Ctrl.SetValue(self.teamPlayerNames[7][4])
+        
+        closefile(self.rom)
+    
+    def saveRom(self):
+        
+        # General Game Settings
+                        
+        savetime(self.rom, self.minutes, self.seconds)
+        savecharge(self.rom, self.superShoot)
+        savemusic(self.rom, self.music)
+        savenopenalty(self.rom, self.noPenalty)
+
+        # Team Settings
+        
+        self.team1.saveteam(self.rom, self.teamHexName[0], self.teamPlayerHexNames[0])
+        self.team2.saveteam(self.rom, self.teamHexName[1], self.teamPlayerHexNames[1])
+        self.team3.saveteam(self.rom, self.teamHexName[2], self.teamPlayerHexNames[2])
+        self.team4.saveteam(self.rom, self.teamHexName[3], self.teamPlayerHexNames[3])
+        self.team5.saveteam(self.rom, self.teamHexName[4], self.teamPlayerHexNames[4])
+        self.team6.saveteam(self.rom, self.teamHexName[5], self.teamPlayerHexNames[5])
+        self.team7.saveteam(self.rom, self.teamHexName[6], self.teamPlayerHexNames[6])
+        self.team8.saveteam(self.rom, self.teamHexName[7], self.teamPlayerHexNames[7])
+        
+        self.team1.writeTeamStats(self.rom, self.team1Attack, self.team1Defense)
+        self.team2.writeTeamStats(self.rom, self.team2Attack, self.team2Defense)
+        self.team3.writeTeamStats(self.rom, self.team3Attack, self.team3Defense)
+        self.team4.writeTeamStats(self.rom, self.team4Attack, self.team4Defense)
+        self.team5.writeTeamStats(self.rom, self.team5Attack, self.team5Defense)
+        self.team6.writeTeamStats(self.rom, self.team6Attack, self.team6Defense)
+        self.team7.writeTeamStats(self.rom, self.team7Attack, self.team7Defense)
+        self.team8.writeTeamStats(self.rom, self.team8Attack, self.team8Defense)
+        
+        self.team1.sShootWrite(self.rom, self.sShootSelection[0])
+        
+        closefile(self.rom)
         
         
 #-------------------------------------------------------------------------------
@@ -1702,227 +1957,8 @@ class Frame1(wx.Frame):
                 
                 self.rom = loadfile(filename, "read")
                 
-                # General Game Settings
+                self.loadRom()
                 
-                self.minutes , self.seconds = loadtime(self.rom)
-                self.minCtrl1.SetValue("%d" % self.minutes)
-                self.secCtrl1.SetValue("%2d" % self.seconds)
-                
-                self.superShoot = loadcharge(self.rom)
-                self.shootCtrl1.SetValue("%d" % self.superShoot)
-                
-                self.music = loadmusic(self.rom)
-                self.choice1.SetSelection(self.music[0])
-                self.choice2.SetSelection(self.music[1])
-                self.choice3.SetSelection(self.music[2])
-                self.choice4.SetSelection(self.music[3])
-                
-                self.noPenalty = loadnopenalty(self.rom)
-                self.checkBox1.SetValue(self.noPenalty)
-                
-                # Team Settings
-                
-                # Team 1
-                
-                self.teamHexName[0], self.teamPlayerHexNames[0] = self.team1.loadteam(self.rom)
-                
-                self.teamName[0] = hextostr(self.teamHexName[0])
-                self.teamNameCtrl1.SetValue(self.teamName[0])
-                
-                team1Stats = self.team1.readTeamStats(self.rom)
-                
-                self.team1Attack = int(hexlify(team1Stats[0]), 16)
-                self.team1Defense = int(hexlify(team1Stats[1]), 16)
-                
-                self.team1AttackSpinCtrl1.SetValue(self.team1Attack)
-                self.team1DefenseSpinCtrl1.SetValue(self.team1Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[0][i] = hextostr(self.teamPlayerHexNames[0][i])
-                
-                self.team1Player1Ctrl.SetValue(self.teamPlayerNames[0][0])
-                self.team1Player2Ctrl.SetValue(self.teamPlayerNames[0][1])
-                self.team1Player3Ctrl.SetValue(self.teamPlayerNames[0][2])
-                self.team1Player4Ctrl.SetValue(self.teamPlayerNames[0][3])
-                self.team1Player5Ctrl.SetValue(self.teamPlayerNames[0][4])
-                
-                self.sShootSelection[0] = self.team1.sShootRead(self.rom)
-                
-                self.shootTeam1Choice1.SetSelection(int(self.sShootSelection[0][0]))
-                self.shootTeam1Choice2.SetSelection(int(self.sShootSelection[0][1]))
-                self.shootTeam1Choice3.SetSelection(int(self.sShootSelection[0][2]))
-                self.shootTeam1Choice4.SetSelection(int(self.sShootSelection[0][3]))
-                self.shootTeam1Choice5.SetSelection(int(self.sShootSelection[0][4]))
-                
-                # Team 2
-                
-                self.teamHexName[1], self.teamPlayerHexNames[1] = self.team2.loadteam(self.rom)
-                
-                self.teamName[1] = hextostr(self.teamHexName[1])
-                self.teamNameCtrl2.SetValue(self.teamName[1])
-                
-                team2Stats = self.team2.readTeamStats(self.rom)
-                
-                self.team2Attack = int(hexlify(team2Stats[0]), 16)
-                self.team2Defense = int(hexlify(team2Stats[1]), 16)
-                
-                self.team2AttackSpinCtrl1.SetValue(self.team2Attack)
-                self.team2DefenseSpinCtrl1.SetValue(self.team2Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[1][i] = hextostr(self.teamPlayerHexNames[1][i])
-                
-                self.team2Player1Ctrl.SetValue(self.teamPlayerNames[1][0])
-                self.team2Player2Ctrl.SetValue(self.teamPlayerNames[1][1])
-                self.team2Player3Ctrl.SetValue(self.teamPlayerNames[1][2])
-                self.team2Player4Ctrl.SetValue(self.teamPlayerNames[1][3])
-                self.team2Player5Ctrl.SetValue(self.teamPlayerNames[1][4])
-                
-                # Team 3
-                
-                self.teamHexName[2], self.teamPlayerHexNames[2] = self.team3.loadteam(self.rom)
-                
-                self.teamName[2] = hextostr(self.teamHexName[2])
-                self.teamNameCtrl3.SetValue(self.teamName[2])
-                
-                team3Stats = self.team3.readTeamStats(self.rom)
-                
-                self.team3Attack = int(hexlify(team3Stats[0]), 16)
-                self.team3Defense = int(hexlify(team3Stats[1]), 16)
-                
-                self.team3AttackSpinCtrl1.SetValue(self.team3Attack)
-                self.team3DefenseSpinCtrl1.SetValue(self.team3Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[2][i] = hextostr(self.teamPlayerHexNames[2][i])
-                
-                self.team3Player1Ctrl.SetValue(self.teamPlayerNames[2][0])
-                self.team3Player2Ctrl.SetValue(self.teamPlayerNames[2][1])
-                self.team3Player3Ctrl.SetValue(self.teamPlayerNames[2][2])
-                self.team3Player4Ctrl.SetValue(self.teamPlayerNames[2][3])
-                self.team3Player5Ctrl.SetValue(self.teamPlayerNames[2][4])
-                
-                # Team 4
-                
-                self.teamHexName[3], self.teamPlayerHexNames[3] = self.team4.loadteam(self.rom)
-                
-                self.teamName[3] = hextostr(self.teamHexName[3])
-                self.teamNameCtrl4.SetValue(self.teamName[3])
-                
-                team4Stats = self.team4.readTeamStats(self.rom)
-                
-                self.team4Attack = int(hexlify(team4Stats[0]), 16)
-                self.team4Defense = int(hexlify(team4Stats[1]), 16)
-                
-                self.team4AttackSpinCtrl1.SetValue(self.team4Attack)
-                self.team4DefenseSpinCtrl1.SetValue(self.team4Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[3][i] = hextostr(self.teamPlayerHexNames[3][i])
-                
-                self.team4Player1Ctrl.SetValue(self.teamPlayerNames[3][0])
-                self.team4Player2Ctrl.SetValue(self.teamPlayerNames[3][1])
-                self.team4Player3Ctrl.SetValue(self.teamPlayerNames[3][2])
-                self.team4Player4Ctrl.SetValue(self.teamPlayerNames[3][3])
-                self.team4Player5Ctrl.SetValue(self.teamPlayerNames[3][4])
-                
-                # Team 5
-                
-                self.teamHexName[4], self.teamPlayerHexNames[4] = self.team5.loadteam(self.rom)
-                
-                self.teamName[4] = hextostr(self.teamHexName[4])
-                self.teamNameCtrl5.SetValue(self.teamName[4])
-                
-                team5Stats = self.team5.readTeamStats(self.rom)
-                
-                self.team5Attack = int(hexlify(team5Stats[0]), 16)
-                self.team5Defense = int(hexlify(team5Stats[1]), 16)
-                
-                self.team5AttackSpinCtrl1.SetValue(self.team5Attack)
-                self.team5DefenseSpinCtrl1.SetValue(self.team5Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[4][i] = hextostr(self.teamPlayerHexNames[4][i])
-                
-                self.team5Player1Ctrl.SetValue(self.teamPlayerNames[4][0])
-                self.team5Player2Ctrl.SetValue(self.teamPlayerNames[4][1])
-                self.team5Player3Ctrl.SetValue(self.teamPlayerNames[4][2])
-                self.team5Player4Ctrl.SetValue(self.teamPlayerNames[4][3])
-                self.team5Player5Ctrl.SetValue(self.teamPlayerNames[4][4])
-                
-                # Team 6
-                
-                self.teamHexName[5], self.teamPlayerHexNames[5] = self.team6.loadteam(self.rom)
-                
-                self.teamName[5] = hextostr(self.teamHexName[5])
-                self.teamNameCtrl6.SetValue(self.teamName[5])
-                
-                team6Stats = self.team6.readTeamStats(self.rom)
-                
-                self.team6Attack = int(hexlify(team6Stats[0]), 16)
-                self.team6Defense = int(hexlify(team6Stats[1]), 16)
-                
-                self.team6AttackSpinCtrl1.SetValue(self.team6Attack)
-                self.team6DefenseSpinCtrl1.SetValue(self.team6Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[5][i] = hextostr(self.teamPlayerHexNames[5][i])
-                
-                self.team6Player1Ctrl.SetValue(self.teamPlayerNames[5][0])
-                self.team6Player2Ctrl.SetValue(self.teamPlayerNames[5][1])
-                self.team6Player3Ctrl.SetValue(self.teamPlayerNames[5][2])
-                self.team6Player4Ctrl.SetValue(self.teamPlayerNames[5][3])
-                self.team6Player5Ctrl.SetValue(self.teamPlayerNames[5][4])
-                
-                # Team 7
-                
-                self.teamHexName[6], self.teamPlayerHexNames[6] = self.team7.loadteam(self.rom)
-                
-                self.teamName[6] = hextostr(self.teamHexName[6])
-                self.teamNameCtrl7.SetValue(self.teamName[6])
-                
-                team7Stats = self.team7.readTeamStats(self.rom)
-                
-                self.team7Attack = int(hexlify(team7Stats[0]), 16)
-                self.team7Defense = int(hexlify(team7Stats[1]), 16)
-                
-                self.team7AttackSpinCtrl1.SetValue(self.team7Attack)
-                self.team7DefenseSpinCtrl1.SetValue(self.team7Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[6][i] = hextostr(self.teamPlayerHexNames[6][i])
-                
-                self.team7Player1Ctrl.SetValue(self.teamPlayerNames[6][0])
-                self.team7Player2Ctrl.SetValue(self.teamPlayerNames[6][1])
-                self.team7Player3Ctrl.SetValue(self.teamPlayerNames[6][2])
-                self.team7Player4Ctrl.SetValue(self.teamPlayerNames[6][3])
-                self.team7Player5Ctrl.SetValue(self.teamPlayerNames[6][4])
-                
-                # Team 8
-                
-                self.teamHexName[7], self.teamPlayerHexNames[7] = self.team8.loadteam(self.rom)
-                
-                self.teamName[7] = hextostr(self.teamHexName[7])
-                self.teamNameCtrl8.SetValue(self.teamName[7])
-                
-                team8Stats = self.team8.readTeamStats(self.rom)
-                
-                self.team8Attack = int(hexlify(team8Stats[0]), 16)
-                self.team8Defense = int(hexlify(team8Stats[1]), 16)
-                
-                self.team8AttackSpinCtrl1.SetValue(self.team8Attack)
-                self.team8DefenseSpinCtrl1.SetValue(self.team8Defense)
-                
-                for i in range(5):
-                    self.teamPlayerNames[7][i] = hextostr(self.teamPlayerHexNames[7][i])
-                
-                self.team8Player1Ctrl.SetValue(self.teamPlayerNames[7][0])
-                self.team8Player2Ctrl.SetValue(self.teamPlayerNames[7][1])
-                self.team8Player3Ctrl.SetValue(self.teamPlayerNames[7][2])
-                self.team8Player4Ctrl.SetValue(self.teamPlayerNames[7][3])
-                self.team8Player5Ctrl.SetValue(self.teamPlayerNames[7][4])
-                
-                closefile(self.rom)
         finally:
             dlg.Destroy()
             self.button2.Enable(True)
@@ -1936,37 +1972,7 @@ class Frame1(wx.Frame):
                 
                 self.rom = loadfile(filename, "write")
 
-                # General Game Settings
-                                
-                savetime(self.rom, self.minutes, self.seconds)
-                savecharge(self.rom, self.superShoot)
-                savemusic(self.rom, self.music)
-                savenopenalty(self.rom, self.noPenalty)
-
-                # Team Settings
-                
-                self.team1.saveteam(self.rom, self.teamHexName[0], self.teamPlayerHexNames[0])
-                self.team2.saveteam(self.rom, self.teamHexName[1], self.teamPlayerHexNames[1])
-                self.team3.saveteam(self.rom, self.teamHexName[2], self.teamPlayerHexNames[2])
-                self.team4.saveteam(self.rom, self.teamHexName[3], self.teamPlayerHexNames[3])
-                self.team5.saveteam(self.rom, self.teamHexName[4], self.teamPlayerHexNames[4])
-                self.team6.saveteam(self.rom, self.teamHexName[5], self.teamPlayerHexNames[5])
-                self.team7.saveteam(self.rom, self.teamHexName[6], self.teamPlayerHexNames[6])
-                self.team8.saveteam(self.rom, self.teamHexName[7], self.teamPlayerHexNames[7])
-                
-                self.team1.writeTeamStats(self.rom, self.team1Attack, self.team1Defense)
-                self.team2.writeTeamStats(self.rom, self.team2Attack, self.team2Defense)
-                self.team3.writeTeamStats(self.rom, self.team3Attack, self.team3Defense)
-                self.team4.writeTeamStats(self.rom, self.team4Attack, self.team4Defense)
-                self.team5.writeTeamStats(self.rom, self.team5Attack, self.team5Defense)
-                self.team6.writeTeamStats(self.rom, self.team6Attack, self.team6Defense)
-                self.team7.writeTeamStats(self.rom, self.team7Attack, self.team7Defense)
-                self.team8.writeTeamStats(self.rom, self.team8Attack, self.team8Defense)
-                
-                self.team1.sShootWrite(self.rom, self.sShootSelection[0])
-                
-                closefile(self.rom)
-                
+                self.saveRom()
                 
         finally:
             dlg.Destroy()

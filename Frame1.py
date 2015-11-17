@@ -127,6 +127,20 @@ SHOOT_NAMES = (
         "SIN ESPECIAL"
 )
 
+FALL_TYPES = {
+
+        "0" : {"HEX" : "\x14", "NAME" : "Original"},
+        "1" : {"HEX" : "\x09", "NAME" : "CAEN DE PIE APOYANDOSE"},
+        "2" : {"HEX" : "\x0F", "NAME" : "caen de pie"},
+        "3" : {"HEX" : "\x12", "NAME" : "DOS BOTES AL RECIBIR GOLPE"},
+        "4" : {"HEX" : "\x13", "NAME" : "3 BOTES (2 PEQUEÑOS) Y NO CAEN AL SUELO"},
+        "5" : {"HEX" : "\x10", "NAME" : "1 BOTE Y RUEDAN (COMO CUANDO TE CHOCAS CON LA PARED) PERO NO CAEN"},
+        "6" : {"HEX" : "\x17", "NAME" : "DOBLE REBANADA Y TRAS UN BOTE"},
+        "7" : {"HEX" : "\x1F", "NAME" : "siempre caen de pie, a partir de picaos caen de 1 ostia"},
+        "8" : {"HEX" : "\x32", "NAME" : "caen y no se levantan tras un rato como cuando le das el limite de golpes"},
+        "9" : {"HEX" : "\x33", "NAME" : "los envia a chodos, quizas como cuando reciben el especial"},
+}
+
 #-------------------------------------------------------------------------------
 # File
 
@@ -261,6 +275,66 @@ def savenopenalty(rom, enable):
         rom.write("\x18")
 
 #-------------------------------------------------------------------------------
+
+def loadFallType(rom):
+    
+    rom.seek(0x01932E)
+    hexType = rom.read(1)
+    type = 0
+    
+    for key, val in sorted(FALL_TYPES.items()):
+        if val["HEX"] == hexType:
+            type = key
+    
+    return int(type)
+
+def saveFallType(rom, type):
+    
+    hexType = "\x00"
+    
+    for key, val in sorted(FALL_TYPES.items()):
+        if key == str(type):
+            print(key)
+            hexType = val["HEX"]
+    
+    rom.seek(0x01932E)
+    rom.write(hexType)
+
+#-------------------------------------------------------------------------------
+
+def loadFlyHit(rom):
+    
+    rom.seek(0x019303)
+    heightHex = rom.read(1)
+    
+    height = int(hexlify(heightHex), 16)
+    
+    return height
+
+def saveFlyHit(rom, type):
+    
+    heightHex = convertint(type)
+    
+    rom.seek(0x019303)
+    rom.write(heightHex)
+
+#-------------------------------------------------------------------------------
+
+def loadFlyShoot(rom):
+    
+    rom.seek(0x01933f)
+    heightHex = rom.read(1)
+    
+    height = int(hexlify(heightHex), 16)
+    
+    return height
+
+def saveFlyShoot(rom, type):
+    
+    heightHex = convertint(type)
+    
+    rom.seek(0x01933f)
+    rom.write(heightHex)
 
 #-------------------------------------------------------------------------------
 # Teams
@@ -452,13 +526,14 @@ def create(parent):
  wxID_FRAME1ANGRYSPINTEAM1CTRL5, wxID_FRAME1BUTTON1, wxID_FRAME1BUTTON2, 
  wxID_FRAME1CHECKBOX1, wxID_FRAME1CHOICE1, wxID_FRAME1CHOICE2, 
  wxID_FRAME1CHOICE3, wxID_FRAME1CHOICE4, wxID_FRAME1CHOICE5, 
- wxID_FRAME1MINCTRL1, wxID_FRAME1MPOWERSPINTEAM1CTRL1, 
- wxID_FRAME1MPOWERSPINTEAM1CTRL2, wxID_FRAME1MPOWERSPINTEAM1CTRL3, 
- wxID_FRAME1MPOWERSPINTEAM1CTRL4, wxID_FRAME1MPOWERSPINTEAM1CTRL5, 
- wxID_FRAME1NOTEBOOK1, wxID_FRAME1PANEL1, wxID_FRAME1PANEL2, 
- wxID_FRAME1PANEL3, wxID_FRAME1PANEL4, wxID_FRAME1PANEL5, wxID_FRAME1PANEL6, 
- wxID_FRAME1PANEL7, wxID_FRAME1PANEL8, wxID_FRAME1PANEL9, wxID_FRAME1SECCTRL1, 
- wxID_FRAME1SHOOTCTRL1, wxID_FRAME1SHOOTTEAM1CHOICE1, 
+ wxID_FRAME1FALLTYPECHOICE, wxID_FRAME1FLYHITSPINCTRL, 
+ wxID_FRAME1FLYSHOOTSPINCTRL, wxID_FRAME1MINCTRL1, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL1, wxID_FRAME1MPOWERSPINTEAM1CTRL2, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL3, wxID_FRAME1MPOWERSPINTEAM1CTRL4, 
+ wxID_FRAME1MPOWERSPINTEAM1CTRL5, wxID_FRAME1NOTEBOOK1, wxID_FRAME1PANEL1, 
+ wxID_FRAME1PANEL2, wxID_FRAME1PANEL3, wxID_FRAME1PANEL4, wxID_FRAME1PANEL5, 
+ wxID_FRAME1PANEL6, wxID_FRAME1PANEL7, wxID_FRAME1PANEL8, wxID_FRAME1PANEL9, 
+ wxID_FRAME1SECCTRL1, wxID_FRAME1SHOOTCTRL1, wxID_FRAME1SHOOTTEAM1CHOICE1, 
  wxID_FRAME1SHOOTTEAM1CHOICE2, wxID_FRAME1SHOOTTEAM1CHOICE3, 
  wxID_FRAME1SHOOTTEAM1CHOICE4, wxID_FRAME1SHOOTTEAM1CHOICE5, 
  wxID_FRAME1SPEEDSPINTEAM1CTRL1, wxID_FRAME1SPEEDSPINTEAM1CTRL2, 
@@ -481,7 +556,8 @@ def create(parent):
  wxID_FRAME1STATICTEXT42, wxID_FRAME1STATICTEXT43, wxID_FRAME1STATICTEXT44, 
  wxID_FRAME1STATICTEXT45, wxID_FRAME1STATICTEXT46, wxID_FRAME1STATICTEXT47, 
  wxID_FRAME1STATICTEXT48, wxID_FRAME1STATICTEXT49, wxID_FRAME1STATICTEXT5, 
- wxID_FRAME1STATICTEXT50, wxID_FRAME1STATICTEXT51, wxID_FRAME1STATICTEXT6, 
+ wxID_FRAME1STATICTEXT50, wxID_FRAME1STATICTEXT51, wxID_FRAME1STATICTEXT52, 
+ wxID_FRAME1STATICTEXT53, wxID_FRAME1STATICTEXT54, wxID_FRAME1STATICTEXT6, 
  wxID_FRAME1STATICTEXT7, wxID_FRAME1STATICTEXT8, wxID_FRAME1STATICTEXT9, 
  wxID_FRAME1TEAM1ATTACKSPINCTRL1, wxID_FRAME1TEAM1DEFENSESPINCTRL1, 
  wxID_FRAME1TEAM1PLAYER1CTRL, wxID_FRAME1TEAM1PLAYER2CTRL, 
@@ -517,7 +593,7 @@ def create(parent):
  wxID_FRAME1WEIGHTSPINTEAM1CTRL1, wxID_FRAME1WEIGHTSPINTEAM1CTRL2, 
  wxID_FRAME1WEIGHTSPINTEAM1CTRL3, wxID_FRAME1WEIGHTSPINTEAM1CTRL4, 
  wxID_FRAME1WEIGHTSPINTEAM1CTRL5, 
-] = [wx.NewId() for _init_ctrls in range(167)]
+] = [wx.NewId() for _init_ctrls in range(173)]
 
 class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
@@ -543,22 +619,22 @@ class Frame1(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRAME1, name='', parent=prnt,
-              pos=wx.Point(350, 279), size=wx.Size(850, 428),
+              pos=wx.Point(232, 322), size=wx.Size(907, 370),
               style=wx.DEFAULT_FRAME_STYLE, title=u'TurBo Hockey Editor 3000')
-        self.SetClientSize(wx.Size(842, 401))
+        self.SetClientSize(wx.Size(899, 343))
         self.SetIcon(wx.Icon(u"icon.ico",wx.BITMAP_TYPE_ICO))
 
         self.panel1 = wx.Panel(id=wxID_FRAME1PANEL1, name='panel1', parent=self,
-              pos=wx.Point(0, 0), size=wx.Size(842, 401),
+              pos=wx.Point(0, 0), size=wx.Size(899, 343),
               style=wx.TAB_TRAVERSAL)
         self.panel1.SetToolTipString(u'')
 
         self.staticText1 = wx.StaticText(id=wxID_FRAME1STATICTEXT1,
               label=u'Time', name='staticText1', parent=self.panel1,
-              pos=wx.Point(64, 24), size=wx.Size(29, 14), style=0)
+              pos=wx.Point(32, 24), size=wx.Size(29, 14), style=0)
 
         self.minCtrl1 = wx.TextCtrl(id=wxID_FRAME1MINCTRL1, name=u'minCtrl1',
-              parent=self.panel1, pos=wx.Point(56, 40), size=wx.Size(24, 21),
+              parent=self.panel1, pos=wx.Point(16, 40), size=wx.Size(24, 21),
               style=0, value=u'0')
         self.minCtrl1.SetLabelText(u'0')
         self.minCtrl1.SetMaxLength(1)
@@ -567,7 +643,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1MINCTRL1)
 
         self.secCtrl1 = wx.TextCtrl(id=wxID_FRAME1SECCTRL1, name=u'secCtrl1',
-              parent=self.panel1, pos=wx.Point(80, 40), size=wx.Size(24, 21),
+              parent=self.panel1, pos=wx.Point(40, 40), size=wx.Size(24, 21),
               style=0, value=u'0')
         self.secCtrl1.SetLabelText(u'0')
         self.secCtrl1.SetMaxLength(1)
@@ -579,10 +655,10 @@ class Frame1(wx.Frame):
 
         self.staticText2 = wx.StaticText(id=wxID_FRAME1STATICTEXT2,
               label=u'Charge Time', name='staticText2', parent=self.panel1,
-              pos=wx.Point(128, 24), size=wx.Size(60, 14), style=0)
+              pos=wx.Point(80, 24), size=wx.Size(60, 14), style=0)
 
         self.shootCtrl1 = wx.TextCtrl(id=wxID_FRAME1SHOOTCTRL1,
-              name=u'shootCtrl1', parent=self.panel1, pos=wx.Point(144, 40),
+              name=u'shootCtrl1', parent=self.panel1, pos=wx.Point(88, 40),
               size=wx.Size(32, 21), style=0, value=u'0')
         self.shootCtrl1.SetLabelText(u'0')
         self.shootCtrl1.SetToolTipString(u'Super shoot time')
@@ -592,43 +668,43 @@ class Frame1(wx.Frame):
 
         self.staticText3 = wx.StaticText(id=wxID_FRAME1STATICTEXT3,
               label=u'Field 1', name='staticText3', parent=self.panel1,
-              pos=wx.Point(232, 24), size=wx.Size(31, 14), style=0)
+              pos=wx.Point(160, 24), size=wx.Size(31, 14), style=0)
 
         self.staticText4 = wx.StaticText(id=wxID_FRAME1STATICTEXT4,
               label=u'Field 2', name='staticText4', parent=self.panel1,
-              pos=wx.Point(296, 24), size=wx.Size(31, 14), style=0)
+              pos=wx.Point(216, 24), size=wx.Size(31, 14), style=0)
 
         self.staticText5 = wx.StaticText(id=wxID_FRAME1STATICTEXT5,
               label=u'Field 3', name='staticText5', parent=self.panel1,
-              pos=wx.Point(360, 24), size=wx.Size(31, 14), style=0)
+              pos=wx.Point(272, 24), size=wx.Size(31, 14), style=0)
 
         self.staticText6 = wx.StaticText(id=wxID_FRAME1STATICTEXT6,
               label=u'Field 4', name='staticText6', parent=self.panel1,
-              pos=wx.Point(424, 24), size=wx.Size(31, 14), style=0)
+              pos=wx.Point(328, 24), size=wx.Size(31, 14), style=0)
 
         self.choice1 = wx.Choice(choices=[], id=wxID_FRAME1CHOICE1,
-              name='choice1', parent=self.panel1, pos=wx.Point(480, 40),
+              name='choice1', parent=self.panel1, pos=wx.Point(376, 40),
               size=wx.Size(48, 21), style=0)
         self.choice1.SetToolTipString(u'Field 5 music theme')
         self.choice1.Bind(wx.EVT_CHOICE, self.OnChoice1Choice,
               id=wxID_FRAME1CHOICE1)
 
         self.choice2 = wx.Choice(choices=[], id=wxID_FRAME1CHOICE2,
-              name='choice2', parent=self.panel1, pos=wx.Point(288, 40),
+              name='choice2', parent=self.panel1, pos=wx.Point(208, 40),
               size=wx.Size(48, 21), style=0)
         self.choice2.SetToolTipString(u'Field 2 music theme')
         self.choice2.Bind(wx.EVT_CHOICE, self.OnChoice2Choice,
               id=wxID_FRAME1CHOICE2)
 
         self.choice3 = wx.Choice(choices=[], id=wxID_FRAME1CHOICE3,
-              name='choice3', parent=self.panel1, pos=wx.Point(352, 40),
+              name='choice3', parent=self.panel1, pos=wx.Point(264, 40),
               size=wx.Size(48, 21), style=0)
         self.choice3.SetToolTipString(u'Field 3 music theme')
         self.choice3.Bind(wx.EVT_CHOICE, self.OnChoice3Choice,
               id=wxID_FRAME1CHOICE3)
 
         self.choice4 = wx.Choice(choices=[], id=wxID_FRAME1CHOICE4,
-              name='choice4', parent=self.panel1, pos=wx.Point(416, 40),
+              name='choice4', parent=self.panel1, pos=wx.Point(320, 40),
               size=wx.Size(48, 21), style=0)
         self.choice4.SetToolTipString(u'Field 4 music theme')
         self.choice4.Bind(wx.EVT_CHOICE, self.OnChoice4Choice,
@@ -636,25 +712,25 @@ class Frame1(wx.Frame):
 
         self.staticText7 = wx.StaticText(id=wxID_FRAME1STATICTEXT7,
               label=u'Music', name='staticText7', parent=self.panel1,
-              pos=wx.Point(360, 8), size=wx.Size(26, 14), style=0)
+              pos=wx.Point(272, 8), size=wx.Size(26, 14), style=0)
 
         self.checkBox1 = wx.CheckBox(id=wxID_FRAME1CHECKBOX1,
               label=u'No Penalty', name='checkBox1', parent=self.panel1,
-              pos=wx.Point(552, 40), size=wx.Size(70, 13), style=0)
+              pos=wx.Point(440, 40), size=wx.Size(70, 13), style=0)
         self.checkBox1.SetValue(False)
         self.checkBox1.SetToolTipString(u'Enable / Disable penalty')
         self.checkBox1.Bind(wx.EVT_CHECKBOX, self.OnCheckBox1Checkbox,
               id=wxID_FRAME1CHECKBOX1)
 
         self.button1 = wx.Button(id=wxID_FRAME1BUTTON1, label=u'Load',
-              name='button1', parent=self.panel1, pos=wx.Point(752, 8),
+              name='button1', parent=self.panel1, pos=wx.Point(816, 8),
               size=wx.Size(75, 23), style=0)
         self.button1.SetToolTipString(u'Load rom')
         self.button1.Bind(wx.EVT_BUTTON, self.OnButton1Button,
               id=wxID_FRAME1BUTTON1)
 
         self.button2 = wx.Button(id=wxID_FRAME1BUTTON2, label=u'Save',
-              name='button2', parent=self.panel1, pos=wx.Point(752, 40),
+              name='button2', parent=self.panel1, pos=wx.Point(816, 40),
               size=wx.Size(75, 23), style=0)
         self.button2.SetToolTipString(u'Save rom')
         self.button2.Enable(False)
@@ -662,20 +738,20 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1BUTTON2)
 
         self.notebook1 = wx.Notebook(id=wxID_FRAME1NOTEBOOK1, name='notebook1',
-              parent=self.panel1, pos=wx.Point(8, 72), size=wx.Size(824, 320),
+              parent=self.panel1, pos=wx.Point(8, 72), size=wx.Size(880, 264),
               style=0)
         self.notebook1.SetToolTipString(u'')
 
         self.panel8 = wx.Panel(id=wxID_FRAME1PANEL8, name='panel8',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
 
         self.panel9 = wx.Panel(id=wxID_FRAME1PANEL9, name='panel9',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
 
         self.panel2 = wx.Panel(id=wxID_FRAME1PANEL2, name='panel2',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
         self.panel2.SetToolTipString(u'')
 
@@ -916,25 +992,25 @@ class Frame1(wx.Frame):
               style=wx.SP_ARROW_KEYS)
 
         self.panel3 = wx.Panel(id=wxID_FRAME1PANEL3, name='panel3',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
         self.panel3.SetToolTipString(u'')
 
         self.panel4 = wx.Panel(id=wxID_FRAME1PANEL4, name='panel4',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
         self.panel4.SetToolTipString(u'')
 
         self.panel5 = wx.Panel(id=wxID_FRAME1PANEL5, name='panel5',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
 
         self.panel6 = wx.Panel(id=wxID_FRAME1PANEL6, name='panel6',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
 
         self.panel7 = wx.Panel(id=wxID_FRAME1PANEL7, name='panel7',
-              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(816, 294),
+              parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
               style=wx.TAB_TRAVERSAL)
 
         self.staticText22 = wx.StaticText(id=wxID_FRAME1STATICTEXT22,
@@ -1039,35 +1115,35 @@ class Frame1(wx.Frame):
 
         self.shootTeam1Choice1 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM1CHOICE1, name=u'shootTeam1Choice1',
-              parent=self.panel2, pos=wx.Point(600, 64), size=wx.Size(200, 21),
+              parent=self.panel2, pos=wx.Point(600, 64), size=wx.Size(256, 21),
               style=0)
         self.shootTeam1Choice1.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice1Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE1)
 
         self.shootTeam1Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM1CHOICE2, name=u'shootTeam1Choice2',
-              parent=self.panel2, pos=wx.Point(600, 96), size=wx.Size(200, 21),
+              parent=self.panel2, pos=wx.Point(600, 96), size=wx.Size(256, 21),
               style=0)
         self.shootTeam1Choice2.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice2Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE2)
 
         self.shootTeam1Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM1CHOICE3, name=u'shootTeam1Choice3',
-              parent=self.panel2, pos=wx.Point(600, 128), size=wx.Size(200, 21),
+              parent=self.panel2, pos=wx.Point(600, 128), size=wx.Size(256, 21),
               style=0)
         self.shootTeam1Choice3.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice3Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE3)
 
         self.shootTeam1Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM1CHOICE4, name=u'shootTeam1Choice4',
-              parent=self.panel2, pos=wx.Point(600, 160), size=wx.Size(200, 21),
+              parent=self.panel2, pos=wx.Point(600, 160), size=wx.Size(256, 21),
               style=0)
         self.shootTeam1Choice4.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice4Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE4)
 
         self.shootTeam1Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM1CHOICE5, name=u'shootTeam1Choice5',
-              parent=self.panel2, pos=wx.Point(600, 192), size=wx.Size(200, 21),
+              parent=self.panel2, pos=wx.Point(600, 192), size=wx.Size(256, 21),
               style=0)
         self.shootTeam1Choice5.Bind(wx.EVT_CHOICE,
               self.OnShootTeam1Choice5Choice, id=wxID_FRAME1SHOOTTEAM1CHOICE5)
@@ -1097,7 +1173,7 @@ class Frame1(wx.Frame):
               pos=wx.Point(40, 120), size=wx.Size(69, 14), style=0)
 
         self.choice5 = wx.Choice(choices=[], id=wxID_FRAME1CHOICE5,
-              name='choice5', parent=self.panel1, pos=wx.Point(224, 40),
+              name='choice5', parent=self.panel1, pos=wx.Point(152, 40),
               size=wx.Size(48, 21), style=0)
         self.choice5.SetToolTipString(u'Field 1 music theme')
         self.choice5.Bind(wx.EVT_CHOICE, self.OnChoice5Choice,
@@ -1105,7 +1181,7 @@ class Frame1(wx.Frame):
 
         self.staticText27 = wx.StaticText(id=wxID_FRAME1STATICTEXT27,
               label=u'Field 5', name='staticText27', parent=self.panel1,
-              pos=wx.Point(488, 24), size=wx.Size(31, 14), style=0)
+              pos=wx.Point(384, 24), size=wx.Size(31, 14), style=0)
 
         self.staticText28 = wx.StaticText(id=wxID_FRAME1STATICTEXT28,
               label=u'Team name :', name='staticText28', parent=self.panel5,
@@ -1525,6 +1601,40 @@ class Frame1(wx.Frame):
               self.OnTeam8DefenseSpinCtrl1Text,
               id=wxID_FRAME1TEAM8DEFENSESPINCTRL1)
 
+        self.staticText52 = wx.StaticText(id=wxID_FRAME1STATICTEXT52,
+              label=u'Fall type', name='staticText52', parent=self.panel1,
+              pos=wx.Point(560, 24), size=wx.Size(41, 14), style=0)
+
+        self.fallTypeChoice = wx.Choice(choices=[],
+              id=wxID_FRAME1FALLTYPECHOICE, name=u'fallTypeChoice',
+              parent=self.panel1, pos=wx.Point(528, 40), size=wx.Size(106, 21),
+              style=0)
+        self.fallTypeChoice.Bind(wx.EVT_CHOICE, self.OnFallTypeChoiceChoice,
+              id=wxID_FRAME1FALLTYPECHOICE)
+
+        self.staticText53 = wx.StaticText(id=wxID_FRAME1STATICTEXT53,
+              label=u'Fly type on hit', name='staticText53', parent=self.panel1,
+              pos=wx.Point(640, 24), size=wx.Size(69, 14), style=0)
+
+        self.flyHitSpinCtrl = wx.SpinCtrl(id=wxID_FRAME1FLYHITSPINCTRL,
+              initial=0, max=15, min=0, name=u'flyHitSpinCtrl',
+              parent=self.panel1, pos=wx.Point(656, 40), size=wx.Size(48, 21),
+              style=wx.SP_ARROW_KEYS)
+        self.flyHitSpinCtrl.Bind(wx.EVT_TEXT, self.OnFlyHitSpinCtrlText,
+              id=wxID_FRAME1FLYHITSPINCTRL)
+
+        self.staticText54 = wx.StaticText(id=wxID_FRAME1STATICTEXT54,
+              label=u'Fly type on shoot', name='staticText54',
+              parent=self.panel1, pos=wx.Point(720, 24), size=wx.Size(84, 14),
+              style=0)
+
+        self.flyShootSpinCtrl = wx.SpinCtrl(id=wxID_FRAME1FLYSHOOTSPINCTRL,
+              initial=0, max=15, min=0, name=u'flyShootSpinCtrl',
+              parent=self.panel1, pos=wx.Point(736, 40), size=wx.Size(48, 21),
+              style=wx.SP_ARROW_KEYS)
+        self.flyShootSpinCtrl.Bind(wx.EVT_TEXT, self.OnFlyShootSpinCtrlText,
+              id=wxID_FRAME1FLYSHOOTSPINCTRL)
+
         self._init_coll_notebook1_Pages(self.notebook1)
 
     def __init__(self, parent):
@@ -1561,6 +1671,15 @@ class Frame1(wx.Frame):
         
         self.noPenalty = False
         
+        self.fallType = 0
+        
+        for key, val in sorted(FALL_TYPES.items()):
+            self.fallTypeChoice.Append(val["NAME"])
+            self.fallTypeChoice.SetSelection(0)
+        
+        self.flyTypeOnHit = 0
+        self.flyTypeOnShoot = 0
+        
         self.teamAttack = ['' for x in range (self.Teams)]
         self.teamDefense = ['' for x in range (self.Teams)]
         
@@ -1572,16 +1691,16 @@ class Frame1(wx.Frame):
         for name in self.ShootNames:
             self.shootTeam1Choice1.Append("%s" % name)
             self.shootTeam1Choice1.SetSelection(0)
-        for name in self.ShootNames:
+            
             self.shootTeam1Choice2.Append("%s" % name)
             self.shootTeam1Choice2.SetSelection(0)
-        for name in self.ShootNames:
+            
             self.shootTeam1Choice3.Append("%s" % name)
             self.shootTeam1Choice3.SetSelection(0)
-        for name in self.ShootNames:
+            
             self.shootTeam1Choice4.Append("%s" % name)
             self.shootTeam1Choice4.SetSelection(0)
-        for name in self.ShootNames:
+            
             self.shootTeam1Choice5.Append("%s" % name)
             self.shootTeam1Choice5.SetSelection(0)
         
@@ -1598,8 +1717,8 @@ class Frame1(wx.Frame):
         for i in range(self.Teams):
             self.teamPlayerNames[i]        = ['' for x in range(self.Players)]
             self.teamPlayerHexNames[i]     = ['' for x in range(self.Players)]
-            self.teamPlayerStats[i]        = [['' for x in range(6)] for x in range(5)]
-            self.teamPlayerHexStats[i]     = [['' for x in range(6)] for x in range(5)]
+            self.teamPlayerStats[i]        = [['' for x in range(5)] for x in range(5)]
+            self.teamPlayerHexStats[i]     = [['' for x in range(5)] for x in range(5)]
         
         team1NameOffset = 0x0105E9
         team1StatsOffset = 0x01B3B7
@@ -1668,6 +1787,15 @@ class Frame1(wx.Frame):
         
         self.noPenalty = loadnopenalty(self.rom)
         self.checkBox1.SetValue(self.noPenalty)
+        
+        self.fallType = loadFallType(self.rom)
+        self.fallTypeChoice.SetSelection(self.fallType)
+        
+        self.flyTypeOnHit = loadFlyHit(self.rom)
+        self.flyHitSpinCtrl.SetValue(self.flyTypeOnHit)
+        
+        self.flyTypeOnShoot = loadFlyShoot(self.rom)
+        self.flyShootSpinCtrl.SetValue(self.flyTypeOnShoot)
         
         # Team Settings
         
@@ -1881,6 +2009,9 @@ class Frame1(wx.Frame):
         savecharge(self.rom, self.superShoot)
         savemusic(self.rom, self.music)
         savenopenalty(self.rom, self.noPenalty)
+        saveFallType(self.rom, self.fallType)
+        saveFlyHit(self.rom, self.flyTypeOnHit)
+        saveFlyShoot(self.rom, self.flyTypeOnShoot)
 
         # Team Settings
         
@@ -1945,6 +2076,18 @@ class Frame1(wx.Frame):
         event.Skip()
         self.noPenalty = self.checkBox1.GetValue()
 
+    def OnFallTypeChoiceChoice(self, event):
+        event.Skip()
+        self.fallType = self.fallTypeChoice.GetSelection()
+
+    def OnFlyHitSpinCtrlText(self, event):
+        event.Skip()
+        self.flyTypeOnHit = self.flyHitSpinCtrl.GetValue()
+
+    def OnFlyShootSpinCtrlText(self, event):
+        event.Skip()
+        self.flyTypeOnShoot = self.flyShootSpinCtrl.GetValue()
+        
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
@@ -1962,6 +2105,8 @@ class Frame1(wx.Frame):
         finally:
             dlg.Destroy()
             self.button2.Enable(True)
+
+#-------------------------------------------------------------------------------
 
     def OnButton2Button(self, event):
         event.Skip()
@@ -2356,3 +2501,5 @@ class Frame1(wx.Frame):
         self.team8Defense = self.team8DefenseSpinCtrl1.GetValue()
 
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+

@@ -4,4 +4,10 @@
 
 for changin stats and some game basics
 
-Requires python 2.7 
+### Requires
+
+Install **python 2.7**
+
+### Compile
+
+Install **cx_freeze** and run **build.bat**

@@ -105,8 +105,8 @@ SHOOTS_CHAR = {
 
 SHOOTS_HEX = {v:k for k,v in SHOOTS_CHAR.items()}
 
-START_POWER_HEX = ['\x30', '\x48', '\x58', '\x66', '\x80', '\x9A', '\xB4', '\xCA', '\xFF']
-MAX_POWER_HEX = ['\x03', 'x04', '\x05', '\x06', '\x07']
+START_POWER_HEX = ['\x30', '\x48', '\x50', '\x58', '\x5E', '\x66', '\x6E', '\x80', '\x9A', '\xB4', '\xCA', '\xFF']
+MAX_POWER_HEX = ['\x03', '\x04', '\x05', '\x06', '\x07']
 SPEED_HEX = ['\x02', '\x01', '\x00']
 WEIGHT_HEX = ['\x02', '\x01', '\x00', '\x04', '\x05']
 ANGRY_HEX = ['\x0D', '\x06', '\x02', '\x01', '\x04', '\x00', '\x05']
@@ -436,38 +436,38 @@ class Team(object):
         angryPlayer = 0
         
         
-        j = 0
+        j = 1
         for hex in START_POWER_HEX:
             if statsHex[0] == hex:
                 startPowerPlayer = j
             j += 1
         
-        j = 0
+        j = 1
         for hex in MAX_POWER_HEX:
             if statsHex[1] == hex:
                 maxPowerPlayer = j
             j += 1
         
-        j = 0
+        j = 1
         for hex in SPEED_HEX:
             if statsHex[2] == hex:
                 speedPlayer = j
             j += 1
         
-        j = 0
+        j = 1
         for hex in WEIGHT_HEX:
             if statsHex[3] == hex:
                 weightPlayer = j
             j += 1
         
-        j = 0
+        j = 1
         for hex in ANGRY_HEX:
             if statsHex[5] == hex:
                 angryPlayer = j
             j += 1
         
         statsInt = [startPowerPlayer, maxPowerPlayer, speedPlayer, weightPlayer, angryPlayer]
-        
+        print(statsInt)
         return statsInt
         
     def sShootRead(self, rom):
@@ -816,7 +816,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1TEAMNAMECTRL1)
 
         self.sPowerSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL1,
-              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl1',
+              initial=1, max=12, min=1, name=u'sPowerSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(240, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
@@ -933,7 +933,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1WEIGHTSPINTEAM1CTRL1)
 
         self.sPowerSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL4,
-              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl4',
+              initial=1, max=12, min=1, name=u'sPowerSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(240, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
@@ -941,7 +941,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SPOWERSPINTEAM1CTRL4)
 
         self.sPowerSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL5,
-              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl5',
+              initial=1, max=12, min=1, name=u'sPowerSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(240, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
@@ -949,7 +949,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SPOWERSPINTEAM1CTRL5)
 
         self.sPowerSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL2,
-              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl2',
+              initial=1, max=12, min=1, name=u'sPowerSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(240, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
@@ -1015,7 +1015,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1TEAM1PLAYER2CTRL)
 
         self.sPowerSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL3,
-              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl3',
+              initial=1, max=12, min=1, name=u'sPowerSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(240, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
@@ -1047,8 +1047,8 @@ class Frame1(wx.Frame):
               pos=wx.Point(664, 32), size=wx.Size(58, 14), style=0)
 
         self.staticText16 = wx.StaticText(id=wxID_FRAME1STATICTEXT16,
-              label=u'9', name='staticText16', parent=self.panel2,
-              pos=wx.Point(256, 48), size=wx.Size(6, 14), style=0)
+              label=u'12', name='staticText16', parent=self.panel2,
+              pos=wx.Point(256, 48), size=wx.Size(12, 14), style=0)
         self.staticText16.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
 

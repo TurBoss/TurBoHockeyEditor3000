@@ -105,6 +105,13 @@ SHOOTS_CHAR = {
 
 SHOOTS_HEX = {v:k for k,v in SHOOTS_CHAR.items()}
 
+START_POWER_HEX = ['\x30', '\x48', '\x58', '\x66', '\x80', '\x9A', '\xB4', '\xCA', '\xFF']
+MAX_POWER_HEX = ['\x03', 'x04', '\x05', '\x06', '\x07']
+SPEED_HEX = ['\x02', '\x01', '\x00']
+WEIGHT_HEX = ['\x02', '\x01', '\x00', '\x04', '\x05']
+ANGRY_HEX = ['\x0D', '\x06', '\x02', '\x01', '\x04', '\x00', '\x05']
+
+
 SHOOT_NAMES = (
         "DEFORMA LA PELOTA, DIRECTA",
         "TIRA A PUERTA Y SE PARA, AL TOCAR PUEDE IR HACIA TU PROPIA PORTERIA",
@@ -416,6 +423,52 @@ class Team(object):
         
         rom.seek(self.teamStatsOffset)
         rom.write(stats)
+        
+    def loadPlayerStats(self, rom, offset):
+        
+        rom.seek(offset)
+        statsHex = rom.read(6)
+        
+        startPowerPlayer = 0
+        maxPowerPlayer = 0
+        speedPlayer = 0
+        weightPlayer = 0
+        angryPlayer = 0
+        
+        
+        j = 0
+        for hex in START_POWER_HEX:
+            if statsHex[0] == hex:
+                startPowerPlayer = j
+            j += 1
+        
+        j = 0
+        for hex in MAX_POWER_HEX:
+            if statsHex[1] == hex:
+                maxPowerPlayer = j
+            j += 1
+        
+        j = 0
+        for hex in SPEED_HEX:
+            if statsHex[2] == hex:
+                speedPlayer = j
+            j += 1
+        
+        j = 0
+        for hex in WEIGHT_HEX:
+            if statsHex[3] == hex:
+                weightPlayer = j
+            j += 1
+        
+        j = 0
+        for hex in ANGRY_HEX:
+            if statsHex[5] == hex:
+                angryPlayer = j
+            j += 1
+        
+        statsInt = [startPowerPlayer, maxPowerPlayer, speedPlayer, weightPlayer, angryPlayer]
+        
+        return statsInt
         
     def sShootRead(self, rom):
         
@@ -763,7 +816,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1TEAMNAMECTRL1)
 
         self.sPowerSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL1,
-              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl1',
+              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(240, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
@@ -803,54 +856,84 @@ class Frame1(wx.Frame):
               initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(328, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.mPowerSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
+              self.OnMPowerSpinTeam1Ctrl4Text,
+              id=wxID_FRAME1MPOWERSPINTEAM1CTRL4)
 
         self.mPowerSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL5,
               initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(328, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.mPowerSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
+              self.OnMPowerSpinTeam1Ctrl5Text,
+              id=wxID_FRAME1MPOWERSPINTEAM1CTRL5)
 
         self.mPowerSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL2,
               initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(328, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.mPowerSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
+              self.OnMPowerSpinTeam1Ctrl2Text,
+              id=wxID_FRAME1MPOWERSPINTEAM1CTRL2)
 
         self.mPowerSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL3,
               initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(328, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.mPowerSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
+              self.OnMPowerSpinTeam1Ctrl3Text,
+              id=wxID_FRAME1MPOWERSPINTEAM1CTRL3)
 
         self.mPowerSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1MPOWERSPINTEAM1CTRL1,
               initial=1, max=5, min=1, name=u'mPowerSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(328, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.mPowerSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
+              self.OnMPowerSpinTeam1Ctrl1Text,
+              id=wxID_FRAME1MPOWERSPINTEAM1CTRL1)
 
         self.weightSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL4,
               initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(464, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.weightSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
+              self.OnWeightSpinTeam1Ctrl4Text,
+              id=wxID_FRAME1WEIGHTSPINTEAM1CTRL4)
 
         self.weightSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL5,
               initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(464, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.weightSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
+              self.OnWeightSpinTeam1Ctrl5Text,
+              id=wxID_FRAME1WEIGHTSPINTEAM1CTRL5)
 
         self.weightSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL2,
               initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(464, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.weightSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
+              self.OnWeightSpinTeam1Ctrl2Text,
+              id=wxID_FRAME1WEIGHTSPINTEAM1CTRL2)
 
         self.weightSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL3,
               initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(464, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.weightSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
+              self.OnWeightSpinTeam1Ctrl3Text,
+              id=wxID_FRAME1WEIGHTSPINTEAM1CTRL3)
 
         self.weightSpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1WEIGHTSPINTEAM1CTRL1,
               initial=1, max=5, min=1, name=u'weightSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(464, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.weightSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
+              self.OnWeightSpinTeam1Ctrl1Text,
+              id=wxID_FRAME1WEIGHTSPINTEAM1CTRL1)
 
         self.sPowerSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL4,
-              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl4',
+              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(240, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
@@ -858,7 +941,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SPOWERSPINTEAM1CTRL4)
 
         self.sPowerSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL5,
-              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl5',
+              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(240, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
@@ -866,7 +949,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SPOWERSPINTEAM1CTRL5)
 
         self.sPowerSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL2,
-              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl2',
+              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(240, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
@@ -881,26 +964,41 @@ class Frame1(wx.Frame):
               initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(400, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.speedSpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
+              self.OnSpeedSpinTeam1Ctrl1Text,
+              id=wxID_FRAME1SPEEDSPINTEAM1CTRL1)
 
         self.speedSpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL2,
               initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(400, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.speedSpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
+              self.OnSpeedSpinTeam1Ctrl2Text,
+              id=wxID_FRAME1SPEEDSPINTEAM1CTRL2)
 
         self.speedSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL3,
               initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(400, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.speedSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
+              self.OnSpeedSpinTeam1Ctrl3Text,
+              id=wxID_FRAME1SPEEDSPINTEAM1CTRL3)
 
         self.speedSpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL4,
               initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(400, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.speedSpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
+              self.OnSpeedSpinTeam1Ctrl4Text,
+              id=wxID_FRAME1SPEEDSPINTEAM1CTRL4)
 
         self.speedSpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1SPEEDSPINTEAM1CTRL5,
               initial=1, max=3, min=1, name=u'speedSpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(400, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.speedSpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
+              self.OnSpeedSpinTeam1Ctrl5Text,
+              id=wxID_FRAME1SPEEDSPINTEAM1CTRL5)
 
         self.team1Player3Ctrl = wx.TextCtrl(id=wxID_FRAME1TEAM1PLAYER3CTRL,
               name=u'team1Player3Ctrl', parent=self.panel2, pos=wx.Point(136,
@@ -917,7 +1015,7 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1TEAM1PLAYER2CTRL)
 
         self.sPowerSpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1SPOWERSPINTEAM1CTRL3,
-              initial=1, max=5, min=1, name=u'sPowerSpinTeam1Ctrl3',
+              initial=1, max=9, min=1, name=u'sPowerSpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(240, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.sPowerSpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
@@ -949,7 +1047,7 @@ class Frame1(wx.Frame):
               pos=wx.Point(664, 32), size=wx.Size(58, 14), style=0)
 
         self.staticText16 = wx.StaticText(id=wxID_FRAME1STATICTEXT16,
-              label=u'5', name='staticText16', parent=self.panel2,
+              label=u'9', name='staticText16', parent=self.panel2,
               pos=wx.Point(256, 48), size=wx.Size(6, 14), style=0)
         self.staticText16.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
@@ -970,26 +1068,41 @@ class Frame1(wx.Frame):
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl4',
               parent=self.panel2, pos=wx.Point(536, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.angrySpinTeam1Ctrl4.Bind(wx.EVT_TEXT,
+              self.OnAngrySpinTeam1Ctrl4Text,
+              id=wxID_FRAME1ANGRYSPINTEAM1CTRL4)
 
         self.angrySpinTeam1Ctrl5 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL5,
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl5',
               parent=self.panel2, pos=wx.Point(536, 192), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.angrySpinTeam1Ctrl5.Bind(wx.EVT_TEXT,
+              self.OnAngrySpinTeam1Ctrl5Text,
+              id=wxID_FRAME1ANGRYSPINTEAM1CTRL5)
 
         self.angrySpinTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL2,
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl2',
               parent=self.panel2, pos=wx.Point(536, 96), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.angrySpinTeam1Ctrl2.Bind(wx.EVT_TEXT,
+              self.OnAngrySpinTeam1Ctrl2Text,
+              id=wxID_FRAME1ANGRYSPINTEAM1CTRL2)
 
         self.angrySpinTeam1Ctrl3 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL3,
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl3',
               parent=self.panel2, pos=wx.Point(536, 128), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.angrySpinTeam1Ctrl3.Bind(wx.EVT_TEXT,
+              self.OnAngrySpinTeam1Ctrl3Text,
+              id=wxID_FRAME1ANGRYSPINTEAM1CTRL3)
 
         self.angrySpinTeam1Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL1,
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl1',
               parent=self.panel2, pos=wx.Point(536, 64), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
+        self.angrySpinTeam1Ctrl1.Bind(wx.EVT_TEXT,
+              self.OnAngrySpinTeam1Ctrl1Text,
+              id=wxID_FRAME1ANGRYSPINTEAM1CTRL1)
 
         self.panel3 = wx.Panel(id=wxID_FRAME1PANEL3, name='panel3',
               parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(872, 238),
@@ -1652,6 +1765,8 @@ class Frame1(wx.Frame):
         self.Teams = 8
         self.Players = 5
         
+        # MUSIC CHOICE
+        
         for i in range(1,7):
             self.choice1.Append("%d" % i)
             self.choice1.SetSelection(0)
@@ -1671,6 +1786,8 @@ class Frame1(wx.Frame):
         
         self.noPenalty = False
         
+        # FALL TYPES     
+        
         self.fallType = 0
         
         for key, val in sorted(FALL_TYPES.items()):
@@ -1682,6 +1799,16 @@ class Frame1(wx.Frame):
         
         self.teamAttack = ['' for x in range (self.Teams)]
         self.teamDefense = ['' for x in range (self.Teams)]
+        
+        # PLAYER STATS       
+        
+        self.teamStartPower = [['' for x in range (self.Players)] for x in range (self.Teams)]
+        self.teamMaxPower = [['' for x in range (self.Players)] for x in range (self.Teams)]
+        self.teamSpeed = [['' for x in range (self.Players)] for x in range (self.Teams)]
+        self.teamWeight = [['' for x in range (self.Players)] for x in range (self.Teams)]
+        self.teamAngry = [['' for x in range (self.Players)] for x in range (self.Teams)] 
+              
+        # SHOOT CHOICE
         
         self.sShootSelection = [['0' for x in range(self.Players)] for x in range(self.Teams)]
         self.sShootSelectionHex = [['\x00' for x in range(self.Players)] for x in range(self.Teams)]
@@ -1704,6 +1831,7 @@ class Frame1(wx.Frame):
             self.shootTeam1Choice5.Append("%s" % name)
             self.shootTeam1Choice5.SetSelection(0)
         
+        # TEAM NAME
         
         self.teamName =     ['' for x in range(self.Teams)]
         self.teamHexName =  ['' for x in range(self.Teams)]
@@ -1719,55 +1847,65 @@ class Frame1(wx.Frame):
             self.teamPlayerHexNames[i]     = ['' for x in range(self.Players)]
             self.teamPlayerStats[i]        = [['' for x in range(5)] for x in range(5)]
             self.teamPlayerHexStats[i]     = [['' for x in range(5)] for x in range(5)]
+            
+        # GAME OFFSETS
+            
+        self.team1NameOffset = 0x0105E9
+        self.team1StatsOffset = 0x01B3B7
+        self.players1NameOffset = (0x0107CD, 0x0107DA, 0x0107F4, 0x010801, 0x0107E7)
+        self.players1StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players1ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team1NameOffset = 0x0105E9
-        team1StatsOffset = 0x01B3B7
-        players1NameOffset = (0x0107CD, 0x0107DA, 0x0107F4, 0x010801, 0x0107E7)
-        players1ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team2NameOffset = 0x0105F9
+        self.team2StatsOffset = 0x01B3B9
+        self.players2NameOffset = (0x01085C, 0x010869, 0x010876, 0x010883, 0x010890)
+        self.players2StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players2ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team2NameOffset = 0x0105F9
-        team2StatsOffset = 0x01B3B9
-        players2NameOffset = (0x01085C, 0x010869, 0x010876, 0x010883, 0x010890)
-        players2ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team3NameOffset = 0x010609
+        self.team3StatsOffset = 0x01B3BB
+        self.players3NameOffset = (0x01089D, 0x0108AA, 0x0108B7, 0x0108C4, 0x0108D1)
+        self.players3StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players3ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team3NameOffset = 0x010609
-        team3StatsOffset = 0x01B3BB
-        players3NameOffset = (0x01089D, 0x0108AA, 0x0108B7, 0x0108C4, 0x0108D1)
-        players3ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team4NameOffset = 0x010619
+        self.team4StatsOffset = 0x01B3BF
+        self.players4NameOffset = (0x01091F, 0x01092C, 0x010939, 0x010946, 0x010953)
+        self.players4StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players4ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team4NameOffset = 0x010619
-        team4StatsOffset = 0x01B3BF
-        players4NameOffset = (0x01091F, 0x01092C, 0x010939, 0x010946, 0x010953)
-        players4ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team5NameOffset = 0x010639
+        self.team5StatsOffset = 0x01B3C1
+        self.players5NameOffset = (0x010960, 0x01096D, 0x01097A, 0x010987, 0x010994)
+        self.players5StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players5ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team5NameOffset = 0x010639
-        team5StatsOffset = 0x01B3C1
-        players5NameOffset = (0x010960, 0x01096D, 0x01097A, 0x010987, 0x010994)
-        players5ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team6NameOffset = 0x010651
+        self.team6StatsOffset = 0x01B3C5
+        self.players6NameOffset = (0x0108DE, 0x0108EB, 0x0108F8, 0x010905, 0x010912)
+        self.players6StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players6ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team6NameOffset = 0x010651
-        team6StatsOffset = 0x01B3C5
-        players6NameOffset = (0x0108DE, 0x0108EB, 0x0108F8, 0x010905, 0x010912)
-        players6ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team7NameOffset = 0x010671
+        self.team7StatsOffset = 0x01B3C7
+        self.players7NameOffset = (0x0109A1, 0x0109AE, 0x0109BB, 0x0109C8, 0x0109D5)
+        self.players7StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players7ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team7NameOffset = 0x010671
-        team7StatsOffset = 0x01B3C7
-        players7NameOffset = (0x0109A1, 0x0109AE, 0x0109BB, 0x0109C8, 0x0109D5)
-        players7ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.team8NameOffset = 0x0106a1
+        self.team8StatsOffset = 0x01B3C9
+        self.players8NameOffset = (0x010A64, 0x010A71, 0x010A7E, 0x010A8B, 0x010A98)
+        self.players8StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
+        self.players8ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
         
-        team8NameOffset = 0x0106a1
-        team8StatsOffset = 0x01B3C9
-        players8NameOffset = (0x010A64, 0x010A71, 0x010A7E, 0x010A8B, 0x010A98)
-        players8ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
-        
-        self.team1 = Team(team1NameOffset, team1StatsOffset, players1NameOffset, players1ShootOffset)
-        self.team2 = Team(team2NameOffset, team2StatsOffset, players2NameOffset, players2ShootOffset)
-        self.team3 = Team(team3NameOffset, team3StatsOffset, players3NameOffset, players3ShootOffset)
-        self.team4 = Team(team4NameOffset, team4StatsOffset, players4NameOffset, players4ShootOffset)
-        self.team5 = Team(team5NameOffset, team5StatsOffset, players5NameOffset, players5ShootOffset)
-        self.team6 = Team(team6NameOffset, team6StatsOffset, players6NameOffset, players6ShootOffset)
-        self.team7 = Team(team7NameOffset, team7StatsOffset, players7NameOffset, players7ShootOffset)
-        self.team8 = Team(team8NameOffset, team8StatsOffset, players8NameOffset, players8ShootOffset)
+        self.team1 = Team(self.team1NameOffset, self.team1StatsOffset, self.players1NameOffset, self.players1ShootOffset)
+        self.team2 = Team(self.team2NameOffset, self.team2StatsOffset, self.players2NameOffset, self.players2ShootOffset)
+        self.team3 = Team(self.team3NameOffset, self.team3StatsOffset, self.players3NameOffset, self.players3ShootOffset)
+        self.team4 = Team(self.team4NameOffset, self.team4StatsOffset, self.players4NameOffset, self.players4ShootOffset)
+        self.team5 = Team(self.team5NameOffset, self.team5StatsOffset, self.players5NameOffset, self.players5ShootOffset)
+        self.team6 = Team(self.team6NameOffset, self.team6StatsOffset, self.players6NameOffset, self.players6ShootOffset)
+        self.team7 = Team(self.team7NameOffset, self.team7StatsOffset, self.players7NameOffset, self.players7ShootOffset)
+        self.team8 = Team(self.team8NameOffset, self.team8StatsOffset, self.players8NameOffset, self.players8ShootOffset)
     
     def loadRom(self):
         # General Game Settings
@@ -1806,10 +1944,10 @@ class Frame1(wx.Frame):
         self.teamName[0] = hextostr(self.teamHexName[0])
         self.teamNameCtrl1.SetValue(self.teamName[0])
         
-        team1Stats = self.team1.readTeamStats(self.rom)
+        self.team1Stats = self.team1.readTeamStats(self.rom)
         
-        self.team1Attack = int(hexlify(team1Stats[0]), 16)
-        self.team1Defense = int(hexlify(team1Stats[1]), 16)
+        self.team1Attack = int(hexlify(self.team1Stats[0]), 16)
+        self.team1Defense = int(hexlify(self.team1Stats[1]), 16)
         
         self.team1AttackSpinCtrl1.SetValue(self.team1Attack)
         self.team1DefenseSpinCtrl1.SetValue(self.team1Defense)
@@ -1822,6 +1960,48 @@ class Frame1(wx.Frame):
         self.team1Player3Ctrl.SetValue(self.teamPlayerNames[0][2])
         self.team1Player4Ctrl.SetValue(self.teamPlayerNames[0][3])
         self.team1Player5Ctrl.SetValue(self.teamPlayerNames[0][4])
+        
+        self.team1Player1Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[0])
+        
+        self.sPowerSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[0])
+        self.mPowerSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[1])
+        self.speedSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[2])
+        self.weightSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[3])
+        self.angrySpinTeam1Ctrl1.SetValue(self.team1Player1Stats[4])
+        
+        self.team1Player2Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[1])
+        
+        self.sPowerSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[0])
+        self.mPowerSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[1])
+        self.speedSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[2])
+        self.weightSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[3])
+        self.angrySpinTeam1Ctrl2.SetValue(self.team1Player2Stats[4])
+        
+        self.team1Player3Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[2])
+        
+        self.sPowerSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[0])
+        self.mPowerSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[1])
+        self.speedSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[2])
+        self.weightSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[3])
+        self.angrySpinTeam1Ctrl3.SetValue(self.team1Player3Stats[4])
+        
+        self.team1Player4Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[3])
+        
+        self.sPowerSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[0])
+        self.mPowerSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[1])
+        self.speedSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[2])
+        self.weightSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[3])
+        self.angrySpinTeam1Ctrl4.SetValue(self.team1Player4Stats[4])
+        
+        self.team1Player5Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[4])
+        
+        self.sPowerSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[0])
+        self.mPowerSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[1])
+        self.speedSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[2])
+        self.weightSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[3])
+        self.angrySpinTeam1Ctrl5.SetValue(self.team1Player5Stats[4])
+        
+        
         
         self.sShootSelection[0] = self.team1.sShootRead(self.rom)
         
@@ -1838,10 +2018,10 @@ class Frame1(wx.Frame):
         self.teamName[1] = hextostr(self.teamHexName[1])
         self.teamNameCtrl2.SetValue(self.teamName[1])
         
-        team2Stats = self.team2.readTeamStats(self.rom)
+        self.team2Stats = self.team2.readTeamStats(self.rom)
         
-        self.team2Attack = int(hexlify(team2Stats[0]), 16)
-        self.team2Defense = int(hexlify(team2Stats[1]), 16)
+        self.team2Attack = int(hexlify(self.team2Stats[0]), 16)
+        self.team2Defense = int(hexlify(self.team2Stats[1]), 16)
         
         self.team2AttackSpinCtrl1.SetValue(self.team2Attack)
         self.team2DefenseSpinCtrl1.SetValue(self.team2Defense)
@@ -1862,10 +2042,10 @@ class Frame1(wx.Frame):
         self.teamName[2] = hextostr(self.teamHexName[2])
         self.teamNameCtrl3.SetValue(self.teamName[2])
         
-        team3Stats = self.team3.readTeamStats(self.rom)
+        self.team3Stats = self.team3.readTeamStats(self.rom)
         
-        self.team3Attack = int(hexlify(team3Stats[0]), 16)
-        self.team3Defense = int(hexlify(team3Stats[1]), 16)
+        self.team3Attack = int(hexlify(self.team3Stats[0]), 16)
+        self.team3Defense = int(hexlify(self.team3Stats[1]), 16)
         
         self.team3AttackSpinCtrl1.SetValue(self.team3Attack)
         self.team3DefenseSpinCtrl1.SetValue(self.team3Defense)
@@ -1886,10 +2066,10 @@ class Frame1(wx.Frame):
         self.teamName[3] = hextostr(self.teamHexName[3])
         self.teamNameCtrl4.SetValue(self.teamName[3])
         
-        team4Stats = self.team4.readTeamStats(self.rom)
+        self.team4Stats = self.team4.readTeamStats(self.rom)
         
-        self.team4Attack = int(hexlify(team4Stats[0]), 16)
-        self.team4Defense = int(hexlify(team4Stats[1]), 16)
+        self.team4Attack = int(hexlify(self.team4Stats[0]), 16)
+        self.team4Defense = int(hexlify(self.team4Stats[1]), 16)
         
         self.team4AttackSpinCtrl1.SetValue(self.team4Attack)
         self.team4DefenseSpinCtrl1.SetValue(self.team4Defense)
@@ -1910,10 +2090,10 @@ class Frame1(wx.Frame):
         self.teamName[4] = hextostr(self.teamHexName[4])
         self.teamNameCtrl5.SetValue(self.teamName[4])
         
-        team5Stats = self.team5.readTeamStats(self.rom)
+        self.team5Stats = self.team5.readTeamStats(self.rom)
         
-        self.team5Attack = int(hexlify(team5Stats[0]), 16)
-        self.team5Defense = int(hexlify(team5Stats[1]), 16)
+        self.team5Attack = int(hexlify(self.team5Stats[0]), 16)
+        self.team5Defense = int(hexlify(self.team5Stats[1]), 16)
         
         self.team5AttackSpinCtrl1.SetValue(self.team5Attack)
         self.team5DefenseSpinCtrl1.SetValue(self.team5Defense)
@@ -1934,10 +2114,10 @@ class Frame1(wx.Frame):
         self.teamName[5] = hextostr(self.teamHexName[5])
         self.teamNameCtrl6.SetValue(self.teamName[5])
         
-        team6Stats = self.team6.readTeamStats(self.rom)
+        self.team6Stats = self.team6.readTeamStats(self.rom)
         
-        self.team6Attack = int(hexlify(team6Stats[0]), 16)
-        self.team6Defense = int(hexlify(team6Stats[1]), 16)
+        self.team6Attack = int(hexlify(self.team6Stats[0]), 16)
+        self.team6Defense = int(hexlify(self.team6Stats[1]), 16)
         
         self.team6AttackSpinCtrl1.SetValue(self.team6Attack)
         self.team6DefenseSpinCtrl1.SetValue(self.team6Defense)
@@ -1958,10 +2138,10 @@ class Frame1(wx.Frame):
         self.teamName[6] = hextostr(self.teamHexName[6])
         self.teamNameCtrl7.SetValue(self.teamName[6])
         
-        team7Stats = self.team7.readTeamStats(self.rom)
+        self.team7Stats = self.team7.readTeamStats(self.rom)
         
-        self.team7Attack = int(hexlify(team7Stats[0]), 16)
-        self.team7Defense = int(hexlify(team7Stats[1]), 16)
+        self.team7Attack = int(hexlify(self.team7Stats[0]), 16)
+        self.team7Defense = int(hexlify(self.team7Stats[1]), 16)
         
         self.team7AttackSpinCtrl1.SetValue(self.team7Attack)
         self.team7DefenseSpinCtrl1.SetValue(self.team7Defense)
@@ -1982,10 +2162,10 @@ class Frame1(wx.Frame):
         self.teamName[7] = hextostr(self.teamHexName[7])
         self.teamNameCtrl8.SetValue(self.teamName[7])
         
-        team8Stats = self.team8.readTeamStats(self.rom)
+        self.team8Stats = self.team8.readTeamStats(self.rom)
         
-        self.team8Attack = int(hexlify(team8Stats[0]), 16)
-        self.team8Defense = int(hexlify(team8Stats[1]), 16)
+        self.team8Attack = int(hexlify(self.team8Stats[0]), 16)
+        self.team8Defense = int(hexlify(self.team8Stats[1]), 16)
         
         self.team8AttackSpinCtrl1.SetValue(self.team8Attack)
         self.team8DefenseSpinCtrl1.SetValue(self.team8Defense)
@@ -2503,3 +2683,66 @@ class Frame1(wx.Frame):
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
+    def OnMPowerSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+ 
+    def OnMPowerSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+        
+    def OnMPowerSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+
+    def OnMPowerSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+
+    def OnMPowerSpinTeam1Ctrl5Text(self, event):
+        event.Skip()     
+#-------------------------------------------------------------------------------
+          
+    def OnWeightSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+        
+    def OnWeightSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+
+    def OnWeightSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+        
+    def OnWeightSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+
+    def OnWeightSpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+
+#-------------------------------------------------------------------------------
+
+    def OnSpeedSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+
+    def OnSpeedSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+
+    def OnSpeedSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+
+    def OnSpeedSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+
+    def OnSpeedSpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+#-------------------------------------------------------------------------------
+
+    def OnAngrySpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+
+    def OnAngrySpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+
+    def OnAngrySpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+
+    def OnAngrySpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+
+    def OnAngrySpinTeam1Ctrl5Text(self, event):
+        event.Skip()

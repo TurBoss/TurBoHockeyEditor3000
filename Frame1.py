@@ -109,6 +109,7 @@ START_POWER_HEX = ['\x30', '\x48', '\x50', '\x58', '\x5E', '\x66', '\x6E', '\x80
 MAX_POWER_HEX = ['\x03', '\x04', '\x05', '\x06', '\x07']
 SPEED_HEX = ['\x02', '\x01', '\x00']
 WEIGHT_HEX = ['\x02', '\x01', '\x00', '\x04', '\x05']
+KEEPER_HEX = ['\x03', '\x02', '\x01', '\x00']
 ANGRY_HEX = ['\x0D', '\x06', '\x02', '\x01', '\x04', '\x00', '\x05']
 
 
@@ -206,7 +207,7 @@ def savecharge(rom, charge):
 def loadmusic(rom):
 
     
-    musicHex = ["\x0C", "\x0D", "\x0E", "\x0F", "\x10", "\x11"]
+    musicHex = ['\x03', '\x0C', '\x0D', '\x0E', '\x0F', '\x10', '\x11']
     music = [0,0,0,0,0]
     rom.seek(0x01D8DC)
     musics = rom.read(5)
@@ -225,6 +226,8 @@ def loadmusic(rom):
             music[i] = 4
         elif data == musicHex[5]:
             music[i] = 5
+        elif data == musicHex[6]:
+            music[i] = 6
         i += 1
         
     return music
@@ -236,22 +239,24 @@ def savemusic(rom, music):
     i = 0
     for data in music:
         if data == 0:
-            musicHex[i] = "\x0C"
+            musicHex[i] = "\x03"
         elif data == 1:
-            musicHex[i] = "\x0D"
+            musicHex[i] = "\x0C"
         elif data == 2:
-            musicHex[i] = "\x0E"
+            musicHex[i] = "\x0D"
         elif data == 3:
-            musicHex[i] = "\x0F"
+            musicHex[i] = "\x0E"
         elif data == 4:
-            musicHex[i] = "\x10"
+            musicHex[i] = "\x0F"
         elif data == 5:
+            musicHex[i] = "\x10"
+        elif data == 6:
             musicHex[i] = "\x11"
         
         i += 1
     
     rom.seek(0x1D8DC)
-    for i in range(4):
+    for i in range(5):
         rom.write(musicHex[i])
     
 #-------------------------------------------------------------------------------
@@ -301,7 +306,6 @@ def saveFallType(rom, type):
     
     for key, val in sorted(FALL_TYPES.items()):
         if key == str(type):
-            print(key)
             hexType = val["HEX"]
     
     rom.seek(0x01932E)
@@ -433,6 +437,7 @@ class Team(object):
         maxPowerPlayer = 0
         speedPlayer = 0
         weightPlayer = 0
+        keeper = 0
         angryPlayer = 0
         
         
@@ -461,15 +466,45 @@ class Team(object):
             j += 1
         
         j = 1
+        for hex in KEEPER_HEX:
+            if statsHex[4] == hex:
+                keeperPlayer = j
+            j += 1
+        
+        j = 1
         for hex in ANGRY_HEX:
             if statsHex[5] == hex:
                 angryPlayer = j
             j += 1
         
-        statsInt = [startPowerPlayer, maxPowerPlayer, speedPlayer, weightPlayer, angryPlayer]
-        print(statsInt)
-        return statsInt
+        statsInt = [startPowerPlayer, maxPowerPlayer, speedPlayer, weightPlayer, keeperPlayer, angryPlayer]
         
+        return statsInt
+    
+    def writePlayerStats(self, rom, offsets, playerStats):
+        
+        i = 0
+        for offset in offsets:
+            
+            rom.seek(offset)
+            
+            statsHex = []
+            
+            #print("stats Player %d: SP:%d MP:%d S:%d W:%d K:%d A:%d" % ( i, playerStats[i][0]-1, playerStats[i][1]-1, playerStats[i][2]-1, playerStats[i][3]-1, playerStats[i][4]-1, playerStats[i][5]-1))
+            
+            statsHex.append(START_POWER_HEX[playerStats[i][0]-1])
+            statsHex.append(MAX_POWER_HEX[playerStats[i][1]-1])
+            statsHex.append(SPEED_HEX[playerStats[i][2]-1])
+            statsHex.append(WEIGHT_HEX[playerStats[i][3]-1])
+            statsHex.append(KEEPER_HEX[playerStats[i][4]-1])
+            statsHex.append(ANGRY_HEX[playerStats[i][5]-1])
+            
+            
+            for hex in statsHex:
+                rom.write(hex)
+            
+            i += 1
+
     def sShootRead(self, rom):
         
         playerShoot = ['' for i in range(5)]
@@ -1967,7 +2002,7 @@ class Frame1(wx.Frame):
         self.mPowerSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[1])
         self.speedSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[2])
         self.weightSpinTeam1Ctrl1.SetValue(self.team1Player1Stats[3])
-        self.angrySpinTeam1Ctrl1.SetValue(self.team1Player1Stats[4])
+        self.angrySpinTeam1Ctrl1.SetValue(self.team1Player1Stats[5])
         
         self.team1Player2Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[1])
         
@@ -1975,7 +2010,7 @@ class Frame1(wx.Frame):
         self.mPowerSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[1])
         self.speedSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[2])
         self.weightSpinTeam1Ctrl2.SetValue(self.team1Player2Stats[3])
-        self.angrySpinTeam1Ctrl2.SetValue(self.team1Player2Stats[4])
+        self.angrySpinTeam1Ctrl2.SetValue(self.team1Player2Stats[5])
         
         self.team1Player3Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[2])
         
@@ -1983,7 +2018,7 @@ class Frame1(wx.Frame):
         self.mPowerSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[1])
         self.speedSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[2])
         self.weightSpinTeam1Ctrl3.SetValue(self.team1Player3Stats[3])
-        self.angrySpinTeam1Ctrl3.SetValue(self.team1Player3Stats[4])
+        self.angrySpinTeam1Ctrl3.SetValue(self.team1Player3Stats[5])
         
         self.team1Player4Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[3])
         
@@ -1991,7 +2026,7 @@ class Frame1(wx.Frame):
         self.mPowerSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[1])
         self.speedSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[2])
         self.weightSpinTeam1Ctrl4.SetValue(self.team1Player4Stats[3])
-        self.angrySpinTeam1Ctrl4.SetValue(self.team1Player4Stats[4])
+        self.angrySpinTeam1Ctrl4.SetValue(self.team1Player4Stats[5])
         
         self.team1Player5Stats = self.team1.loadPlayerStats(self.rom, self.players1StatsOffset[4])
         
@@ -1999,7 +2034,7 @@ class Frame1(wx.Frame):
         self.mPowerSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[1])
         self.speedSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[2])
         self.weightSpinTeam1Ctrl5.SetValue(self.team1Player5Stats[3])
-        self.angrySpinTeam1Ctrl5.SetValue(self.team1Player5Stats[4])
+        self.angrySpinTeam1Ctrl5.SetValue(self.team1Player5Stats[5])
         
         
         
@@ -2213,9 +2248,18 @@ class Frame1(wx.Frame):
         self.team7.writeTeamStats(self.rom, self.team7Attack, self.team7Defense)
         self.team8.writeTeamStats(self.rom, self.team8Attack, self.team8Defense)
         
+        self.team1.writePlayerStats(self.rom, self.players1StatsOffset, (self.team1Player1Stats, self.team1Player2Stats, self.team1Player3Stats, self.team1Player4Stats, self.team1Player5Stats))
+        
         self.team1.sShootWrite(self.rom, self.sShootSelection[0])
         
         closefile(self.rom)
+        
+        ok_dlg = wx.MessageDialog (self, u'Completed!!',
+            u'Completed',
+            wx.OK | wx.ICON_INFORMATION
+        )
+        ok_dlg.ShowModal ()
+        ok_dlg.Destroy () 
         
         
 #-------------------------------------------------------------------------------
@@ -2583,21 +2627,115 @@ class Frame1(wx.Frame):
         self.sShootSelection[0][4] = self.shootTeam1Choice1.GetSelection()
 
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
     def OnSPowerSpinTeam1Ctrl1Text(self, event):
         event.Skip()
+        self.team1Player1Stats[0] = self.sPowerSpinTeam1Ctrl1.GetValue()
 
     def OnSPowerSpinTeam1Ctrl2Text(self, event):
         event.Skip()
+        self.team1Player2Stats[0] = self.sPowerSpinTeam1Ctrl2.GetValue()
 
     def OnSPowerSpinTeam1Ctrl3Text(self, event):
         event.Skip()
+        self.team1Player3Stats[0] = self.sPowerSpinTeam1Ctrl3.GetValue()
 
     def OnSPowerSpinTeam1Ctrl4Text(self, event):
         event.Skip()
+        self.team1Player4Stats[0] = self.sPowerSpinTeam1Ctrl4.GetValue()
 
     def OnSPowerSpinTeam1Ctrl5Text(self, event):
         event.Skip()
+        self.team1Player5Stats[0] = self.sPowerSpinTeam1Ctrl5.GetValue()
+        
+#-------------------------------------------------------------------------------
+
+    def OnMPowerSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+        self.team1Player1Stats[1] = self.mPowerSpinTeam1Ctrl1.GetValue()
+ 
+    def OnMPowerSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+        self.team1Player2Stats[1] = self.mPowerSpinTeam1Ctrl2.GetValue()
+        
+    def OnMPowerSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+        self.team1Player3Stats[1] = self.mPowerSpinTeam1Ctrl3.GetValue()
+
+    def OnMPowerSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+        self.team1Player4Stats[1] = self.mPowerSpinTeam1Ctrl4.GetValue()
+
+    def OnMPowerSpinTeam1Ctrl5Text(self, event):
+        event.Skip()  
+        self.team1Player5Stats[1] = self.mPowerSpinTeam1Ctrl5.GetValue()
+
+#-------------------------------------------------------------------------------
+
+    def OnSpeedSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+        self.team1Player1Stats[2] = self.speedSpinTeam1Ctrl1.GetValue()
+
+    def OnSpeedSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+        self.team1Player2Stats[2] = self.speedSpinTeam1Ctrl2.GetValue()
+
+    def OnSpeedSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+        self.team1Player3Stats[2] = self.speedSpinTeam1Ctrl3.GetValue()
+
+    def OnSpeedSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+        self.team1Player4Stats[2] = self.speedSpinTeam1Ctrl4.GetValue()
+
+    def OnSpeedSpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+        self.team1Player5Stats[2] = self.speedSpinTeam1Ctrl5.GetValue()
+
+#-------------------------------------------------------------------------------
+          
+    def OnWeightSpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+        self.team1Player1Stats[3] = self.weightSpinTeam1Ctrl1.GetValue()
+        
+    def OnWeightSpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+        self.team1Player2Stats[3] = self.weightSpinTeam1Ctrl2.GetValue()
+
+    def OnWeightSpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+        self.team1Player3Stats[3] = self.weightSpinTeam1Ctrl3.GetValue()
+        
+    def OnWeightSpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+        self.team1Player4Stats[3] = self.weightSpinTeam1Ctrl4.GetValue()
+
+    def OnWeightSpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+        self.team1Player5Stats[3] = self.weightSpinTeam1Ctrl5.GetValue()
+
+#-------------------------------------------------------------------------------
+
+    def OnAngrySpinTeam1Ctrl1Text(self, event):
+        event.Skip()
+        self.team1Player1Stats[5] = self.angrySpinTeam1Ctrl1.GetValue()
+
+    def OnAngrySpinTeam1Ctrl2Text(self, event):
+        event.Skip()
+        self.team1Player2Stats[5] = self.angrySpinTeam1Ctrl2.GetValue()
+
+    def OnAngrySpinTeam1Ctrl3Text(self, event):
+        event.Skip()
+        self.team1Player3Stats[5] = self.angrySpinTeam1Ctrl3.GetValue()
+
+    def OnAngrySpinTeam1Ctrl4Text(self, event):
+        event.Skip()
+        self.team1Player4Stats[5] = self.angrySpinTeam1Ctrl4.GetValue()
+
+    def OnAngrySpinTeam1Ctrl5Text(self, event):
+        event.Skip()
+        self.team1Player5Stats[5] = self.angrySpinTeam1Ctrl5.GetValue()
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -2682,67 +2820,3 @@ class Frame1(wx.Frame):
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-    def OnMPowerSpinTeam1Ctrl1Text(self, event):
-        event.Skip()
- 
-    def OnMPowerSpinTeam1Ctrl2Text(self, event):
-        event.Skip()
-        
-    def OnMPowerSpinTeam1Ctrl3Text(self, event):
-        event.Skip()
-
-    def OnMPowerSpinTeam1Ctrl4Text(self, event):
-        event.Skip()
-
-    def OnMPowerSpinTeam1Ctrl5Text(self, event):
-        event.Skip()     
-#-------------------------------------------------------------------------------
-          
-    def OnWeightSpinTeam1Ctrl1Text(self, event):
-        event.Skip()
-        
-    def OnWeightSpinTeam1Ctrl2Text(self, event):
-        event.Skip()
-
-    def OnWeightSpinTeam1Ctrl3Text(self, event):
-        event.Skip()
-        
-    def OnWeightSpinTeam1Ctrl4Text(self, event):
-        event.Skip()
-
-    def OnWeightSpinTeam1Ctrl5Text(self, event):
-        event.Skip()
-
-#-------------------------------------------------------------------------------
-
-    def OnSpeedSpinTeam1Ctrl1Text(self, event):
-        event.Skip()
-
-    def OnSpeedSpinTeam1Ctrl2Text(self, event):
-        event.Skip()
-
-    def OnSpeedSpinTeam1Ctrl3Text(self, event):
-        event.Skip()
-
-    def OnSpeedSpinTeam1Ctrl4Text(self, event):
-        event.Skip()
-
-    def OnSpeedSpinTeam1Ctrl5Text(self, event):
-        event.Skip()
-#-------------------------------------------------------------------------------
-
-    def OnAngrySpinTeam1Ctrl1Text(self, event):
-        event.Skip()
-
-    def OnAngrySpinTeam1Ctrl2Text(self, event):
-        event.Skip()
-
-    def OnAngrySpinTeam1Ctrl3Text(self, event):
-        event.Skip()
-
-    def OnAngrySpinTeam1Ctrl4Text(self, event):
-        event.Skip()
-
-    def OnAngrySpinTeam1Ctrl5Text(self, event):
-        event.Skip()

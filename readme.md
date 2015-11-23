@@ -6,7 +6,7 @@ for changin stats and some game basics
 
 ### Requires
 
-Install **python 2.7**
+Install **Python 2.7** and **wxPython 3.0**
 
 ### Compile
 

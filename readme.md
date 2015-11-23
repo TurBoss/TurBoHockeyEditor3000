@@ -1,8 +1,8 @@
 # TurBo Hockey Editor 3000
 
-## For NES game nekettsu Hockey game
+## For NES game nekettsu Hockey
 
-for changin stats and some game basics
+For changing stats and some game basics
 
 ### Requires
 

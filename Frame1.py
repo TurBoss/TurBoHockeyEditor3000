@@ -591,8 +591,20 @@ class Team(object):
             defStr[i] = hextostr(defHex[i])
         return (powStr, spdStr, defStr)
 
-    def writDisplayStats(self, rom, displayStats):
-        pass
+    def writeDisplayStats(self, rom, displayStats):
+        print(displayStats)
+        
+        for i in range(5):
+            rom.seek(self.playersDisplayStatsOffset[i])
+            rom.write(strtohex("{0: >3}".format(displayStats[0][i])))
+
+        for i in range(5):
+            rom.seek(self.playersDisplayStatsOffset[i]+3)
+            rom.write(strtohex("{0: >3}".format(displayStats[1][i])))
+            
+        for i in range(5):
+            rom.seek(self.playersDisplayStatsOffset[i]+6)
+            rom.write(strtohex("{0: >3}".format(displayStats[2][i])))
 
 #-------------------------------------------------------------------------------
 # utils

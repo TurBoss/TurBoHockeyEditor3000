@@ -825,22 +825,20 @@ def create(parent):
  wxID_FRAME1STATICTEXT115, wxID_FRAME1STATICTEXT116, wxID_FRAME1STATICTEXT117, 
  wxID_FRAME1STATICTEXT118, wxID_FRAME1STATICTEXT119, wxID_FRAME1STATICTEXT12, 
  wxID_FRAME1STATICTEXT120, wxID_FRAME1STATICTEXT121, wxID_FRAME1STATICTEXT13, 
- wxID_FRAME1STATICTEXT14, wxID_FRAME1STATICTEXT15, wxID_FRAME1STATICTEXT16, 
- wxID_FRAME1STATICTEXT17, wxID_FRAME1STATICTEXT18, wxID_FRAME1STATICTEXT19, 
- wxID_FRAME1STATICTEXT2, wxID_FRAME1STATICTEXT20, wxID_FRAME1STATICTEXT21, 
- wxID_FRAME1STATICTEXT22, wxID_FRAME1STATICTEXT23, wxID_FRAME1STATICTEXT24, 
- wxID_FRAME1STATICTEXT25, wxID_FRAME1STATICTEXT26, wxID_FRAME1STATICTEXT27, 
- wxID_FRAME1STATICTEXT28, wxID_FRAME1STATICTEXT29, wxID_FRAME1STATICTEXT3, 
- wxID_FRAME1STATICTEXT30, wxID_FRAME1STATICTEXT31, wxID_FRAME1STATICTEXT32, 
- wxID_FRAME1STATICTEXT33, wxID_FRAME1STATICTEXT34, wxID_FRAME1STATICTEXT35, 
- wxID_FRAME1STATICTEXT36, wxID_FRAME1STATICTEXT37, wxID_FRAME1STATICTEXT38, 
- wxID_FRAME1STATICTEXT39, wxID_FRAME1STATICTEXT4, wxID_FRAME1STATICTEXT40, 
- wxID_FRAME1STATICTEXT41, wxID_FRAME1STATICTEXT42, wxID_FRAME1STATICTEXT43, 
- wxID_FRAME1STATICTEXT44, wxID_FRAME1STATICTEXT45, wxID_FRAME1STATICTEXT46, 
- wxID_FRAME1STATICTEXT47, wxID_FRAME1STATICTEXT48, wxID_FRAME1STATICTEXT49, 
- wxID_FRAME1STATICTEXT5, wxID_FRAME1STATICTEXT50, wxID_FRAME1STATICTEXT51, 
- wxID_FRAME1STATICTEXT52, wxID_FRAME1STATICTEXT53, wxID_FRAME1STATICTEXT54, 
- wxID_FRAME1STATICTEXT55, wxID_FRAME1STATICTEXT56, wxID_FRAME1STATICTEXT57, 
+ wxID_FRAME1STATICTEXT14, wxID_FRAME1STATICTEXT15, wxID_FRAME1STATICTEXT2, 
+ wxID_FRAME1STATICTEXT21, wxID_FRAME1STATICTEXT22, wxID_FRAME1STATICTEXT23, 
+ wxID_FRAME1STATICTEXT24, wxID_FRAME1STATICTEXT25, wxID_FRAME1STATICTEXT26, 
+ wxID_FRAME1STATICTEXT27, wxID_FRAME1STATICTEXT28, wxID_FRAME1STATICTEXT29, 
+ wxID_FRAME1STATICTEXT3, wxID_FRAME1STATICTEXT30, wxID_FRAME1STATICTEXT31, 
+ wxID_FRAME1STATICTEXT32, wxID_FRAME1STATICTEXT33, wxID_FRAME1STATICTEXT34, 
+ wxID_FRAME1STATICTEXT35, wxID_FRAME1STATICTEXT36, wxID_FRAME1STATICTEXT37, 
+ wxID_FRAME1STATICTEXT38, wxID_FRAME1STATICTEXT39, wxID_FRAME1STATICTEXT4, 
+ wxID_FRAME1STATICTEXT40, wxID_FRAME1STATICTEXT41, wxID_FRAME1STATICTEXT42, 
+ wxID_FRAME1STATICTEXT43, wxID_FRAME1STATICTEXT44, wxID_FRAME1STATICTEXT45, 
+ wxID_FRAME1STATICTEXT46, wxID_FRAME1STATICTEXT47, wxID_FRAME1STATICTEXT48, 
+ wxID_FRAME1STATICTEXT49, wxID_FRAME1STATICTEXT5, wxID_FRAME1STATICTEXT50, 
+ wxID_FRAME1STATICTEXT51, wxID_FRAME1STATICTEXT52, wxID_FRAME1STATICTEXT53, 
+ wxID_FRAME1STATICTEXT54, wxID_FRAME1STATICTEXT56, wxID_FRAME1STATICTEXT57, 
  wxID_FRAME1STATICTEXT58, wxID_FRAME1STATICTEXT59, wxID_FRAME1STATICTEXT6, 
  wxID_FRAME1STATICTEXT60, wxID_FRAME1STATICTEXT61, wxID_FRAME1STATICTEXT62, 
  wxID_FRAME1STATICTEXT63, wxID_FRAME1STATICTEXT64, wxID_FRAME1STATICTEXT65, 
@@ -908,13 +906,13 @@ def create(parent):
  wxID_FRAME1WEIGHTSPINTEAM8CTRL1, wxID_FRAME1WEIGHTSPINTEAM8CTRL2, 
  wxID_FRAME1WEIGHTSPINTEAM8CTRL3, wxID_FRAME1WEIGHTSPINTEAM8CTRL4, 
  wxID_FRAME1WEIGHTSPINTEAM8CTRL5, 
-] = [wx.NewId() for _init_ctrls in range(570)]
+] = [wx.NewId() for _init_ctrls in range(564)]
 
 class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.panel2, select=True,
+        parent.AddPage(imageId=-1, page=self.panel2, select=False,
               text=u'Team 1')
         parent.AddPage(imageId=-1, page=self.panel3, select=False,
               text=u'Team 2')
@@ -928,7 +926,7 @@ class Frame1(wx.Frame):
               text=u'Team 6')
         parent.AddPage(imageId=-1, page=self.panel8, select=False,
               text=u'Team 7')
-        parent.AddPage(imageId=-1, page=self.panel9, select=False,
+        parent.AddPage(imageId=-1, page=self.panel9, select=True,
               text=u'Team 8')
 
     def _init_ctrls(self, prnt):
@@ -1088,10 +1086,6 @@ class Frame1(wx.Frame):
         self.staticText8 = wx.StaticText(id=wxID_FRAME1STATICTEXT8,
               label=u'Team name :', name='staticText8', parent=self.panel2,
               pos=wx.Point(16, 16), size=wx.Size(62, 14), style=0)
-
-        self.staticText20 = wx.StaticText(id=wxID_FRAME1STATICTEXT20,
-              label=u'7', name='staticText20', parent=self.panel2,
-              pos=wx.Point(544, 48), size=wx.Size(6, 14), style=0)
 
         self.team1Player5Ctrl = wx.TextCtrl(id=wxID_FRAME1TEAM1PLAYER5CTRL,
               name=u'team1Player5Ctrl', parent=self.panel2, pos=wx.Point(136,
@@ -1286,45 +1280,27 @@ class Frame1(wx.Frame):
 
         self.staticText10 = wx.StaticText(id=wxID_FRAME1STATICTEXT10,
               label=u'Start Power', name='staticText10', parent=self.panel2,
-              pos=wx.Point(232, 32), size=wx.Size(57, 14), style=0)
+              pos=wx.Point(232, 40), size=wx.Size(57, 14), style=0)
 
         self.staticText11 = wx.StaticText(id=wxID_FRAME1STATICTEXT11,
               label=u'Max Power', name='staticText11', parent=self.panel2,
-              pos=wx.Point(312, 32), size=wx.Size(53, 14), style=0)
+              pos=wx.Point(312, 40), size=wx.Size(53, 14), style=0)
 
         self.staticText12 = wx.StaticText(id=wxID_FRAME1STATICTEXT12,
               label=u'Speed', name='staticText12', parent=self.panel2,
-              pos=wx.Point(392, 32), size=wx.Size(30, 14), style=0)
+              pos=wx.Point(392, 40), size=wx.Size(30, 14), style=0)
 
         self.staticText13 = wx.StaticText(id=wxID_FRAME1STATICTEXT13,
               label=u'Weight', name='staticText13', parent=self.panel2,
-              pos=wx.Point(464, 32), size=wx.Size(34, 14), style=0)
+              pos=wx.Point(464, 40), size=wx.Size(34, 14), style=0)
 
         self.staticText14 = wx.StaticText(id=wxID_FRAME1STATICTEXT14,
               label=u'Angry', name='staticText14', parent=self.panel2,
-              pos=wx.Point(536, 32), size=wx.Size(29, 14), style=0)
+              pos=wx.Point(536, 40), size=wx.Size(29, 14), style=0)
 
         self.staticText15 = wx.StaticText(id=wxID_FRAME1STATICTEXT15,
               label=u'Special Shoot', name='staticText15', parent=self.panel2,
-              pos=wx.Point(616, 32), size=wx.Size(64, 14), style=0)
-
-        self.staticText16 = wx.StaticText(id=wxID_FRAME1STATICTEXT16,
-              label=u'12', name='staticText16', parent=self.panel2,
-              pos=wx.Point(256, 48), size=wx.Size(12, 14), style=0)
-        self.staticText16.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'Tahoma'))
-
-        self.staticText17 = wx.StaticText(id=wxID_FRAME1STATICTEXT17,
-              label=u'5', name='staticText17', parent=self.panel2,
-              pos=wx.Point(336, 48), size=wx.Size(6, 14), style=0)
-
-        self.staticText18 = wx.StaticText(id=wxID_FRAME1STATICTEXT18,
-              label=u'3', name='staticText18', parent=self.panel2,
-              pos=wx.Point(400, 48), size=wx.Size(12, 14), style=0)
-
-        self.staticText19 = wx.StaticText(id=wxID_FRAME1STATICTEXT19,
-              label=u'5', name='staticText19', parent=self.panel2,
-              pos=wx.Point(472, 48), size=wx.Size(6, 14), style=0)
+              pos=wx.Point(616, 40), size=wx.Size(64, 14), style=0)
 
         self.angrySpinTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1ANGRYSPINTEAM1CTRL4,
               initial=1, max=7, min=1, name=u'angrySpinTeam1Ctrl4',
@@ -2034,21 +2010,17 @@ class Frame1(wx.Frame):
               self.OnDisplayDefTeam1Ctrl1Text,
               id=wxID_FRAME1DISPLAYDEFTEAM1CTRL1)
 
-        self.staticText55 = wx.StaticText(id=wxID_FRAME1STATICTEXT55,
-              label=u'Display stats', name='staticText55', parent=self.panel2,
-              pos=wx.Point(760, 8), size=wx.Size(61, 14), style=0)
-
         self.staticText56 = wx.StaticText(id=wxID_FRAME1STATICTEXT56,
               label=u'POW', name='staticText56', parent=self.panel2,
-              pos=wx.Point(720, 32), size=wx.Size(24, 14), style=0)
+              pos=wx.Point(720, 40), size=wx.Size(24, 14), style=0)
 
         self.staticText57 = wx.StaticText(id=wxID_FRAME1STATICTEXT57,
               label=u'SPD', name='staticText57', parent=self.panel2,
-              pos=wx.Point(776, 32), size=wx.Size(24, 14), style=0)
+              pos=wx.Point(776, 40), size=wx.Size(24, 14), style=0)
 
         self.staticText58 = wx.StaticText(id=wxID_FRAME1STATICTEXT58,
               label=u'DEF', name='staticText58', parent=self.panel2,
-              pos=wx.Point(832, 32), size=wx.Size(24, 14), style=0)
+              pos=wx.Point(832, 40), size=wx.Size(24, 14), style=0)
 
         self.displayPowTeam1Ctrl2 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM1CTRL2,
               initial=1, max=999, min=1, name=u'displayPowTeam1Ctrl2',
@@ -2536,8 +2508,6 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM3CHOICE1, name=u'shootTeam3Choice1',
               parent=self.panel4, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam3Choice1.Bind(wx.EVT_CHOICE,
-              self.OnShootTeam3Choice1Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE1)
 
         self.shootTeam3Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM3CHOICE2, name=u'shootTeam3Choice2',
@@ -2799,8 +2769,6 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM4CHOICE1, name=u'shootTeam4Choice1',
               parent=self.panel5, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam4Choice1.Bind(wx.EVT_CHOICE,
-              self.OnShootTeam4Choice1Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE1)
 
         self.shootTeam4Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM4CHOICE2, name=u'shootTeam4Choice2',
@@ -3062,8 +3030,6 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM5CHOICE1, name=u'shootTeam5Choice1',
               parent=self.panel6, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam5Choice1.Bind(wx.EVT_CHOICE,
-              self.OnShootTeam5Choice1Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE1)
 
         self.shootTeam5Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM5CHOICE2, name=u'shootTeam5Choice2',
@@ -3325,15 +3291,11 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM6CHOICE1, name=u'shootTeam6Choice1',
               parent=self.panel7, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam6Choice1.Bind(wx.EVT_CHOICE, self.OnChoice6Choice,
-              id=wxID_FRAME1SHOOTTEAM6CHOICE1)
 
         self.shootTeam6Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE2, name=u'shootTeam6Choice2',
               parent=self.panel7, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam6Choice2.Bind(wx.EVT_CHOICE,
-              self.OnShootTeam6Choice2Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE2)
 
         self.shootTeam6Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE3, name=u'shootTeam6Choice3',
@@ -3349,8 +3311,6 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM6CHOICE5, name=u'shootTeam6Choice5',
               parent=self.panel7, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
-        self.shootTeam6Choice5.Bind(wx.EVT_CHOICE, self.OnChoice10Choice,
-              id=wxID_FRAME1SHOOTTEAM6CHOICE5)
 
         self.displayPowTeam6Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM6CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam6Ctrl1',
@@ -4493,6 +4453,7 @@ class Frame1(wx.Frame):
         
         
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
     def OnMinCtrl1Text(self, event):
         event.Skip()
@@ -5121,22 +5082,3 @@ class Frame1(wx.Frame):
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-    def OnShootTeam3Choice1Choice(self, event):
-        event.Skip()
-
-    def OnShootTeam4Choice1Choice(self, event):
-        event.Skip()
-
-    def OnShootTeam5Choice1Choice(self, event):
-        event.Skip()
-
-    def OnChoice6Choice(self, event):
-        event.Skip()
-
-    def OnShootTeam6Choice2Choice(self, event):
-        event.Skip()
-
-    def OnChoice10Choice(self, event):
-        event.Skip()
-

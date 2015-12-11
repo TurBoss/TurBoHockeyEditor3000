@@ -912,7 +912,7 @@ class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.panel2, select=False,
+        parent.AddPage(imageId=-1, page=self.panel2, select=True,
               text=u'Team 1')
         parent.AddPage(imageId=-1, page=self.panel3, select=False,
               text=u'Team 2')
@@ -926,7 +926,7 @@ class Frame1(wx.Frame):
               text=u'Team 6')
         parent.AddPage(imageId=-1, page=self.panel8, select=False,
               text=u'Team 7')
-        parent.AddPage(imageId=-1, page=self.panel9, select=True,
+        parent.AddPage(imageId=-1, page=self.panel9, select=False,
               text=u'Team 8')
 
     def _init_ctrls(self, prnt):
@@ -2072,7 +2072,7 @@ class Frame1(wx.Frame):
 
         self.displayPowTeam1Ctrl4 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM1CTRL4,
               initial=1, max=999, min=1, name=u'displayPowTeam1Ctrl4',
-              parent=self.panel2, pos=wx.Point(714, 160), size=wx.Size(48, 21),
+              parent=self.panel2, pos=wx.Point(712, 160), size=wx.Size(48, 21),
               style=wx.SP_ARROW_KEYS)
         self.displayPowTeam1Ctrl4.Bind(wx.EVT_TEXT,
               self.OnDisplayPowTeam1Ctrl4Text,
@@ -4014,21 +4014,98 @@ class Frame1(wx.Frame):
         
         for name in self.ShootNames:
             self.shootTeam1Choice1.Append("%s" % name)
+            self.shootTeam2Choice1.Append("%s" % name)
+            self.shootTeam3Choice1.Append("%s" % name)
+            self.shootTeam4Choice1.Append("%s" % name)
+            self.shootTeam5Choice1.Append("%s" % name)
+            self.shootTeam6Choice1.Append("%s" % name)
+            self.shootTeam7Choice1.Append("%s" % name)
+            self.shootTeam8Choice1.Append("%s" % name)
+            
             self.shootTeam1Choice1.SetSelection(0)
+            self.shootTeam2Choice1.SetSelection(0)
+            self.shootTeam3Choice1.SetSelection(0)
+            self.shootTeam4Choice1.SetSelection(0)                   
+            self.shootTeam5Choice1.SetSelection(0)                  
+            self.shootTeam6Choice1.SetSelection(0)                  
+            self.shootTeam7Choice1.SetSelection(0)                  
+            self.shootTeam8Choice1.SetSelection(0)
             
             self.shootTeam1Choice2.Append("%s" % name)
+            self.shootTeam2Choice2.Append("%s" % name)
+            self.shootTeam3Choice2.Append("%s" % name)
+            self.shootTeam4Choice2.Append("%s" % name)
+            self.shootTeam5Choice2.Append("%s" % name)
+            self.shootTeam6Choice2.Append("%s" % name)
+            self.shootTeam7Choice2.Append("%s" % name)
+            self.shootTeam8Choice2.Append("%s" % name)
+            
             self.shootTeam1Choice2.SetSelection(0)
+            self.shootTeam2Choice2.SetSelection(0)
+            self.shootTeam3Choice2.SetSelection(0)
+            self.shootTeam4Choice2.SetSelection(0)
+            self.shootTeam5Choice2.SetSelection(0)
+            self.shootTeam6Choice2.SetSelection(0)
+            self.shootTeam7Choice2.SetSelection(0)
+            self.shootTeam8Choice2.SetSelection(0)
             
             self.shootTeam1Choice3.Append("%s" % name)
+            self.shootTeam2Choice3.Append("%s" % name)
+            self.shootTeam3Choice3.Append("%s" % name)
+            self.shootTeam4Choice3.Append("%s" % name)
+            self.shootTeam5Choice3.Append("%s" % name)
+            self.shootTeam6Choice3.Append("%s" % name)
+            self.shootTeam7Choice3.Append("%s" % name)
+            self.shootTeam8Choice3.Append("%s" % name)
+            
             self.shootTeam1Choice3.SetSelection(0)
+            self.shootTeam2Choice3.SetSelection(0)
+            self.shootTeam3Choice3.SetSelection(0)
+            self.shootTeam4Choice3.SetSelection(0)
+            self.shootTeam5Choice3.SetSelection(0)
+            self.shootTeam6Choice3.SetSelection(0)
+            self.shootTeam7Choice3.SetSelection(0)
+            self.shootTeam8Choice3.SetSelection(0)
             
             self.shootTeam1Choice4.Append("%s" % name)
+            self.shootTeam2Choice4.Append("%s" % name)
+            self.shootTeam3Choice4.Append("%s" % name)
+            self.shootTeam4Choice4.Append("%s" % name)
+            self.shootTeam5Choice4.Append("%s" % name)
+            self.shootTeam6Choice4.Append("%s" % name)
+            self.shootTeam7Choice4.Append("%s" % name)
+            self.shootTeam8Choice4.Append("%s" % name)
+            
             self.shootTeam1Choice4.SetSelection(0)
+            self.shootTeam2Choice4.SetSelection(0)
+            self.shootTeam3Choice4.SetSelection(0)
+            self.shootTeam4Choice4.SetSelection(0)
+            self.shootTeam5Choice4.SetSelection(0)
+            self.shootTeam6Choice4.SetSelection(0)
+            self.shootTeam7Choice4.SetSelection(0)
+            self.shootTeam8Choice4.SetSelection(0)
             
             self.shootTeam1Choice5.Append("%s" % name)
+            self.shootTeam2Choice5.Append("%s" % name)
+            self.shootTeam3Choice5.Append("%s" % name)
+            self.shootTeam4Choice5.Append("%s" % name)
+            self.shootTeam5Choice5.Append("%s" % name)
+            self.shootTeam6Choice5.Append("%s" % name)
+            self.shootTeam7Choice5.Append("%s" % name)
+            self.shootTeam8Choice5.Append("%s" % name)
+            
             self.shootTeam1Choice5.SetSelection(0)
+            self.shootTeam2Choice5.SetSelection(0)
+            self.shootTeam3Choice5.SetSelection(0)
+            self.shootTeam4Choice5.SetSelection(0)
+            self.shootTeam5Choice5.SetSelection(0)
+            self.shootTeam6Choice5.SetSelection(0)
+            self.shootTeam7Choice5.SetSelection(0)
+            self.shootTeam8Choice5.SetSelection(0)
+            
         
-        self.playersDisplayStats = ['' for i in range(5)]
+        
+        self.playersDisplayStats = ['' for i in range(self.Teams)]
             
         
         # TEAM NAME
@@ -4054,60 +4131,67 @@ class Frame1(wx.Frame):
         self.team1StatsOffset = 0x01B3B7
         self.players1NameOffset = (0x0107CD, 0x0107DA, 0x0107F4, 0x010801, 0x0107E7)
         self.players1StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players1ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players1ShootOffset = (0x01B138, 0x01B141, 0x01B153, 0x01B15C, 0x01B14A)
         self.players1DisplayStatsOffset = (0x0107D1, 0x0107DE, 0x0107F8, 0x010805, 0x0107EB)
         
         
         self.team2NameOffset = 0x0105F9
         self.team2StatsOffset = 0x01B3B9
         self.players2NameOffset = (0x01085C, 0x010869, 0x010876, 0x010883, 0x010890)
-        self.players2StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players2ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players2StatsOffset = (0x01B195, 0x01B19E, 0x01B1A7, 0x01B1B0, 0x01B1B9)
+        self.players2ShootOffset = (0x01B19B, 0x01B1A4, 0x01B1AD, 0x01B1B6, 0x01B1BF)
+        self.players2DisplayStatsOffset = (0x010860, 0x01086D, 0x01087A, 0x010887, 0x010894)
         
         self.team3NameOffset = 0x010609
         self.team3StatsOffset = 0x01B3BB
         self.players3NameOffset = (0x01089D, 0x0108AA, 0x0108B7, 0x0108C4, 0x0108D1)
-        self.players3StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players3ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players3StatsOffset = (0x01B1C2, 0x01B1CB, 0x01B1D4, 0x01B1DD, 0x01B1E6)
+        self.players3ShootOffset = (0x01B1C8, 0x01B1D1, 0x01B1DA, 0x01B1E3, 0x01B1EC)
+        self.players3DisplayStatsOffset = (0x0108A1, 0x0108AE, 0x0108BB, 0x0108C8, 0x0108D5)
         
         self.team4NameOffset = 0x010619
         self.team4StatsOffset = 0x01B3BF
         self.players4NameOffset = (0x01091F, 0x01092C, 0x010939, 0x010946, 0x010953)
-        self.players4StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players4ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players4StatsOffset = (0x01B21C, 0x01B225, 0x01B22E, 0x01B237, 0x01B240)
+        self.players4ShootOffset = (0x01B222, 0x01B22B, 0x01B234, 0x01B23D, 0x01B246)
+        self.players4DisplayStatsOffset = (0x010923, 0x010930, 0x01093D, 0x01094A, 0x010957)
         
         self.team5NameOffset = 0x010639
         self.team5StatsOffset = 0x01B3C1
         self.players5NameOffset = (0x010960, 0x01096D, 0x01097A, 0x010987, 0x010994)
-        self.players5StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players5ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players5StatsOffset = (0x01B249, 0x01B252, 0x01B25B, 0x01B264, 0x01B26D)
+        self.players5ShootOffset = (0x01B24F, 0x01B258, 0x01B261, 0x01B26A, 0x01B273)
+        self.players5DisplayStatsOffset = (0x010964, 0x010971, 0x01097E, 0x01098B, 0x010998)
         
         self.team6NameOffset = 0x010651
         self.team6StatsOffset = 0x01B3C5
         self.players6NameOffset = (0x0108DE, 0x0108EB, 0x0108F8, 0x010905, 0x010912)
-        self.players6StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players6ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players6StatsOffset = (0x01B1EF, 0x01B1F8, 0x01B201, 0x01B20A, 0x01B213)
+        self.players6ShootOffset = (0x01B1F5, 0x01B1FE, 0x01B207, 0x01B210, 0x01B219)
+        self.players6DisplayStatsOffset = (0x0108E2, 0x0108EF, 0x0108FC, 0x010909, 0x010916)
         
         self.team7NameOffset = 0x010671
         self.team7StatsOffset = 0x01B3C7
         self.players7NameOffset = (0x0109A1, 0x0109AE, 0x0109BB, 0x0109C8, 0x0109D5)
-        self.players7StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players7ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players7StatsOffset = (0x01B276, 0x01B27F, 0x01B288, 0x01B291, 0x01B29A)
+        self.players7ShootOffset = (0x01B27C, 0x01B285, 0x01B28B, 0x01B297, 0x01B2A0)
+        self.players7DisplayStatsOffset = (0x0109A5, 0x0109B2, 0x0109BF, 0x0109CC, 0x0109D9)
         
         self.team8NameOffset = 0x0106a1
         self.team8StatsOffset = 0x01B3C9
         self.players8NameOffset = (0x010A64, 0x010A71, 0x010A7E, 0x010A8B, 0x010A98)
-        self.players8StatsOffset = (0x01B132, 0x01B13B, 0x01B14D, 0x01B156, 0x01B144)
-        self.players8ShootOffset = (0x01B138, 0x01B141, 0x01B14A, 0x01B153, 0x01B15C)
+        self.players8StatsOffset = (0x01B2FD, 0x01B306, 0x01B30F, 0x01B318, 0x01B321)
+        self.players8ShootOffset = (0x01B303, 0x01B30C, 0x01B315, 0x01B31E, 0x01B327)
+        self.players8DisplayStatsOffset = (0x010A68, 0x010A75, 0x010A82, 0x010A8F, 0x010A9C)
         
         self.team1 = Team(self.team1NameOffset, self.team1StatsOffset, self.players1NameOffset, self.players1ShootOffset, self.players1DisplayStatsOffset)
-        self.team2 = Team(self.team2NameOffset, self.team2StatsOffset, self.players2NameOffset, self.players2ShootOffset, self.players1DisplayStatsOffset)
-        self.team3 = Team(self.team3NameOffset, self.team3StatsOffset, self.players3NameOffset, self.players3ShootOffset, self.players1DisplayStatsOffset)
-        self.team4 = Team(self.team4NameOffset, self.team4StatsOffset, self.players4NameOffset, self.players4ShootOffset, self.players1DisplayStatsOffset)
-        self.team5 = Team(self.team5NameOffset, self.team5StatsOffset, self.players5NameOffset, self.players5ShootOffset, self.players1DisplayStatsOffset)
-        self.team6 = Team(self.team6NameOffset, self.team6StatsOffset, self.players6NameOffset, self.players6ShootOffset, self.players1DisplayStatsOffset)
-        self.team7 = Team(self.team7NameOffset, self.team7StatsOffset, self.players7NameOffset, self.players7ShootOffset, self.players1DisplayStatsOffset)
-        self.team8 = Team(self.team8NameOffset, self.team8StatsOffset, self.players8NameOffset, self.players8ShootOffset, self.players1DisplayStatsOffset)
+        self.team2 = Team(self.team2NameOffset, self.team2StatsOffset, self.players2NameOffset, self.players2ShootOffset, self.players2DisplayStatsOffset)
+        self.team3 = Team(self.team3NameOffset, self.team3StatsOffset, self.players3NameOffset, self.players3ShootOffset, self.players3DisplayStatsOffset)
+        self.team4 = Team(self.team4NameOffset, self.team4StatsOffset, self.players4NameOffset, self.players4ShootOffset, self.players4DisplayStatsOffset)
+        self.team5 = Team(self.team5NameOffset, self.team5StatsOffset, self.players5NameOffset, self.players5ShootOffset, self.players5DisplayStatsOffset)
+        self.team6 = Team(self.team6NameOffset, self.team6StatsOffset, self.players6NameOffset, self.players6ShootOffset, self.players6DisplayStatsOffset)
+        self.team7 = Team(self.team7NameOffset, self.team7StatsOffset, self.players7NameOffset, self.players7ShootOffset, self.players7DisplayStatsOffset)
+        self.team8 = Team(self.team8NameOffset, self.team8StatsOffset, self.players8NameOffset, self.players8ShootOffset, self.players8DisplayStatsOffset)
     
     def loadRom(self):
         # General Game Settings
@@ -4257,6 +4341,75 @@ class Frame1(wx.Frame):
         self.team2Player4Ctrl.SetValue(self.teamPlayerNames[1][3])
         self.team2Player5Ctrl.SetValue(self.teamPlayerNames[1][4])
         
+        self.team2Player1Stats = self.team2.loadPlayerStats(self.rom, self.players2StatsOffset[0])
+        
+        self.sPowerSpinTeam2Ctrl1.SetValue(self.team2Player1Stats[0])
+        self.mPowerSpinTeam2Ctrl1.SetValue(self.team2Player1Stats[1])
+        self.speedSpinTeam2Ctrl1.SetValue(self.team2Player1Stats[2])
+        self.weightSpinTeam2Ctrl1.SetValue(self.team2Player1Stats[3])
+        self.angrySpinTeam2Ctrl1.SetValue(self.team2Player1Stats[5])
+        
+        
+        self.team2Player2Stats = self.team2.loadPlayerStats(self.rom, self.players2StatsOffset[1])
+        
+        self.sPowerSpinTeam2Ctrl2.SetValue(self.team2Player2Stats[0])
+        self.mPowerSpinTeam2Ctrl2.SetValue(self.team2Player2Stats[1])
+        self.speedSpinTeam2Ctrl2.SetValue(self.team2Player2Stats[2])
+        self.weightSpinTeam2Ctrl2.SetValue(self.team2Player2Stats[3])
+        self.angrySpinTeam2Ctrl2.SetValue(self.team2Player2Stats[5])
+        
+        self.team2Player3Stats = self.team2.loadPlayerStats(self.rom, self.players2StatsOffset[2])
+        
+        self.sPowerSpinTeam2Ctrl3.SetValue(self.team2Player3Stats[0])
+        self.mPowerSpinTeam2Ctrl3.SetValue(self.team2Player3Stats[1])
+        self.speedSpinTeam2Ctrl3.SetValue(self.team2Player3Stats[2])
+        self.weightSpinTeam2Ctrl3.SetValue(self.team2Player3Stats[3])
+        self.angrySpinTeam2Ctrl3.SetValue(self.team2Player3Stats[5])
+        
+        self.team2Player4Stats = self.team2.loadPlayerStats(self.rom, self.players2StatsOffset[3])
+        
+        self.sPowerSpinTeam2Ctrl4.SetValue(self.team2Player4Stats[0])
+        self.mPowerSpinTeam2Ctrl4.SetValue(self.team2Player4Stats[1])
+        self.speedSpinTeam2Ctrl4.SetValue(self.team2Player4Stats[2])
+        self.weightSpinTeam2Ctrl4.SetValue(self.team2Player4Stats[3])
+        self.angrySpinTeam2Ctrl4.SetValue(self.team2Player4Stats[5])
+        
+        self.team2Player5Stats = self.team2.loadPlayerStats(self.rom, self.players2StatsOffset[4])
+        
+        self.sPowerSpinTeam2Ctrl5.SetValue(self.team2Player5Stats[0])
+        self.mPowerSpinTeam2Ctrl5.SetValue(self.team2Player5Stats[1])
+        self.speedSpinTeam2Ctrl5.SetValue(self.team2Player5Stats[2])
+        self.weightSpinTeam2Ctrl5.SetValue(self.team2Player5Stats[3])
+        self.angrySpinTeam2Ctrl5.SetValue(self.team2Player5Stats[5])
+        
+        self.sShootSelection[1] = self.team2.sShootRead(self.rom)
+        
+        self.shootTeam2Choice1.SetSelection(int(self.sShootSelection[1][0]))
+        self.shootTeam2Choice2.SetSelection(int(self.sShootSelection[1][1]))
+        self.shootTeam2Choice3.SetSelection(int(self.sShootSelection[1][2]))
+        self.shootTeam2Choice4.SetSelection(int(self.sShootSelection[1][3]))
+        self.shootTeam2Choice5.SetSelection(int(self.sShootSelection[1][4]))
+        
+        self.playersDisplayStats[1] = self.team2.readDisplayStats(self.rom)
+        
+        self.displayPowTeam2Ctrl1.SetValue(int(self.playersDisplayStats[1][0][0]))
+        self.displayPowTeam2Ctrl2.SetValue(int(self.playersDisplayStats[1][0][1]))
+        self.displayPowTeam2Ctrl3.SetValue(int(self.playersDisplayStats[1][0][2]))
+        self.displayPowTeam2Ctrl4.SetValue(int(self.playersDisplayStats[1][0][3]))
+        self.displayPowTeam2Ctrl5.SetValue(int(self.playersDisplayStats[1][0][4]))
+        
+        self.displaySpdTeam2Ctrl1.SetValue(int(self.playersDisplayStats[1][1][0]))
+        self.displaySpdTeam2Ctrl2.SetValue(int(self.playersDisplayStats[1][1][1]))
+        self.displaySpdTeam2Ctrl3.SetValue(int(self.playersDisplayStats[1][1][2]))
+        self.displaySpdTeam2Ctrl4.SetValue(int(self.playersDisplayStats[1][1][3]))
+        self.displaySpdTeam2Ctrl5.SetValue(int(self.playersDisplayStats[1][1][4]))
+        
+        self.displayDefTeam2Ctrl1.SetValue(int(self.playersDisplayStats[1][2][0]))
+        self.displayDefTeam2Ctrl2.SetValue(int(self.playersDisplayStats[1][2][1]))
+        self.displayDefTeam2Ctrl3.SetValue(int(self.playersDisplayStats[1][2][2]))
+        self.displayDefTeam2Ctrl4.SetValue(int(self.playersDisplayStats[1][2][3]))
+        self.displayDefTeam2Ctrl5.SetValue(int(self.playersDisplayStats[1][2][4]))
+        
         # Team 3
         
         self.teamHexName[2], self.teamPlayerHexNames[2] = self.team3.loadteam(self.rom)
@@ -4281,6 +4434,75 @@ class Frame1(wx.Frame):
         self.team3Player4Ctrl.SetValue(self.teamPlayerNames[2][3])
         self.team3Player5Ctrl.SetValue(self.teamPlayerNames[2][4])
         
+        self.team3Player1Stats = self.team3.loadPlayerStats(self.rom, self.players3StatsOffset[0])
+        
+        self.sPowerSpinTeam3Ctrl1.SetValue(self.team3Player1Stats[0])
+        self.mPowerSpinTeam3Ctrl1.SetValue(self.team3Player1Stats[1])
+        self.speedSpinTeam3Ctrl1.SetValue(self.team3Player1Stats[2])
+        self.weightSpinTeam3Ctrl1.SetValue(self.team3Player1Stats[3])
+        self.angrySpinTeam3Ctrl1.SetValue(self.team3Player1Stats[5])
+        
+        
+        self.team3Player2Stats = self.team3.loadPlayerStats(self.rom, self.players3StatsOffset[1])
+        
+        self.sPowerSpinTeam3Ctrl2.SetValue(self.team3Player2Stats[0])
+        self.mPowerSpinTeam3Ctrl2.SetValue(self.team3Player2Stats[1])
+        self.speedSpinTeam3Ctrl2.SetValue(self.team3Player2Stats[2])
+        self.weightSpinTeam3Ctrl2.SetValue(self.team3Player2Stats[3])
+        self.angrySpinTeam3Ctrl2.SetValue(self.team3Player2Stats[5])
+        
+        self.team3Player3Stats = self.team3.loadPlayerStats(self.rom, self.players3StatsOffset[2])
+        
+        self.sPowerSpinTeam3Ctrl3.SetValue(self.team3Player3Stats[0])
+        self.mPowerSpinTeam3Ctrl3.SetValue(self.team3Player3Stats[1])
+        self.speedSpinTeam3Ctrl3.SetValue(self.team3Player3Stats[2])
+        self.weightSpinTeam3Ctrl3.SetValue(self.team3Player3Stats[3])
+        self.angrySpinTeam3Ctrl3.SetValue(self.team3Player3Stats[5])
+        
+        self.team3Player4Stats = self.team3.loadPlayerStats(self.rom, self.players3StatsOffset[3])
+        
+        self.sPowerSpinTeam3Ctrl4.SetValue(self.team3Player4Stats[0])
+        self.mPowerSpinTeam3Ctrl4.SetValue(self.team3Player4Stats[1])
+        self.speedSpinTeam3Ctrl4.SetValue(self.team3Player4Stats[2])
+        self.weightSpinTeam3Ctrl4.SetValue(self.team3Player4Stats[3])
+        self.angrySpinTeam3Ctrl4.SetValue(self.team3Player4Stats[5])
+        
+        self.team3Player5Stats = self.team3.loadPlayerStats(self.rom, self.players3StatsOffset[4])
+        
+        self.sPowerSpinTeam3Ctrl5.SetValue(self.team3Player5Stats[0])
+        self.mPowerSpinTeam3Ctrl5.SetValue(self.team3Player5Stats[1])
+        self.speedSpinTeam3Ctrl5.SetValue(self.team3Player5Stats[2])
+        self.weightSpinTeam3Ctrl5.SetValue(self.team3Player5Stats[3])
+        self.angrySpinTeam3Ctrl5.SetValue(self.team3Player5Stats[5])
+        
+        self.sShootSelection[2] = self.team3.sShootRead(self.rom)
+        
+        self.shootTeam3Choice1.SetSelection(int(self.sShootSelection[2][0]))
+        self.shootTeam3Choice2.SetSelection(int(self.sShootSelection[2][1]))
+        self.shootTeam3Choice3.SetSelection(int(self.sShootSelection[2][2]))
+        self.shootTeam3Choice4.SetSelection(int(self.sShootSelection[2][3]))
+        self.shootTeam3Choice5.SetSelection(int(self.sShootSelection[2][4]))
+        
+        self.playersDisplayStats[2] = self.team3.readDisplayStats(self.rom)
+        
+        self.displayPowTeam3Ctrl1.SetValue(int(self.playersDisplayStats[2][0][0]))
+        self.displayPowTeam3Ctrl2.SetValue(int(self.playersDisplayStats[2][0][1]))
+        self.displayPowTeam3Ctrl3.SetValue(int(self.playersDisplayStats[2][0][2]))
+        self.displayPowTeam3Ctrl4.SetValue(int(self.playersDisplayStats[2][0][3]))
+        self.displayPowTeam3Ctrl5.SetValue(int(self.playersDisplayStats[2][0][4]))
+        
+        self.displaySpdTeam3Ctrl1.SetValue(int(self.playersDisplayStats[2][1][0]))
+        self.displaySpdTeam3Ctrl2.SetValue(int(self.playersDisplayStats[2][1][1]))
+        self.displaySpdTeam3Ctrl3.SetValue(int(self.playersDisplayStats[2][1][2]))
+        self.displaySpdTeam3Ctrl4.SetValue(int(self.playersDisplayStats[2][1][3]))
+        self.displaySpdTeam3Ctrl5.SetValue(int(self.playersDisplayStats[2][1][4]))
+        
+        self.displayDefTeam3Ctrl1.SetValue(int(self.playersDisplayStats[2][2][0]))
+        self.displayDefTeam3Ctrl2.SetValue(int(self.playersDisplayStats[2][2][1]))
+        self.displayDefTeam3Ctrl3.SetValue(int(self.playersDisplayStats[2][2][2]))
+        self.displayDefTeam3Ctrl4.SetValue(int(self.playersDisplayStats[2][2][3]))
+        self.displayDefTeam3Ctrl5.SetValue(int(self.playersDisplayStats[2][2][4]))
+
         # Team 4
         
         self.teamHexName[3], self.teamPlayerHexNames[3] = self.team4.loadteam(self.rom)
@@ -4304,6 +4526,75 @@ class Frame1(wx.Frame):
         self.team4Player3Ctrl.SetValue(self.teamPlayerNames[3][2])
         self.team4Player4Ctrl.SetValue(self.teamPlayerNames[3][3])
         self.team4Player5Ctrl.SetValue(self.teamPlayerNames[3][4])
+        
+        self.team4Player1Stats = self.team4.loadPlayerStats(self.rom, self.players4StatsOffset[0])
+        
+        self.sPowerSpinTeam4Ctrl1.SetValue(self.team4Player1Stats[0])
+        self.mPowerSpinTeam4Ctrl1.SetValue(self.team4Player1Stats[1])
+        self.speedSpinTeam4Ctrl1.SetValue(self.team4Player1Stats[2])
+        self.weightSpinTeam4Ctrl1.SetValue(self.team4Player1Stats[3])
+        self.angrySpinTeam4Ctrl1.SetValue(self.team4Player1Stats[5])
+        
+        
+        self.team4Player2Stats = self.team4.loadPlayerStats(self.rom, self.players4StatsOffset[1])
+        
+        self.sPowerSpinTeam4Ctrl2.SetValue(self.team4Player2Stats[0])
+        self.mPowerSpinTeam4Ctrl2.SetValue(self.team4Player2Stats[1])
+        self.speedSpinTeam4Ctrl2.SetValue(self.team4Player2Stats[2])
+        self.weightSpinTeam4Ctrl2.SetValue(self.team4Player2Stats[3])
+        self.angrySpinTeam4Ctrl2.SetValue(self.team4Player2Stats[5])
+        
+        self.team4Player3Stats = self.team4.loadPlayerStats(self.rom, self.players4StatsOffset[2])
+        
+        self.sPowerSpinTeam4Ctrl3.SetValue(self.team4Player3Stats[0])
+        self.mPowerSpinTeam4Ctrl3.SetValue(self.team4Player3Stats[1])
+        self.speedSpinTeam4Ctrl3.SetValue(self.team4Player3Stats[2])
+        self.weightSpinTeam4Ctrl3.SetValue(self.team4Player3Stats[3])
+        self.angrySpinTeam4Ctrl3.SetValue(self.team4Player3Stats[5])
+        
+        self.team4Player4Stats = self.team4.loadPlayerStats(self.rom, self.players4StatsOffset[3])
+        
+        self.sPowerSpinTeam4Ctrl4.SetValue(self.team4Player4Stats[0])
+        self.mPowerSpinTeam4Ctrl4.SetValue(self.team4Player4Stats[1])
+        self.speedSpinTeam4Ctrl4.SetValue(self.team4Player4Stats[2])
+        self.weightSpinTeam4Ctrl4.SetValue(self.team4Player4Stats[3])
+        self.angrySpinTeam4Ctrl4.SetValue(self.team4Player4Stats[5])
+        
+        self.team4Player5Stats = self.team4.loadPlayerStats(self.rom, self.players4StatsOffset[4])
+        
+        self.sPowerSpinTeam4Ctrl5.SetValue(self.team4Player5Stats[0])
+        self.mPowerSpinTeam4Ctrl5.SetValue(self.team4Player5Stats[1])
+        self.speedSpinTeam4Ctrl5.SetValue(self.team4Player5Stats[2])
+        self.weightSpinTeam4Ctrl5.SetValue(self.team4Player5Stats[3])
+        self.angrySpinTeam4Ctrl5.SetValue(self.team4Player5Stats[5])
+        
+        self.sShootSelection[3] = self.team4.sShootRead(self.rom)
+        
+        self.shootTeam4Choice1.SetSelection(int(self.sShootSelection[3][0]))
+        self.shootTeam4Choice2.SetSelection(int(self.sShootSelection[3][1]))
+        self.shootTeam4Choice3.SetSelection(int(self.sShootSelection[3][2]))
+        self.shootTeam4Choice4.SetSelection(int(self.sShootSelection[3][3]))
+        self.shootTeam4Choice5.SetSelection(int(self.sShootSelection[3][4]))
+        
+        self.playersDisplayStats[3] = self.team4.readDisplayStats(self.rom)
+        
+        self.displayPowTeam4Ctrl1.SetValue(int(self.playersDisplayStats[3][0][0]))
+        self.displayPowTeam4Ctrl2.SetValue(int(self.playersDisplayStats[3][0][1]))
+        self.displayPowTeam4Ctrl3.SetValue(int(self.playersDisplayStats[3][0][2]))
+        self.displayPowTeam4Ctrl4.SetValue(int(self.playersDisplayStats[3][0][3]))
+        self.displayPowTeam4Ctrl5.SetValue(int(self.playersDisplayStats[3][0][4]))
+        
+        self.displaySpdTeam4Ctrl1.SetValue(int(self.playersDisplayStats[3][1][0]))
+        self.displaySpdTeam4Ctrl2.SetValue(int(self.playersDisplayStats[3][1][1]))
+        self.displaySpdTeam4Ctrl3.SetValue(int(self.playersDisplayStats[3][1][2]))
+        self.displaySpdTeam4Ctrl4.SetValue(int(self.playersDisplayStats[3][1][3]))
+        self.displaySpdTeam4Ctrl5.SetValue(int(self.playersDisplayStats[3][1][4]))
+        
+        self.displayDefTeam4Ctrl1.SetValue(int(self.playersDisplayStats[3][2][0]))
+        self.displayDefTeam4Ctrl2.SetValue(int(self.playersDisplayStats[3][2][1]))
+        self.displayDefTeam4Ctrl3.SetValue(int(self.playersDisplayStats[3][2][2]))
+        self.displayDefTeam4Ctrl4.SetValue(int(self.playersDisplayStats[3][2][3]))
+        self.displayDefTeam4Ctrl5.SetValue(int(self.playersDisplayStats[3][2][4]))
         
         # Team 5
         
@@ -4329,6 +4620,75 @@ class Frame1(wx.Frame):
         self.team5Player4Ctrl.SetValue(self.teamPlayerNames[4][3])
         self.team5Player5Ctrl.SetValue(self.teamPlayerNames[4][4])
         
+        self.team5Player1Stats = self.team5.loadPlayerStats(self.rom, self.players5StatsOffset[0])
+        
+        self.sPowerSpinTeam5Ctrl1.SetValue(self.team5Player1Stats[0])
+        self.mPowerSpinTeam5Ctrl1.SetValue(self.team5Player1Stats[1])
+        self.speedSpinTeam5Ctrl1.SetValue(self.team5Player1Stats[2])
+        self.weightSpinTeam5Ctrl1.SetValue(self.team5Player1Stats[3])
+        self.angrySpinTeam5Ctrl1.SetValue(self.team5Player1Stats[5])
+        
+        
+        self.team5Player2Stats = self.team5.loadPlayerStats(self.rom, self.players5StatsOffset[1])
+        
+        self.sPowerSpinTeam5Ctrl2.SetValue(self.team5Player2Stats[0])
+        self.mPowerSpinTeam5Ctrl2.SetValue(self.team5Player2Stats[1])
+        self.speedSpinTeam5Ctrl2.SetValue(self.team5Player2Stats[2])
+        self.weightSpinTeam5Ctrl2.SetValue(self.team5Player2Stats[3])
+        self.angrySpinTeam5Ctrl2.SetValue(self.team5Player2Stats[5])
+        
+        self.team5Player3Stats = self.team5.loadPlayerStats(self.rom, self.players5StatsOffset[2])
+        
+        self.sPowerSpinTeam5Ctrl3.SetValue(self.team5Player3Stats[0])
+        self.mPowerSpinTeam5Ctrl3.SetValue(self.team5Player3Stats[1])
+        self.speedSpinTeam5Ctrl3.SetValue(self.team5Player3Stats[2])
+        self.weightSpinTeam5Ctrl3.SetValue(self.team5Player3Stats[3])
+        self.angrySpinTeam5Ctrl3.SetValue(self.team5Player3Stats[5])
+        
+        self.team5Player5Stats = self.team5.loadPlayerStats(self.rom, self.players5StatsOffset[3])
+        
+        self.sPowerSpinTeam5Ctrl4.SetValue(self.team5Player5Stats[0])
+        self.mPowerSpinTeam5Ctrl4.SetValue(self.team5Player5Stats[1])
+        self.speedSpinTeam5Ctrl4.SetValue(self.team5Player5Stats[2])
+        self.weightSpinTeam5Ctrl4.SetValue(self.team5Player5Stats[3])
+        self.angrySpinTeam5Ctrl4.SetValue(self.team5Player5Stats[5])
+        
+        self.team5Player5Stats = self.team5.loadPlayerStats(self.rom, self.players5StatsOffset[4])
+        
+        self.sPowerSpinTeam5Ctrl5.SetValue(self.team5Player5Stats[0])
+        self.mPowerSpinTeam5Ctrl5.SetValue(self.team5Player5Stats[1])
+        self.speedSpinTeam5Ctrl5.SetValue(self.team5Player5Stats[2])
+        self.weightSpinTeam5Ctrl5.SetValue(self.team5Player5Stats[3])
+        self.angrySpinTeam5Ctrl5.SetValue(self.team5Player5Stats[5])
+        
+        self.sShootSelection[4] = self.team5.sShootRead(self.rom)
+        
+        self.shootTeam5Choice1.SetSelection(int(self.sShootSelection[4][0]))
+        self.shootTeam5Choice2.SetSelection(int(self.sShootSelection[4][1]))
+        self.shootTeam5Choice3.SetSelection(int(self.sShootSelection[4][2]))
+        self.shootTeam5Choice4.SetSelection(int(self.sShootSelection[4][3]))
+        self.shootTeam5Choice5.SetSelection(int(self.sShootSelection[4][4]))
+        
+        self.playersDisplayStats[4] = self.team5.readDisplayStats(self.rom)
+        
+        self.displayPowTeam5Ctrl1.SetValue(int(self.playersDisplayStats[4][0][0]))
+        self.displayPowTeam5Ctrl2.SetValue(int(self.playersDisplayStats[4][0][1]))
+        self.displayPowTeam5Ctrl3.SetValue(int(self.playersDisplayStats[4][0][2]))
+        self.displayPowTeam5Ctrl4.SetValue(int(self.playersDisplayStats[4][0][3]))
+        self.displayPowTeam5Ctrl5.SetValue(int(self.playersDisplayStats[4][0][4]))
+        
+        self.displaySpdTeam5Ctrl1.SetValue(int(self.playersDisplayStats[4][1][0]))
+        self.displaySpdTeam5Ctrl2.SetValue(int(self.playersDisplayStats[4][1][1]))
+        self.displaySpdTeam5Ctrl3.SetValue(int(self.playersDisplayStats[4][1][2]))
+        self.displaySpdTeam5Ctrl4.SetValue(int(self.playersDisplayStats[4][1][3]))
+        self.displaySpdTeam5Ctrl5.SetValue(int(self.playersDisplayStats[4][1][4]))
+        
+        self.displayDefTeam5Ctrl1.SetValue(int(self.playersDisplayStats[4][2][0]))
+        self.displayDefTeam5Ctrl2.SetValue(int(self.playersDisplayStats[4][2][1]))
+        self.displayDefTeam5Ctrl3.SetValue(int(self.playersDisplayStats[4][2][2]))
+        self.displayDefTeam5Ctrl4.SetValue(int(self.playersDisplayStats[4][2][3]))
+        self.displayDefTeam5Ctrl5.SetValue(int(self.playersDisplayStats[4][2][4]))
+        
         # Team 6
         
         self.teamHexName[5], self.teamPlayerHexNames[5] = self.team6.loadteam(self.rom)
@@ -4352,6 +4712,75 @@ class Frame1(wx.Frame):
         self.team6Player3Ctrl.SetValue(self.teamPlayerNames[5][2])
         self.team6Player4Ctrl.SetValue(self.teamPlayerNames[5][3])
         self.team6Player5Ctrl.SetValue(self.teamPlayerNames[5][4])
+        
+        self.team6Player1Stats = self.team6.loadPlayerStats(self.rom, self.players6StatsOffset[0])
+        
+        self.sPowerSpinTeam6Ctrl1.SetValue(self.team6Player1Stats[0])
+        self.mPowerSpinTeam6Ctrl1.SetValue(self.team6Player1Stats[1])
+        self.speedSpinTeam6Ctrl1.SetValue(self.team6Player1Stats[2])
+        self.weightSpinTeam6Ctrl1.SetValue(self.team6Player1Stats[3])
+        self.angrySpinTeam6Ctrl1.SetValue(self.team6Player1Stats[5])
+        
+        
+        self.team6Player2Stats = self.team6.loadPlayerStats(self.rom, self.players6StatsOffset[1])
+        
+        self.sPowerSpinTeam6Ctrl2.SetValue(self.team6Player2Stats[0])
+        self.mPowerSpinTeam6Ctrl2.SetValue(self.team6Player2Stats[1])
+        self.speedSpinTeam6Ctrl2.SetValue(self.team6Player2Stats[2])
+        self.weightSpinTeam6Ctrl2.SetValue(self.team6Player2Stats[3])
+        self.angrySpinTeam6Ctrl2.SetValue(self.team6Player2Stats[5])
+        
+        self.team6Player3Stats = self.team6.loadPlayerStats(self.rom, self.players6StatsOffset[2])
+        
+        self.sPowerSpinTeam6Ctrl3.SetValue(self.team6Player3Stats[0])
+        self.mPowerSpinTeam6Ctrl3.SetValue(self.team6Player3Stats[1])
+        self.speedSpinTeam6Ctrl3.SetValue(self.team6Player3Stats[2])
+        self.weightSpinTeam6Ctrl3.SetValue(self.team6Player3Stats[3])
+        self.angrySpinTeam6Ctrl3.SetValue(self.team6Player3Stats[5])
+        
+        self.team6Player4Stats = self.team6.loadPlayerStats(self.rom, self.players6StatsOffset[3])
+        
+        self.sPowerSpinTeam6Ctrl4.SetValue(self.team6Player4Stats[0])
+        self.mPowerSpinTeam6Ctrl4.SetValue(self.team6Player4Stats[1])
+        self.speedSpinTeam6Ctrl4.SetValue(self.team6Player4Stats[2])
+        self.weightSpinTeam6Ctrl4.SetValue(self.team6Player4Stats[3])
+        self.angrySpinTeam6Ctrl4.SetValue(self.team6Player4Stats[5])
+        
+        self.team6Player5Stats = self.team6.loadPlayerStats(self.rom, self.players6StatsOffset[4])
+        
+        self.sPowerSpinTeam6Ctrl5.SetValue(self.team6Player5Stats[0])
+        self.mPowerSpinTeam6Ctrl5.SetValue(self.team6Player5Stats[1])
+        self.speedSpinTeam6Ctrl5.SetValue(self.team6Player5Stats[2])
+        self.weightSpinTeam6Ctrl5.SetValue(self.team6Player5Stats[3])
+        self.angrySpinTeam6Ctrl5.SetValue(self.team6Player5Stats[5])
+        
+        self.sShootSelection[5] = self.team6.sShootRead(self.rom)
+        
+        self.shootTeam6Choice1.SetSelection(int(self.sShootSelection[5][0]))
+        self.shootTeam6Choice2.SetSelection(int(self.sShootSelection[5][1]))
+        self.shootTeam6Choice3.SetSelection(int(self.sShootSelection[5][2]))
+        self.shootTeam6Choice4.SetSelection(int(self.sShootSelection[5][3]))
+        self.shootTeam6Choice5.SetSelection(int(self.sShootSelection[5][4]))
+        
+        self.playersDisplayStats[5] = self.team6.readDisplayStats(self.rom)
+        
+        self.displayPowTeam6Ctrl1.SetValue(int(self.playersDisplayStats[5][0][0]))
+        self.displayPowTeam6Ctrl2.SetValue(int(self.playersDisplayStats[5][0][1]))
+        self.displayPowTeam6Ctrl3.SetValue(int(self.playersDisplayStats[5][0][2]))
+        self.displayPowTeam6Ctrl4.SetValue(int(self.playersDisplayStats[5][0][3]))
+        self.displayPowTeam6Ctrl5.SetValue(int(self.playersDisplayStats[5][0][4]))
+        
+        self.displaySpdTeam6Ctrl1.SetValue(int(self.playersDisplayStats[5][1][0]))
+        self.displaySpdTeam6Ctrl2.SetValue(int(self.playersDisplayStats[5][1][1]))
+        self.displaySpdTeam6Ctrl3.SetValue(int(self.playersDisplayStats[5][1][2]))
+        self.displaySpdTeam6Ctrl4.SetValue(int(self.playersDisplayStats[5][1][3]))
+        self.displaySpdTeam6Ctrl5.SetValue(int(self.playersDisplayStats[5][1][4]))
+        
+        self.displayDefTeam6Ctrl1.SetValue(int(self.playersDisplayStats[5][2][0]))
+        self.displayDefTeam6Ctrl2.SetValue(int(self.playersDisplayStats[5][2][1]))
+        self.displayDefTeam6Ctrl3.SetValue(int(self.playersDisplayStats[5][2][2]))
+        self.displayDefTeam6Ctrl4.SetValue(int(self.playersDisplayStats[5][2][3]))
+        self.displayDefTeam6Ctrl5.SetValue(int(self.playersDisplayStats[5][2][4]))
         
         # Team 7
         

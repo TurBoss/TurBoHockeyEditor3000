@@ -5359,7 +5359,7 @@ class Frame1(wx.Frame):
         self.weightSpinTeam7Ctrl5.SetValue(self.team7Player5Stats[3])
         self.angrySpinTeam7Ctrl5.SetValue(self.team7Player5Stats[5])
         
-        self.sShootSelection[6] = self.team6.sShootRead(self.rom)
+        self.sShootSelection[6] = self.team7.sShootRead(self.rom)
         
         self.shootTeam7Choice1.SetSelection(int(self.sShootSelection[6][0]))
         self.shootTeam7Choice2.SetSelection(int(self.sShootSelection[6][1]))

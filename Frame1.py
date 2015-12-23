@@ -899,7 +899,7 @@ class Frame1(wx.Frame):
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.panel2, select=True,
+        parent.AddPage(imageId=-1, page=self.panel2, select=False,
               text=u'Team 1')
         parent.AddPage(imageId=-1, page=self.panel3, select=False,
               text=u'Team 2')
@@ -913,7 +913,7 @@ class Frame1(wx.Frame):
               text=u'Team 6')
         parent.AddPage(imageId=-1, page=self.panel8, select=False,
               text=u'Team 7')
-        parent.AddPage(imageId=-1, page=self.panel9, select=False,
+        parent.AddPage(imageId=-1, page=self.panel9, select=True,
               text=u'Team 8')
 
     def _init_ctrls(self, prnt):
@@ -2309,26 +2309,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM2CHOICE1, name=u'shootTeam2Choice1',
               parent=self.panel3, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam2Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam2Choice1Choice, id=wxID_FRAME1SHOOTTEAM2CHOICE1)
 
         self.shootTeam2Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM2CHOICE2, name=u'shootTeam2Choice2',
               parent=self.panel3, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam2Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam2Choice2Choice, id=wxID_FRAME1SHOOTTEAM2CHOICE2)
 
         self.shootTeam2Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM2CHOICE3, name=u'shootTeam2Choice3',
               parent=self.panel3, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam2Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam2Choice3Choice, id=wxID_FRAME1SHOOTTEAM2CHOICE3)
 
         self.shootTeam2Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM2CHOICE4, name=u'shootTeam2Choice4',
               parent=self.panel3, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam2Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam2Choice4Choice, id=wxID_FRAME1SHOOTTEAM2CHOICE4)
 
         self.shootTeam2Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM2CHOICE5, name=u'shootTeam2Choice5',
               parent=self.panel3, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam2Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam2Choice5Choice, id=wxID_FRAME1SHOOTTEAM2CHOICE5)
 
         self.displayPowTeam2Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM2CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam2Ctrl1',
@@ -2645,26 +2655,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM3CHOICE1, name=u'shootTeam3Choice1',
               parent=self.panel4, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam3Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam3Choice1Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE1)
 
         self.shootTeam3Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM3CHOICE2, name=u'shootTeam3Choice2',
               parent=self.panel4, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam3Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam3Choice2Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE2)
 
         self.shootTeam3Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM3CHOICE3, name=u'shootTeam3Choice3',
               parent=self.panel4, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam3Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam3Choice3Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE3)
 
         self.shootTeam3Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM3CHOICE4, name=u'shootTeam3Choice4',
               parent=self.panel4, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam3Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam3Choice4Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE4)
 
         self.shootTeam3Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM3CHOICE5, name=u'shootTeam3Choice5',
               parent=self.panel4, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam3Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam3Choice5Choice, id=wxID_FRAME1SHOOTTEAM3CHOICE5)
 
         self.displayPowTeam3Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM3CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam3Ctrl1',
@@ -2981,26 +3001,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM4CHOICE1, name=u'shootTeam4Choice1',
               parent=self.panel5, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam4Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam4Choice1Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE1)
 
         self.shootTeam4Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM4CHOICE2, name=u'shootTeam4Choice2',
               parent=self.panel5, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam4Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam4Choice2Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE2)
 
         self.shootTeam4Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM4CHOICE3, name=u'shootTeam4Choice3',
               parent=self.panel5, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam4Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam4Choice3Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE3)
 
         self.shootTeam4Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM4CHOICE4, name=u'shootTeam4Choice4',
               parent=self.panel5, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam4Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam4Choice4Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE4)
 
         self.shootTeam4Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM4CHOICE5, name=u'shootTeam4Choice5',
               parent=self.panel5, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam4Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam4Choice5Choice, id=wxID_FRAME1SHOOTTEAM4CHOICE5)
 
         self.displayPowTeam4Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM4CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam4Ctrl1',
@@ -3317,26 +3347,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM5CHOICE1, name=u'shootTeam5Choice1',
               parent=self.panel6, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam5Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam5Choice1Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE1)
 
         self.shootTeam5Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM5CHOICE2, name=u'shootTeam5Choice2',
               parent=self.panel6, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam5Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam5Choice2Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE2)
 
         self.shootTeam5Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM5CHOICE3, name=u'shootTeam5Choice3',
               parent=self.panel6, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam5Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam5Choice3Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE3)
 
         self.shootTeam5Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM5CHOICE4, name=u'shootTeam5Choice4',
               parent=self.panel6, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam5Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam5Choice4Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE4)
 
         self.shootTeam5Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM5CHOICE5, name=u'shootTeam5Choice5',
               parent=self.panel6, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam5Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam5Choice5Choice, id=wxID_FRAME1SHOOTTEAM5CHOICE5)
 
         self.displayPowTeam5Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM5CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam5Ctrl1',
@@ -3653,26 +3693,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM6CHOICE1, name=u'shootTeam6Choice1',
               parent=self.panel7, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam6Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam6Choice1Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE1)
 
         self.shootTeam6Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE2, name=u'shootTeam6Choice2',
               parent=self.panel7, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam6Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam6Choice2Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE2)
 
         self.shootTeam6Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE3, name=u'shootTeam6Choice3',
               parent=self.panel7, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam6Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam6Choice3Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE3)
 
         self.shootTeam6Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE4, name=u'shootTeam6Choice4',
               parent=self.panel7, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam6Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam6Choice4Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE4)
 
         self.shootTeam6Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM6CHOICE5, name=u'shootTeam6Choice5',
               parent=self.panel7, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam6Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam6Choice5Choice, id=wxID_FRAME1SHOOTTEAM6CHOICE5)
 
         self.displayPowTeam6Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM6CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam6Ctrl1',
@@ -3989,26 +4039,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM7CHOICE1, name=u'shootTeam7Choice1',
               parent=self.panel8, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam7Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam7Choice1Choice, id=wxID_FRAME1SHOOTTEAM7CHOICE1)
 
         self.shootTeam7Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM7CHOICE2, name=u'shootTeam7Choice2',
               parent=self.panel8, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam7Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam7Choice2Choice, id=wxID_FRAME1SHOOTTEAM7CHOICE2)
 
         self.shootTeam7Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM7CHOICE3, name=u'shootTeam7Choice3',
               parent=self.panel8, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam7Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam7Choice3Choice, id=wxID_FRAME1SHOOTTEAM7CHOICE3)
 
         self.shootTeam7Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM7CHOICE4, name=u'shootTeam7Choice4',
               parent=self.panel8, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam7Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam7Choice4Choice, id=wxID_FRAME1SHOOTTEAM7CHOICE4)
 
         self.shootTeam7Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM7CHOICE5, name=u'shootTeam7Choice5',
               parent=self.panel8, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam7Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam7Choice5Choice, id=wxID_FRAME1SHOOTTEAM7CHOICE5)
 
         self.displayPowTeam7Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM7CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam7Ctrl1',
@@ -4325,26 +4385,36 @@ class Frame1(wx.Frame):
               id=wxID_FRAME1SHOOTTEAM8CHOICE1, name=u'shootTeam8Choice1',
               parent=self.panel9, pos=wx.Point(592, 64), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam8Choice1.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam8Choice1Choice, id=wxID_FRAME1SHOOTTEAM8CHOICE1)
 
         self.shootTeam8Choice2 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM8CHOICE2, name=u'shootTeam8Choice2',
               parent=self.panel9, pos=wx.Point(592, 96), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam8Choice2.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam8Choice2Choice, id=wxID_FRAME1SHOOTTEAM8CHOICE2)
 
         self.shootTeam8Choice3 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM8CHOICE3, name=u'shootTeam8Choice3',
               parent=self.panel9, pos=wx.Point(592, 128), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam8Choice3.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam8Choice3Choice, id=wxID_FRAME1SHOOTTEAM8CHOICE3)
 
         self.shootTeam8Choice4 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM8CHOICE4, name=u'shootTeam8Choice4',
               parent=self.panel9, pos=wx.Point(592, 160), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam8Choice4.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam8Choice4Choice, id=wxID_FRAME1SHOOTTEAM8CHOICE4)
 
         self.shootTeam8Choice5 = wx.Choice(choices=[],
               id=wxID_FRAME1SHOOTTEAM8CHOICE5, name=u'shootTeam8Choice5',
               parent=self.panel9, pos=wx.Point(592, 192), size=wx.Size(106, 21),
               style=0)
+        self.shootTeam8Choice5.Bind(wx.EVT_CHOICE,
+              self.OnShootTeam8Choice5Choice, id=wxID_FRAME1SHOOTTEAM8CHOICE5)
 
         self.displayPowTeam8Ctrl1 = wx.SpinCtrl(id=wxID_FRAME1DISPLAYPOWTEAM8CTRL1,
               initial=1, max=999, min=1, name=u'displayPowTeam8Ctrl1',
@@ -5524,6 +5594,13 @@ class Frame1(wx.Frame):
         self.team8.writePlayerStats(self.rom, self.players8StatsOffset, (self.team8Player1Stats, self.team8Player2Stats, self.team8Player3Stats, self.team8Player4Stats, self.team8Player5Stats))
         
         self.team1.sShootWrite(self.rom, self.sShootSelection[0])
+        self.team2.sShootWrite(self.rom, self.sShootSelection[1])
+        self.team3.sShootWrite(self.rom, self.sShootSelection[2])
+        self.team4.sShootWrite(self.rom, self.sShootSelection[3])
+        self.team5.sShootWrite(self.rom, self.sShootSelection[4])
+        self.team6.sShootWrite(self.rom, self.sShootSelection[5])
+        self.team7.sShootWrite(self.rom, self.sShootSelection[6])
+        self.team8.sShootWrite(self.rom, self.sShootSelection[7])
         
         self.team1.writeDisplayStats(self.rom, self.playersDisplayStats[0])
         
@@ -5902,6 +5979,159 @@ class Frame1(wx.Frame):
     def OnShootTeam1Choice5Choice(self, event):
         event.Skip()
         self.sShootSelection[0][4] = self.shootTeam1Choice1.GetSelection()
+        
+#-------------------------------------------------------------------------------
+        
+    def OnShootTeam2Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[1][0] = self.shootTeam2Choice1.GetSelection()
+
+    def OnShootTeam2Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[1][1] = self.shootTeam2Choice1.GetSelection()
+
+    def OnShootTeam2Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[1][2] = self.shootTeam2Choice1.GetSelection()
+
+    def OnShootTeam2Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[1][3] = self.shootTeam2Choice1.GetSelection()
+        
+    def OnShootTeam2Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[1][4] = self.shootTeam2Choice1.GetSelection()
+        
+#-------------------------------------------------------------------------------
+        
+    def OnShootTeam3Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[2][0] = self.shootTeam3Choice1.GetSelection()
+
+    def OnShootTeam3Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[2][1] = self.shootTeam3Choice1.GetSelection()
+
+    def OnShootTeam3Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[2][2] = self.shootTeam3Choice1.GetSelection()
+
+    def OnShootTeam3Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[2][3] = self.shootTeam3Choice1.GetSelection()
+
+    def OnShootTeam3Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[2][4] = self.shootTeam3Choice1.GetSelection()
+
+#-------------------------------------------------------------------------------
+    def OnShootTeam4Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[3][0] = self.shootTeam4Choice1.GetSelection()
+
+    def OnShootTeam4Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[3][1] = self.shootTeam4Choice1.GetSelection()
+
+    def OnShootTeam4Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[3][2] = self.shootTeam4Choice1.GetSelection()
+
+    def OnShootTeam4Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[3][3] = self.shootTeam4Choice1.GetSelection()
+
+    def OnShootTeam4Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[3][4] = self.shootTeam4Choice1.GetSelection()
+        
+#-------------------------------------------------------------------------------
+
+    def OnShootTeam5Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[4][0] = self.shootTeam5Choice1.GetSelection()
+
+    def OnShootTeam5Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[4][1] = self.shootTeam5Choice1.GetSelection()
+
+    def OnShootTeam5Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[4][2] = self.shootTeam5Choice1.GetSelection()
+
+    def OnShootTeam5Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[4][3] = self.shootTeam5Choice1.GetSelection()
+
+    def OnShootTeam5Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[4][4] = self.shootTeam5Choice1.GetSelection()
+
+#-------------------------------------------------------------------------------
+
+    def OnShootTeam6Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[5][0] = self.shootTeam6Choice1.GetSelection()
+
+    def OnShootTeam6Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[5][1] = self.shootTeam6Choice1.GetSelection()
+
+    def OnShootTeam6Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[5][2] = self.shootTeam6Choice1.GetSelection()
+
+    def OnShootTeam6Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[5][3] = self.shootTeam6Choice1.GetSelection()
+
+    def OnShootTeam6Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[5][4] = self.shootTeam6Choice1.GetSelection()
+
+#-------------------------------------------------------------------------------
+
+    def OnShootTeam7Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[6][0] = self.shootTeam7Choice1.GetSelection()
+
+    def OnShootTeam7Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[6][1] = self.shootTeam7Choice1.GetSelection()
+
+    def OnShootTeam7Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[6][2] = self.shootTeam7Choice1.GetSelection()
+
+    def OnShootTeam7Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[6][3] = self.shootTeam7Choice1.GetSelection()
+
+    def OnShootTeam7Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[6][4] = self.shootTeam7Choice1.GetSelection()
+
+#-------------------------------------------------------------------------------
+
+    def OnShootTeam8Choice1Choice(self, event):
+        event.Skip()
+        self.sShootSelection[7][0] = self.shootTeam8Choice1.GetSelection()
+
+    def OnShootTeam8Choice2Choice(self, event):
+        event.Skip()
+        self.sShootSelection[7][1] = self.shootTeam8Choice1.GetSelection()
+
+    def OnShootTeam8Choice3Choice(self, event):
+        event.Skip()
+        self.sShootSelection[7][2] = self.shootTeam8Choice1.GetSelection()
+
+    def OnShootTeam8Choice4Choice(self, event):
+        event.Skip()
+        self.sShootSelection[7][3] = self.shootTeam8Choice1.GetSelection()
+
+    def OnShootTeam8Choice5Choice(self, event):
+        event.Skip()
+        self.sShootSelection[7][4] = self.shootTeam8Choice1.GetSelection()
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -6946,3 +7176,5 @@ class Frame1(wx.Frame):
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+
+ 

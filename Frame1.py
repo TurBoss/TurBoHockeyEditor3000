@@ -919,7 +919,7 @@ class Frame1(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRAME1, name='', parent=prnt,
-              pos=wx.Point(328, 343), size=wx.Size(909, 368),
+              pos=wx.Point(2411, 241), size=wx.Size(917, 380),
               style=wx.DEFAULT_FRAME_STYLE, title=u'TurBo Hockey Editor 3000')
         self.SetClientSize(wx.Size(901, 341))
         self.SetIcon(wx.Icon(u"icon.ico",wx.BITMAP_TYPE_ICO))
@@ -936,7 +936,7 @@ class Frame1(wx.Frame):
         self.minCtrl1 = wx.TextCtrl(id=wxID_FRAME1MINCTRL1, name=u'minCtrl1',
               parent=self.panel1, pos=wx.Point(16, 40), size=wx.Size(24, 21),
               style=0, value=u'0')
-        self.minCtrl1.SetLabelText(u'0')
+        self.minCtrl1.SetLabel(u'0')
         self.minCtrl1.SetMaxLength(1)
         self.minCtrl1.SetToolTipString(u'Minutes')
         self.minCtrl1.Bind(wx.EVT_TEXT, self.OnMinCtrl1Text,
@@ -945,7 +945,7 @@ class Frame1(wx.Frame):
         self.secCtrl1 = wx.TextCtrl(id=wxID_FRAME1SECCTRL1, name=u'secCtrl1',
               parent=self.panel1, pos=wx.Point(40, 40), size=wx.Size(24, 21),
               style=0, value=u'0')
-        self.secCtrl1.SetLabelText(u'0')
+        self.secCtrl1.SetLabel(u'0')
         self.secCtrl1.SetMaxLength(1)
         self.secCtrl1.SetToolTipString(u'Seconds')
         self.secCtrl1.SetInsertionPoint(1)
@@ -960,7 +960,7 @@ class Frame1(wx.Frame):
         self.shootCtrl1 = wx.TextCtrl(id=wxID_FRAME1SHOOTCTRL1,
               name=u'shootCtrl1', parent=self.panel1, pos=wx.Point(88, 40),
               size=wx.Size(32, 21), style=0, value=u'0')
-        self.shootCtrl1.SetLabelText(u'0')
+        self.shootCtrl1.SetLabel(u'0')
         self.shootCtrl1.SetToolTipString(u'Super shoot time')
         self.shootCtrl1.SetMaxLength(3)
         self.shootCtrl1.Bind(wx.EVT_TEXT, self.OnShootCtrl1Text,
